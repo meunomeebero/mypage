@@ -21,10 +21,11 @@
   <meta name="twitter:title" content="Bero Land | Links">
   <meta name="twitter:description" content="Home com links oficiais do Bero e acesso lateral para o restante do perfil.">
   <meta name="twitter:image" content="https://www.bero.land/public/banner.png">
+  <meta name="twitter:image:alt" content="Banner da Bero Land">
   <link rel="preconnect" href="https://static.ietf.org" crossorigin>
   <link rel="stylesheet" href="https://static.ietf.org/fonts/noto-sans-mono/import.css">
   <link rel="stylesheet" href="./styles.css">
-  <script type="application/ld+json">
+  <script id="profile-jsonld" type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ProfilePage",
@@ -57,14 +58,22 @@
   <div class="site-shell">
     <aside class="sidebar" aria-label="Paginas">
       <div class="sidebar__inner">
-        <p class="sidebar__label">pages</p>
+        <div class="sidebar__top">
+          <p class="sidebar__label">paginas</p>
+          <div class="lang-switch lang-switch--mobile" aria-label="Language switcher">
+            <button type="button" data-lang-choice="pt-BR">PT</button>
+            <span class="lang-switch__sep">/</span>
+            <button type="button" data-lang-choice="en">EN</button>
+          </div>
+        </div>
         <nav class="sidebar__nav">
           <a class="is-active" href="./index.html">00. links</a>
-          <a href="./about.html">01. about</a>
+          <a class="nav-subitem" href="./minilab.html">00.1 minilab</a>
+          <a href="./about.html">01. sobre</a>
           <a href="./media-kit.html">02. media kit</a>
-          <a href="./projects.html">03. projects</a>
+          <a href="./projects.html">03. projetos</a>
           <a href="./videos.html">04. videos</a>
-          <a href="./contact.html">05. contact</a>
+          <a href="./contact.html">05. contato</a>
         </nav>
       </div>
     </aside>
@@ -73,7 +82,11 @@
       <div class="content">
         <div class="status-bar" aria-hidden="true">
           <span>bero.land / index.html</span>
-          <span>static html / links first</span>
+          <div class="lang-switch lang-switch--desktop" aria-label="Language switcher">
+            <button type="button" data-lang-choice="pt-BR">PT</button>
+            <span class="lang-switch__sep">/</span>
+            <button type="button" data-lang-choice="en">EN</button>
+          </div>
         </div>
 
         <header class="hero">
@@ -88,48 +101,48 @@
         <section class="section" aria-labelledby="primary-links-title">
           <div class="section-head">
             <span class="section-id">00.</span>
-            <h2 id="primary-links-title">Primary Links</h2>
+            <h2 id="primary-links-title">Links principais</h2>
           </div>
           <nav class="link-list" aria-label="Links principais">
             <a class="link-row" href="https://www.youtube.com/@meunomeebero" target="_blank" rel="noopener noreferrer">
               <span>YouTube / @meunomeebero</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">channel</span>
+              <span class="link-row__meta">canal</span>
             </a>
             <a class="link-row" href="https://www.youtube.com/@beroodev" target="_blank" rel="noopener noreferrer">
               <span>YouTube / @beroodev</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">channel</span>
+              <span class="link-row__meta">canal</span>
             </a>
             <a class="link-row" href="https://github.com/meunomeebero" target="_blank" rel="noopener noreferrer">
               <span>GitHub</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">code</span>
+              <span class="link-row__meta">codigo</span>
             </a>
               <a class="link-row" href="https://x.com/meunomeebero" target="_blank" rel="noopener noreferrer">
               <span>X / Twitter</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">updates</span>
+              <span class="link-row__meta">posts</span>
             </a>
             <a class="link-row" href="https://www.instagram.com/meunomeebero" target="_blank" rel="noopener noreferrer">
               <span>Instagram</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">stories</span>
+              <span class="link-row__meta">perfil</span>
             </a>
             <a class="link-row" href="https://www.tiktok.com/@meunomeebero" target="_blank" rel="noopener noreferrer">
               <span>TikTok</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">shorts</span>
+              <span class="link-row__meta">curtas</span>
             </a>
             <a class="link-row" href="https://www.linkedin.com/in/robertojrcdc/" target="_blank" rel="noopener noreferrer">
               <span>LinkedIn</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">work</span>
+              <span class="link-row__meta">trabalho</span>
             </a>
               <a class="link-row" href="https://discord.com/servers/mansao-dev-1132161173484224642" target="_blank" rel="noopener noreferrer">
               <span>Discord / Mansao Dev</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">community</span>
+              <span class="link-row__meta">comunidade</span>
             </a>
             <a class="link-row" href="mailto:mail@bero.land?subject=Publicidade%20com%20Bero">
               <span>mail@bero.land</span>
@@ -146,24 +159,24 @@
         <section class="section" aria-labelledby="routing-title">
           <div class="section-head">
             <span class="section-id">00.1</span>
-            <h2 id="routing-title">Cursos / Comunidades</h2>
+            <h2 id="routing-title">Cursos e comunidades</h2>
           </div>
           <div class="featured-links">
             <article class="featured-link">
               <a class="link-row" href="https://berolab.app" target="_blank" rel="noopener noreferrer">
                 <span>BeroLab</span>
                 <span class="link-row__dots" aria-hidden="true"></span>
-                <span class="link-row__meta">community</span>
+                <span class="link-row__meta">comunidade</span>
               </a>
               <p class="featured-link__text">Comunidade fechada para networking, compartilhamento de conhecimento, eventos ao vivo e acompanhamento em grupo, com planos a partir de R$ 0.</p>
               <p class="featured-link__note">Iniciativas: clube do livro tecnico, clube do ingles tech, maratona de SaaS e BeroLab Open Source.</p>
             </article>
 
             <article class="featured-link">
-              <a class="link-row" href="https://bero.land/minilab" target="_blank" rel="noopener noreferrer">
+              <a class="link-row" href="./minilab.html">
                 <span>MiniLab JavaScript</span>
                 <span class="link-row__dots" aria-hidden="true"></span>
-                <span class="link-row__meta">course</span>
+                <span class="link-row__meta">curso</span>
               </a>
               <p class="featured-link__text">Uma hora e meia de conteudo, saindo do zero em JavaScript ate a criacao de um bot de WhatsApp integrado com GPT, por R$ 37.</p>
             </article>
@@ -172,18 +185,18 @@
         <section class="section" aria-labelledby="secondary-links-title">
           <div class="section-head">
             <span class="section-id">00.2</span>
-            <h2 id="secondary-links-title">Other links</h2>
+            <h2 id="secondary-links-title">Outros links</h2>
           </div>
           <nav class="link-list" aria-label="Links sociais">
             <a class="link-row" href="https://gist.github.com/meunomeebero/21a29f49336e0f4256e22e791afd8035" target="_blank" rel="noopener noreferrer">
               <span>My Resume 2026</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">document</span>
+              <span class="link-row__meta">curriculo</span>
             </a>
             <a class="link-row" href="https://bero-royale.shardweb.app" target="_blank" rel="noopener noreferrer">
               <span>Bero Royale</span>
               <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">play</span>
+              <span class="link-row__meta">jogar</span>
             </a>
           </nav>
         </section>

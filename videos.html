@@ -16,10 +16,12 @@
   <meta property="og:description" content="Registro dos canais e formatos de video do Bero.">
   <meta property="og:url" content="https://bero.land/videos.html">
   <meta property="og:image" content="https://www.bero.land/public/banner.png">
+  <meta property="og:image:alt" content="Banner da Bero Land">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Bero Land | Videos">
   <meta name="twitter:description" content="Canais, formatos e linha editorial do Bero.">
   <meta name="twitter:image" content="https://www.bero.land/public/banner.png">
+  <meta name="twitter:image:alt" content="Banner da Bero Land">
   <link rel="preconnect" href="https://static.ietf.org" crossorigin>
   <link rel="stylesheet" href="https://static.ietf.org/fonts/noto-sans-mono/import.css">
   <link rel="stylesheet" href="./styles.css">
@@ -28,14 +30,22 @@
   <div class="site-shell">
     <aside class="sidebar" aria-label="Paginas">
       <div class="sidebar__inner">
-        <p class="sidebar__label">pages</p>
+        <div class="sidebar__top">
+          <p class="sidebar__label">paginas</p>
+          <div class="lang-switch lang-switch--mobile" aria-label="Language switcher">
+            <button type="button" data-lang-choice="pt-BR">PT</button>
+            <span class="lang-switch__sep">/</span>
+            <button type="button" data-lang-choice="en">EN</button>
+          </div>
+        </div>
         <nav class="sidebar__nav">
           <a href="./index.html">00. links</a>
-          <a href="./about.html">01. about</a>
+          <a class="nav-subitem" href="./minilab.html">00.1 minilab</a>
+          <a href="./about.html">01. sobre</a>
           <a href="./media-kit.html">02. media kit</a>
-          <a href="./projects.html">03. projects</a>
+          <a href="./projects.html">03. projetos</a>
           <a class="is-active" href="./videos.html">04. videos</a>
-          <a href="./contact.html">05. contact</a>
+          <a href="./contact.html">05. contato</a>
         </nav>
       </div>
     </aside>
@@ -44,28 +54,32 @@
       <div class="content">
         <div class="status-bar" aria-hidden="true">
           <span>bero.land / videos.html</span>
-          <span>video index</span>
+          <div class="lang-switch lang-switch--desktop" aria-label="Language switcher">
+            <button type="button" data-lang-choice="pt-BR">PT</button>
+            <span class="lang-switch__sep">/</span>
+            <button type="button" data-lang-choice="en">EN</button>
+          </div>
         </div>
 
         <header class="hero">
           <p class="eyebrow">Videos</p>
-          <h1>Channels / Formats</h1>
+          <h1>Canais e formatos</h1>
           <p class="subtitle">Onde o conteudo entra, em que formato e com qual tom editorial.</p>
         </header>
 
         <section class="section" aria-labelledby="channels-title">
           <div class="section-head">
             <span class="section-id">04.</span>
-            <h2 id="channels-title">Channel Registry</h2>
+            <h2 id="channels-title">Canais</h2>
           </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Channel</th>
-                  <th>Audience</th>
-                  <th>Editorial line</th>
-                  <th>Format</th>
+                  <th>Canal</th>
+                  <th>Audiencia</th>
+                  <th>Linha editorial</th>
+                  <th>Formato</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,19 +93,19 @@
                   <td><a href="https://www.youtube.com/@beroodev" target="_blank" rel="noopener noreferrer">YouTube / @beroodev</a></td>
                   <td>35 mil+ inscritos</td>
                   <td>Carreira, programacao, investimentos e opiniao brutalmente honesta sobre o mercado tech</td>
-                  <td>Long-form tecnico</td>
+                  <td>Video longo tecnico</td>
                 </tr>
                 <tr>
                   <td><a href="https://www.tiktok.com/@meunomeebero" target="_blank" rel="noopener noreferrer">TikTok</a></td>
                   <td>65 mil+ seguidores</td>
                   <td>Animacao, tecnologia e recortes curtos com linguagem rapida</td>
-                  <td>Short-form vertical video</td>
+                  <td>Video curto vertical</td>
                 </tr>
                 <tr>
                   <td><a href="https://www.instagram.com/meunomeebero" target="_blank" rel="noopener noreferrer">Instagram</a></td>
                   <td>110 mil+ seguidores</td>
                   <td>Reels de animacao, bastidores e apoio de distribuicao</td>
-                  <td>Short-form / social support</td>
+                  <td>Video curto / distribuicao</td>
                 </tr>
               </tbody>
             </table>
@@ -101,13 +115,13 @@
         <section class="section" aria-labelledby="featured-title">
           <div class="section-head">
             <span class="section-id">04.1</span>
-            <h2 id="featured-title">Featured Videos</h2>
+            <h2 id="featured-title">Videos em destaque</h2>
           </div>
           <div class="record-list">
             <article class="record">
               <div class="record__head">
                 <h3>PARTE 1 | O dia que eu resolvi fazer programa</h3>
-                <span class="record__tag">favorite animation</span>
+                <span class="record__tag">animacao favorita</span>
               </div>
               <p>Minha animacao favorita do canal hoje. Bom recorte do tom narrativo e do jeito como eu transformo programacao em historia.</p>
               <div class="record__meta">
@@ -117,7 +131,7 @@
             <article class="record">
               <div class="record__head">
                 <h3>Minha opiniao brutalmente honesta sobre programacao em 2026</h3>
-                <span class="record__tag">favorite technical</span>
+                <span class="record__tag">tecnico favorito</span>
               </div>
               <p>Meu video tecnico favorito no canal de long-form neste momento. Representa bem a linha de conteudo direta, opinativa e sem eufemismos.</p>
               <div class="record__meta">

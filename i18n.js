@@ -1,4 +1,5 @@
 (function() {
+  const STORAGE_KEY = 'bero-land-locale';
   const BRAZIL_TIMEZONES = new Set([
     'America/Sao_Paulo',
     'America/Fortaleza',
@@ -16,6 +17,11 @@
   ]);
 
   function detectLanguage() {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (saved === 'pt-BR' || saved === 'en') {
+      return saved;
+    }
+
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const locale = (navigator.language || '').toLowerCase();
     const isBrazil = BRAZIL_TIMEZONES.has(timezone) || locale.endsWith('-br');
@@ -50,6 +56,13 @@
     }
   }
 
+  function setJsonLd(selector, value) {
+    const node = document.querySelector(selector);
+    if (node) {
+      node.textContent = JSON.stringify(value);
+    }
+  }
+
   function pageName() {
     const pathname = window.location.pathname;
     const last = pathname.split('/').pop();
@@ -58,15 +71,98 @@
 
   function applyGlobalLabels(locale) {
     const navLabels = locale === 'pt-BR'
-      ? ['00. links', '01. sobre', '02. media kit', '03. projetos', '04. videos', '05. contato']
-      : ['00. links', '01. about', '02. media kit', '03. projects', '04. videos', '05. contact'];
+      ? ['00. links', '00.1 minilab', '01. sobre', '02. media kit', '03. projetos', '04. videos', '05. contato']
+      : ['00. links', '00.1 minilab', '01. about', '02. media kit', '03. projects', '04. videos', '05. contact'];
 
     setAttr('.sidebar', 'aria-label', locale === 'pt-BR' ? 'Paginas' : 'Pages');
+    document.querySelectorAll('.lang-switch').forEach(function(node) {
+      node.setAttribute('aria-label', locale === 'pt-BR' ? 'Alternar idioma' : 'Switch language');
+    });
 
     document.querySelectorAll('.sidebar__nav a').forEach(function(node, index) {
       if (navLabels[index]) {
         node.textContent = navLabels[index];
       }
+    });
+  }
+
+  function syncLanguageSwitch(locale) {
+    document.querySelectorAll('[data-lang-choice]').forEach(function(node) {
+      const isActive = node.getAttribute('data-lang-choice') === locale;
+      node.classList.toggle('is-active', isActive);
+      node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      node.setAttribute('aria-label', node.getAttribute('data-lang-choice') === 'pt-BR'
+        ? (locale === 'pt-BR' ? 'Português selecionado' : 'Mudar para português')
+        : (locale === 'en' ? 'English selected' : 'Switch to English'));
+    });
+  }
+
+  const profileJsonLd = {
+    'pt-BR': {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      dateModified: '2026-03-06',
+      mainEntity: {
+        '@type': 'Person',
+        name: 'Bero',
+        url: 'https://bero.land/',
+        description: 'Bero e criador de conteudo e programador. Publica conteudo sobre programacao, apps, SaaS, IA, jogos, animacao, carreira, indie hacking e publicidade.',
+        email: 'mailto:mail@bero.land',
+        jobTitle: [
+          'Criador de Conteudo',
+          'Programador'
+        ],
+        sameAs: [
+          'https://x.com/meunomeebero',
+          'https://www.instagram.com/meunomeebero',
+          'https://www.youtube.com/@meunomeebero',
+          'https://github.com/meunomeebero',
+          'https://www.linkedin.com/in/robertojrcdc/',
+          'https://discord.com/servers/mansao-dev-1132161173484224642',
+          'https://www.tiktok.com/@meunomeebero',
+          'https://www.youtube.com/@beroodev'
+        ]
+      }
+    },
+    en: {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      dateModified: '2026-03-06',
+      mainEntity: {
+        '@type': 'Person',
+        name: 'Bero',
+        url: 'https://bero.land/',
+        description: 'Bero is a content creator and software engineer publishing about programming, apps, SaaS, AI, games, animation, career and advertising.',
+        email: 'mailto:mail@bero.land',
+        jobTitle: [
+          'Content Creator',
+          'Programmer'
+        ],
+        sameAs: [
+          'https://x.com/meunomeebero',
+          'https://www.instagram.com/meunomeebero',
+          'https://www.youtube.com/@meunomeebero',
+          'https://github.com/meunomeebero',
+          'https://www.linkedin.com/in/robertojrcdc/',
+          'https://discord.com/servers/mansao-dev-1132161173484224642',
+          'https://www.tiktok.com/@meunomeebero',
+          'https://www.youtube.com/@beroodev'
+        ]
+      }
+    }
+  };
+
+  function bindLanguageSwitch() {
+    document.querySelectorAll('[data-lang-choice]').forEach(function(node) {
+      node.addEventListener('click', function() {
+        const nextLocale = node.getAttribute('data-lang-choice');
+        if (!nextLocale) {
+          return;
+        }
+
+        window.localStorage.setItem(STORAGE_KEY, nextLocale);
+        applyTranslation(nextLocale);
+      });
     });
   }
 
@@ -77,34 +173,36 @@
         metaDescription: 'Links oficiais do Bero. Home estatica com acesso rapido para canais, projetos, comunidade e contato comercial.',
         ogTitle: 'Bero Land | Links',
         ogDescription: 'Links oficiais do Bero em uma home estatica, com sidebar para about, media kit, projects, videos e contact.',
+        ogImageAlt: 'Banner da Bero Land',
         twitterTitle: 'Bero Land | Links',
         twitterDescription: 'Home com links oficiais do Bero e acesso lateral para o restante do perfil.',
+        twitterImageAlt: 'Banner da Bero Land',
         texts: [
           ['.sidebar__label', 'paginas'],
           ['.status-bar span:last-child', 'static html / links first'],
           ['.hero .eyebrow', 'Creator / Programmer / Brand Partnerships'],
           ['.hero .lede', 'Desenvolvedor brasileiro baseado em Sao Jose dos Campos. 6+ anos programando, 10+ anos criando conteudo e + de 360 mil seguidores e inscritos somados nas plataformas.'],
-          ['#primary-links-title', 'Primary Links'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(1) .link-row__meta', 'channel'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(2) .link-row__meta', 'channel'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(3) .link-row__meta', 'code'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(4) .link-row__meta', 'updates'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(5) .link-row__meta', 'stories'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(6) .link-row__meta', 'shorts'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(7) .link-row__meta', 'work'],
-          ['.link-list[aria-label="Links principais"] a:nth-of-type(8) .link-row__meta', 'community'],
+          ['#primary-links-title', 'Links principais'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(1) .link-row__meta', 'canal'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(2) .link-row__meta', 'canal'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(3) .link-row__meta', 'codigo'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(4) .link-row__meta', 'posts'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(5) .link-row__meta', 'perfil'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(6) .link-row__meta', 'curtas'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(7) .link-row__meta', 'trabalho'],
+          ['.link-list[aria-label="Links principais"] a:nth-of-type(8) .link-row__meta', 'comunidade'],
           ['.link-list[aria-label="Links principais"] a:nth-of-type(9) .link-row__meta', 'email'],
           ['#secret-trigger span:first-child', 'Conteudo secreto'],
           ['#secret-trigger .link-row__meta', 'descubra'],
-          ['#routing-title', 'Cursos / Comunidades'],
-          ['.featured-link:nth-of-type(1) .link-row__meta', 'community'],
+          ['#routing-title', 'Cursos e comunidades'],
+          ['.featured-link:nth-of-type(1) .link-row__meta', 'comunidade'],
           ['.featured-link:nth-of-type(1) .featured-link__text', 'Comunidade fechada para networking, compartilhamento de conhecimento, eventos ao vivo e acompanhamento em grupo, com planos a partir de R$ 0.'],
           ['.featured-link:nth-of-type(1) .featured-link__note', 'Iniciativas: clube do livro tecnico, clube do ingles tech, maratona de SaaS e BeroLab Open Source.'],
-          ['.featured-link:nth-of-type(2) .link-row__meta', 'course'],
+          ['.featured-link:nth-of-type(2) .link-row__meta', 'curso'],
           ['.featured-link:nth-of-type(2) .featured-link__text', 'Uma hora e meia de conteudo, saindo do zero em JavaScript ate a criacao de um bot de WhatsApp integrado com GPT, por R$ 37.'],
-          ['#secondary-links-title', 'Other links'],
-          ['.link-list[aria-label="Links sociais"] a:nth-of-type(1) .link-row__meta', 'document'],
-          ['.link-list[aria-label="Links sociais"] a:nth-of-type(2) .link-row__meta', 'play'],
+          ['#secondary-links-title', 'Outros links'],
+          ['.link-list[aria-label="Links sociais"] a:nth-of-type(1) .link-row__meta', 'curriculo'],
+          ['.link-list[aria-label="Links sociais"] a:nth-of-type(2) .link-row__meta', 'jogar'],
           ['.footer p:first-child', 'bero.land. Todos os direitos reservados.'],
           ['.footer p:nth-child(2)', 'Curtiu o projeto? Deixe uma estrela no repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
         ]
@@ -114,8 +212,10 @@
         metaDescription: 'Official Bero links. Static home with quick access to channels, projects, community and business contact.',
         ogTitle: 'Bero Land | Links',
         ogDescription: 'Official Bero links in a static home, with a sidebar for about, media kit, projects, videos and contact.',
+        ogImageAlt: 'Bero Land banner',
         twitterTitle: 'Bero Land | Links',
         twitterDescription: 'Home with Bero official links and sidebar access to the rest of the profile.',
+        twitterImageAlt: 'Bero Land banner',
         texts: [
           ['.sidebar__label', 'pages'],
           ['.status-bar span:last-child', 'static html / links first'],
@@ -149,21 +249,23 @@
     },
     'about.html': {
       'pt-BR': {
-        title: 'Bero Land | About',
-        metaDescription: 'About do Bero: identidade de marca, areas de atuacao e posicionamento como criador de conteudo e programador.',
-        ogTitle: 'Bero Land | About',
+        title: 'Bero Land | Sobre',
+        metaDescription: 'Sobre o Bero: identidade de marca, areas de atuacao e posicionamento como criador de conteudo e programador.',
+        ogTitle: 'Bero Land | Sobre',
         ogDescription: 'Quem e Bero, como a marca opera e quais assuntos atravessam o conteudo e os projetos.',
-        twitterTitle: 'Bero Land | About',
+        ogImageAlt: 'Banner da Bero Land',
+        twitterTitle: 'Bero Land | Sobre',
         twitterDescription: 'Identidade, posicionamento e areas de atuacao do Bero.',
+        twitterImageAlt: 'Banner da Bero Land',
         texts: [
           ['.sidebar__label', 'paginas'],
-          ['.status-bar span:last-child', 'brand identity'],
-          ['.hero .eyebrow', 'About'],
+          ['.status-bar span:last-child', 'identidade'],
+          ['.hero .eyebrow', 'Sobre'],
           ['.hero .subtitle', 'Bero e meu nome artistico. Profissionalmente, eu tambem assino como Roberto Junior.'],
-          ['#about-title', 'Positioning'],
-          ['.section:nth-of-type(1) .body-copy p:nth-of-type(1)', 'Eu sou o Bero, nome artistico de Roberto Junior. Sou um desenvolvedor brasileiro baseado em Sao Jose dos Campos, programo ha mais de 6 anos e atualmente trabalho na Ask.com como Software Engineer com foco em Golang e Python.'],
+          ['#about-title', 'Quem sou eu'],
+          ['.section:nth-of-type(1) .body-copy p:nth-of-type(1)', 'Eu sou o Roberto Junior, conhecido na internet como Bero. Sou um desenvolvedor brasileiro baseado em Sao Jose dos Campos, programo ha mais de 6 anos e atualmente trabalho na Ask.com como Software Engineer com foco em Golang e Python.'],
           ['.section:nth-of-type(1) .body-copy p:nth-of-type(2)', 'Hoje minha stack principal e Node.js com TypeScript, Golang e Next.js. No conteudo, misturo animacao, carreira, programacao, mercado tech, mundo corporativo sem eufemismos e dicas de investimento para jovens da geracao milenial e Z que ainda estao se encontrando na carreira.'],
-          ['#identity-title', 'Identity Markers'],
+          ['#identity-title', 'Panorama rapido'],
           ['.info-grid .fact:nth-of-type(1) dt', 'Base'],
           ['.info-grid .fact:nth-of-type(2) dt', 'Experiencia'],
           ['.info-grid .fact:nth-of-type(3) dt', 'Historico profissional'],
@@ -174,8 +276,9 @@
           ['.info-grid .fact:nth-of-type(8) dt', 'Funcoes'],
           ['.info-grid .fact:nth-of-type(9) dt', 'Temas'],
           ['.info-grid .fact:nth-of-type(10) dt', 'Foco atual'],
+          ['.info-grid .fact:nth-of-type(3) dd', 'Atual: Ask.com / Software Engineer / Golang e Python'],
           ['.info-grid .fact:nth-of-type(10) dd', 'Continuar crescendo como dev, desenvolver meus projetos pessoais e construir a melhor comunidade de devs do Brasil'],
-          ['#cta-title', 'Open To'],
+          ['#cta-title', 'Disponivel para'],
           ['.section:nth-of-type(3) .body-copy p:nth-of-type(1)', 'Estou aberto a oportunidades em empresas com projetos realmente empolgantes, a trabalhos freelance na linha de software house com apoio da equipe da BeroLab e a parcerias publicitarias com fit claro com tecnologia.'],
           ['.section:nth-of-type(3) .body-copy p:nth-of-type(2)', 'Se fizer sentido para o que voce esta construindo, <a href="./contact.html">entre em contato</a>.', 'html'],
           ['.footer p:first-child', 'bero.land. Todos os direitos reservados.'],
@@ -187,15 +290,17 @@
         metaDescription: 'About Bero: brand identity, background and positioning as a content creator and software engineer.',
         ogTitle: 'Bero Land | About',
         ogDescription: 'Who Bero is, how the brand operates and which topics drive the content and projects.',
+        ogImageAlt: 'Bero Land banner',
         twitterTitle: 'Bero Land | About',
         twitterDescription: 'Identity, positioning and focus areas behind Bero.',
+        twitterImageAlt: 'Bero Land banner',
         texts: [
           ['.sidebar__label', 'pages'],
           ['.status-bar span:last-child', 'brand identity'],
           ['.hero .eyebrow', 'About'],
           ['.hero .subtitle', 'Bero is my stage name. Professionally, I also sign as Roberto Junior.'],
           ['#about-title', 'Positioning'],
-          ['.section:nth-of-type(1) .body-copy p:nth-of-type(1)', 'I am Bero, the stage name of Roberto Junior. I am a Brazilian developer based in Sao Jose dos Campos, I have been coding for over 6 years, and I currently work at Ask.com as a Software Engineer focused on Golang and Python.'],
+          ['.section:nth-of-type(1) .body-copy p:nth-of-type(1)', 'I am Roberto Junior, better known online as Bero. I am a Brazilian developer based in Sao Jose dos Campos, I have been coding for over 6 years, and I currently work at Ask.com as a Software Engineer focused on Golang and Python.'],
           ['.section:nth-of-type(1) .body-copy p:nth-of-type(2)', 'Today my core stack is Node.js with TypeScript, Golang and Next.js. In content, I mix animation, career, programming, the tech market, corporate life without euphemisms, and investment advice for millennials and Gen Z still figuring out their path.'],
           ['#identity-title', 'Identity Markers'],
           ['.info-grid .fact:nth-of-type(1) dt', 'Base'],
@@ -232,29 +337,32 @@
         metaDescription: 'Media kit do Bero: fit de marca, formatos, entregas e fluxo comercial para publicidade e parcerias.',
         ogTitle: 'Bero Land | Media Kit',
         ogDescription: 'Fit de marca, formatos e caminho comercial para trabalhar com o Bero.',
+        ogImageAlt: 'Banner da Bero Land',
         twitterTitle: 'Bero Land | Media Kit',
         twitterDescription: 'Fit de marca, formatos e fluxo comercial do Bero.',
+        twitterImageAlt: 'Banner da Bero Land',
         texts: [
           ['.sidebar__label', 'paginas'],
-          ['.status-bar span:last-child', 'commercial snapshot'],
+          ['.status-bar span:last-child', 'visao comercial'],
           ['.hero .eyebrow', 'Media Kit'],
+          ['.hero h1', 'Visao comercial'],
           ['.hero .subtitle', 'Publicidade com linguagem nativa de internet, software e inteligencia artificial.'],
-          ['#audience-title', 'Audience Snapshot'],
-          ['#fit-title', 'Brand Fit'],
+          ['#audience-title', 'Alcance'],
+          ['#fit-title', 'Fit de marca'],
           ['.section:nth-of-type(2) .text-list li:nth-of-type(1)', 'Meu foco atual esta especialmente em empresas de inteligencia artificial.'],
           ['.section:nth-of-type(2) .text-list li:nth-of-type(2)', 'No dia a dia eu uso ChatGPT, Claude, Codex e Openclaw, entao tenho repertorio real para falar de ferramentas e fluxo de uso.'],
           ['.section:nth-of-type(2) .text-list li:nth-of-type(3)', 'As campanhas funcionam melhor quando a marca quer ser entendida por uma audiencia tech-native, nao apenas aparecer nela.'],
-          ['#formats-title', 'Formats'],
+          ['#formats-title', 'Formatos'],
           ['.section:nth-of-type(3) .record:nth-of-type(1) h3', 'Video Dedicado (YouTube)'],
           ['.section:nth-of-type(3) .record:nth-of-type(2) h3', 'Video Insert / Integracao (YouTube)'],
           ['.section:nth-of-type(3) .record:nth-of-type(3) h3', 'Animacao Publicitaria (Instagram / Shorts / TikTok)'],
           ['.section:nth-of-type(3) .record:nth-of-type(4) h3', 'Pacotes Multiplataforma'],
-          ['.section:nth-of-type(3) .record:nth-of-type(1) .record__tag', 'bookable'],
-          ['.section:nth-of-type(3) .record:nth-of-type(2) .record__tag', 'bookable'],
-          ['.section:nth-of-type(3) .record:nth-of-type(3) .record__tag', 'bookable'],
-          ['.section:nth-of-type(3) .record:nth-of-type(4) .record__tag', 'custom'],
-          ['#campaigns-title', 'Selected Campaigns'],
-          ['#flow-title', 'Flow'],
+          ['.section:nth-of-type(3) .record:nth-of-type(1) .record__tag', 'disponivel'],
+          ['.section:nth-of-type(3) .record:nth-of-type(2) .record__tag', 'disponivel'],
+          ['.section:nth-of-type(3) .record:nth-of-type(3) .record__tag', 'disponivel'],
+          ['.section:nth-of-type(3) .record:nth-of-type(4) .record__tag', 'sob medida'],
+          ['#campaigns-title', 'Cases'],
+          ['#flow-title', 'Como funciona'],
           ['.footer p:first-child', 'bero.land. Todos os direitos reservados.'],
           ['.footer p:nth-child(2)', 'Curtiu o projeto? Deixe uma estrela no repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
         ]
@@ -264,8 +372,10 @@
         metaDescription: 'Bero media kit: brand fit, formats, campaign examples and business flow for partnerships.',
         ogTitle: 'Bero Land | Media Kit',
         ogDescription: 'Brand fit, formats and a commercial overview for working with Bero.',
+        ogImageAlt: 'Bero Land banner',
         twitterTitle: 'Bero Land | Media Kit',
         twitterDescription: 'Brand fit, formats and commercial flow behind Bero partnerships.',
+        twitterImageAlt: 'Bero Land banner',
         texts: [
           ['.sidebar__label', 'pages'],
           ['.status-bar span:last-child', 'commercial snapshot'],
@@ -310,18 +420,27 @@
     },
     'projects.html': {
       'pt-BR': {
-        title: 'Bero Land | Projects',
+        title: 'Bero Land | Projetos',
         metaDescription: 'Projetos do Bero: BeroLab, Bero Royale e Blaboard.',
-        ogTitle: 'Bero Land | Projects',
+        ogTitle: 'Bero Land | Projetos',
         ogDescription: 'Registro resumido dos projetos e da infraestrutura de comunidade do Bero.',
-        twitterTitle: 'Bero Land | Projects',
+        ogImageAlt: 'Banner da Bero Land',
+        twitterTitle: 'Bero Land | Projetos',
         twitterDescription: 'Projetos publicos, de produto e open source do Bero.',
+        twitterImageAlt: 'Banner da Bero Land',
         texts: [
           ['.sidebar__label', 'paginas'],
-          ['.status-bar span:last-child', 'project registry'],
-          ['.hero .eyebrow', 'Projects'],
+          ['.status-bar span:last-child', 'projetos'],
+          ['.hero .eyebrow', 'Projetos'],
+          ['.hero h1', 'O que eu construo'],
           ['.hero .subtitle', 'Produtos, experimentos e comunidade.'],
-          ['#projects-title', 'Registry'],
+          ['#projects-title', 'Projetos'],
+          ['.section .record:nth-of-type(1) .record__tag', 'ativo'],
+          ['.section .record:nth-of-type(1) .record__meta div:first-child', '<strong>Tipo:</strong> produto / comunidade', 'html'],
+          ['.section .record:nth-of-type(2) .record__meta div:first-child', '<strong>Tipo:</strong> game / experimento / open source', 'html'],
+          ['.section .record:nth-of-type(2) .record__meta div:nth-child(2)', '<strong>Jogar:</strong> <a href="https://bero-royale.shardweb.app" target="_blank" rel="noopener noreferrer">bero-royale.shardweb.app</a>', 'html'],
+          ['.section .record:nth-of-type(3) .record__meta div:first-child', '<strong>Tipo:</strong> open source / ferramenta interna de produto', 'html'],
+          ['.section .record:nth-of-type(3) .record__meta div:nth-child(3)', '<strong>Contribuir:</strong> para contribuir, basta se cadastrar gratuitamente na <a href="https://berolab.app" target="_blank" rel="noopener noreferrer">BeroLab</a>', 'html'],
           ['.footer p:first-child', 'bero.land. Todos os direitos reservados.'],
           ['.footer p:nth-child(2)', 'Curtiu o projeto? Deixe uma estrela no repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
         ]
@@ -331,8 +450,10 @@
         metaDescription: 'Bero projects: BeroLab, Bero Royale and Blaboard.',
         ogTitle: 'Bero Land | Projects',
         ogDescription: 'A concise registry of Bero products and open source projects.',
+        ogImageAlt: 'Bero Land banner',
         twitterTitle: 'Bero Land | Projects',
         twitterDescription: 'Public, product and open source projects built by Bero.',
+        twitterImageAlt: 'Bero Land banner',
         texts: [
           ['.sidebar__label', 'pages'],
           ['.status-bar span:last-child', 'project registry'],
@@ -362,15 +483,27 @@
         metaDescription: 'Videos e canais do Bero: linhas editoriais, formatos principais e pontos de distribuicao.',
         ogTitle: 'Bero Land | Videos',
         ogDescription: 'Registro dos canais e formatos de video do Bero.',
+        ogImageAlt: 'Banner da Bero Land',
         twitterTitle: 'Bero Land | Videos',
         twitterDescription: 'Canais, formatos e linha editorial do Bero.',
+        twitterImageAlt: 'Banner da Bero Land',
         texts: [
           ['.sidebar__label', 'paginas'],
-          ['.status-bar span:last-child', 'video index'],
+          ['.status-bar span:last-child', 'videos'],
           ['.hero .eyebrow', 'Videos'],
+          ['.hero h1', 'Canais e formatos'],
           ['.hero .subtitle', 'Onde o conteudo entra, em que formato e com qual tom editorial.'],
-          ['#channels-title', 'Channel Registry'],
-          ['#featured-title', 'Featured Videos'],
+          ['#channels-title', 'Canais'],
+          ['table thead th:nth-of-type(1)', 'Canal'],
+          ['table thead th:nth-of-type(2)', 'Audiencia'],
+          ['table thead th:nth-of-type(3)', 'Linha editorial'],
+          ['table thead th:nth-of-type(4)', 'Formato'],
+          ['table tbody tr:nth-of-type(2) td:nth-of-type(4)', 'Video longo tecnico'],
+          ['table tbody tr:nth-of-type(3) td:nth-of-type(4)', 'Video curto vertical'],
+          ['table tbody tr:nth-of-type(4) td:nth-of-type(4)', 'Video curto / distribuicao'],
+          ['#featured-title', 'Videos em destaque'],
+          ['.record:nth-of-type(1) .record__tag', 'animacao favorita'],
+          ['.record:nth-of-type(2) .record__tag', 'tecnico favorito'],
           ['.footer p:first-child', 'bero.land. Todos os direitos reservados.'],
           ['.footer p:nth-child(2)', 'Curtiu o projeto? Deixe uma estrela no repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
         ]
@@ -380,8 +513,10 @@
         metaDescription: 'Bero videos and channels: editorial lines, main formats and featured work.',
         ogTitle: 'Bero Land | Videos',
         ogDescription: 'A registry of Bero channels, formats and featured videos.',
+        ogImageAlt: 'Bero Land banner',
         twitterTitle: 'Bero Land | Videos',
         twitterDescription: 'Channels, formats and editorial focus behind Bero content.',
+        twitterImageAlt: 'Bero Land banner',
         texts: [
           ['.sidebar__label', 'pages'],
           ['.status-bar span:last-child', 'video index'],
@@ -415,20 +550,25 @@
     },
     'contact.html': {
       'pt-BR': {
-        title: 'Bero Land | Contact',
+        title: 'Bero Land | Contato',
         metaDescription: 'Contato comercial do Bero para publicidade, parcerias, projetos e campanhas especiais.',
-        ogTitle: 'Bero Land | Contact',
+        ogTitle: 'Bero Land | Contato',
         ogDescription: 'Contato comercial e orientacao de briefing para trabalhar com o Bero.',
-        twitterTitle: 'Bero Land | Contact',
+        ogImageAlt: 'Banner da Bero Land',
+        twitterTitle: 'Bero Land | Contato',
         twitterDescription: 'Como fechar publicidade ou parceria com o Bero.',
+        twitterImageAlt: 'Banner da Bero Land',
         texts: [
           ['.sidebar__label', 'paginas'],
-          ['.status-bar span:last-child', 'close a deal'],
-          ['.hero .eyebrow', 'Contact'],
+          ['.status-bar span:last-child', 'contato'],
+          ['.hero .eyebrow', 'Contato'],
+          ['.hero h1', 'Vamos trabalhar juntos'],
           ['.hero .subtitle', 'Publicidade, projetos especiais e parcerias com foco atual em software e inteligencia artificial.'],
-          ['#contact-title', 'Primary Contact'],
-          ['#brief-title', 'Good Briefing Includes'],
-          ['#speed-title', 'Fastest Route'],
+          ['#contact-title', 'Contato principal'],
+          ['#brief-title', 'Um bom briefing tem'],
+          ['.text-list li:nth-of-type(6)', 'Faixa de budget'],
+          ['.text-list li:nth-of-type(7)', 'Necessidade de uso de imagem, direitos ou whitelisting'],
+          ['#speed-title', 'Forma mais rapida'],
           ['.footer p:first-child', 'bero.land. Todos os direitos reservados.'],
           ['.footer p:nth-child(2)', 'Curtiu o projeto? Deixe uma estrela no repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
         ]
@@ -438,8 +578,10 @@
         metaDescription: 'Business contact for Bero: advertising partnerships, special projects and collaboration requests.',
         ogTitle: 'Bero Land | Contact',
         ogDescription: 'Business contact and briefing guidelines for working with Bero.',
+        ogImageAlt: 'Bero Land banner',
         twitterTitle: 'Bero Land | Contact',
         twitterDescription: 'How to work with Bero on partnerships and campaigns.',
+        twitterImageAlt: 'Bero Land banner',
         texts: [
           ['.sidebar__label', 'pages'],
           ['.status-bar span:last-child', 'close a deal'],
@@ -462,6 +604,64 @@
           ['.footer p:nth-child(2)', 'Enjoyed the project? Leave a star on the repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
         ]
       }
+    },
+    'minilab.html': {
+      'pt-BR': {
+        title: 'MiniLab JavaScript | Bero',
+        metaDescription: 'Aprenda JavaScript do zero ate a construcao de um bot de WhatsApp integrado com IA em 1h30, com acesso ao MiniLab do Bero.',
+        ogTitle: 'MiniLab JavaScript | Bero',
+        ogDescription: 'JavaScript do zero ate um bot de WhatsApp com IA em 1h30, no MiniLab do Bero.',
+        ogImageAlt: 'Banner do MiniLab JavaScript do Bero',
+        twitterTitle: 'MiniLab JavaScript | Bero',
+        twitterDescription: 'JavaScript do zero ate um bot de WhatsApp com IA em 1h30, no MiniLab do Bero.',
+        twitterImageAlt: 'Banner do MiniLab JavaScript do Bero',
+        texts: [
+          ['.sidebar__label', 'paginas'],
+          ['.hero .eyebrow', 'MiniLab JavaScript'],
+          ['.hero h1', 'Do zero a um bot de WhatsApp com IA'],
+          ['.hero .lede', 'Uma aula direta, em 1h30, para entender a base de programacao e sair com um projeto pratico rodando.'],
+          ['#video-title', 'Preview'],
+          ['#learn-title', 'O que entra'],
+          ['#offer-title', 'Oferta'],
+          ['.pricing-block__old', 'de R$197'],
+          ['.pricing-block__current', 'por R$37'],
+          ['.cta-button', 'Garantir promocao'],
+          ['.cta-caption', 'Pagamento e acesso pela Hotmart.'],
+          ['#route-title', 'Para quem faz sentido'],
+          ['.section:nth-of-type(4) .body-copy p:nth-of-type(1)', 'Para quem quer destravar JavaScript sem enrolacao, entender como um projeto real nasce e sair da teoria mais rapido.'],
+          ['.section:nth-of-type(4) .body-copy p:nth-of-type(2)', 'Se quiser ver o resto do ecossistema do Bero antes de comprar, volte para os <a href="./index.html">links principais</a>.', 'html'],
+          ['.footer p:first-child', 'bero.land. Todos os direitos reservados.'],
+          ['.footer p:nth-child(2)', 'Curtiu o projeto? Deixe uma estrela no repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
+        ]
+      },
+      en: {
+        title: 'MiniLab JavaScript | Bero',
+        metaDescription: 'Learn JavaScript from zero to building a WhatsApp bot with AI in 90 minutes, inside Bero MiniLab.',
+        ogTitle: 'MiniLab JavaScript | Bero',
+        ogDescription: 'From zero JavaScript to a WhatsApp bot with AI in 90 minutes, inside Bero MiniLab.',
+        ogImageAlt: 'Bero MiniLab JavaScript banner',
+        twitterTitle: 'MiniLab JavaScript | Bero',
+        twitterDescription: 'Learn JavaScript from zero to a WhatsApp bot with AI in 90 minutes, inside Bero MiniLab.',
+        twitterImageAlt: 'Bero MiniLab JavaScript banner',
+        texts: [
+          ['.sidebar__label', 'pages'],
+          ['.hero .eyebrow', 'MiniLab JavaScript'],
+          ['.hero h1', 'From zero to an AI WhatsApp bot'],
+          ['.hero .lede', 'A direct 90-minute class to understand the basics of programming and leave with a practical project running.'],
+          ['#video-title', 'Preview'],
+          ['#learn-title', 'What is inside'],
+          ['#offer-title', 'Offer'],
+          ['.pricing-block__old', 'from R$197'],
+          ['.pricing-block__current', 'for R$37'],
+          ['.cta-button', 'Get the promo'],
+          ['.cta-caption', 'Checkout and delivery through Hotmart.'],
+          ['#route-title', 'Who this is for'],
+          ['.section:nth-of-type(4) .body-copy p:nth-of-type(1)', 'For anyone who wants to unlock JavaScript without fluff, understand how a real project comes together, and move past theory faster.'],
+          ['.section:nth-of-type(4) .body-copy p:nth-of-type(2)', 'If you want to see the rest of the Bero ecosystem before buying, go back to the <a href="./index.html">main links</a>.', 'html'],
+          ['.footer p:first-child', 'bero.land. All rights reserved.'],
+          ['.footer p:nth-child(2)', 'Enjoyed the project? Leave a star on the repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
+        ]
+      }
     }
   };
 
@@ -479,9 +679,15 @@
     setMeta('meta[name="description"]', config.metaDescription);
     setMeta('meta[property="og:title"]', config.ogTitle);
     setMeta('meta[property="og:description"]', config.ogDescription);
+    setMeta('meta[property="og:image:alt"]', config.ogImageAlt);
     setMeta('meta[name="twitter:title"]', config.twitterTitle);
     setMeta('meta[name="twitter:description"]', config.twitterDescription);
+    setMeta('meta[name="twitter:image:alt"]', config.twitterImageAlt);
     applyGlobalLabels(locale);
+    syncLanguageSwitch(locale);
+    if (currentPage === 'index.html') {
+      setJsonLd('#profile-jsonld', profileJsonLd[locale] || profileJsonLd['pt-BR']);
+    }
 
     config.texts.forEach(function(entry) {
       if (entry[2] === 'html') {
@@ -494,6 +700,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
+    bindLanguageSwitch();
     applyTranslation(detectLanguage());
   });
 })();
