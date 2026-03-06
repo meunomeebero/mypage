@@ -266,6 +266,22 @@ th {
   gap: 1rem;
 }
 
+.easter-egg__trigger {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--link);
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.easter-egg__trigger:hover {
+  color: var(--text);
+}
+
 .featured-link {
   display: grid;
   gap: 0.55rem;
@@ -371,9 +387,12 @@ tbody tr + tr td {
 .footer {
   margin-top: 2.5rem;
   padding-top: 1rem;
-  border-top: 1px dotted var(--line);
+  border-top: 1px solid var(--line);
   color: var(--soft);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  text-align: center;
+  justify-items: center;
+  gap: 0.45rem;
 }
 
 @media (max-width: 900px) {
@@ -395,7 +414,9 @@ tbody tr + tr td {
   }
 
   .sidebar__nav {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: 0.4rem;
+    border-top: 1px dotted var(--line);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.45rem 1rem;
   }
 
@@ -419,7 +440,9 @@ tbody tr + tr td {
   }
 
   .status-bar {
-    display: grid;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
   }
 
   .section-head {
@@ -427,22 +450,13 @@ tbody tr + tr td {
     gap: 0.2rem;
   }
 
-  .link-row {
-    grid-template-columns: 1fr;
-    gap: 0.15rem;
-  }
-
-  .link-row__dots {
-    display: none;
-  }
-
   .hero {
-    text-align: left;
+    text-align: center;
   }
 
   .avatar {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
