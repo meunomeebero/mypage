@@ -537,12 +537,8 @@
           ['#featured-title', 'Featured Videos'],
           ['.record:nth-of-type(1) .record__tag', 'favorite animation'],
           ['.record:nth-of-type(1) p', 'My favorite animation on the channel right now. It is a strong sample of the narrative tone and of how I turn programming into story.'],
-          ['.record:nth-of-type(1) .record__meta strong', 'Link:'],
-          ['.record:nth-of-type(1) .record__meta a', 'YouTube / watch'],
           ['.record:nth-of-type(2) .record__tag', 'favorite technical'],
           ['.record:nth-of-type(2) p', 'My current favorite technical long-form video. It captures the direct, opinionated and no-euphemism style of the channel.'],
-          ['.record:nth-of-type(2) .record__meta strong', 'Link:'],
-          ['.record:nth-of-type(2) .record__meta a', 'YouTube / watch'],
           ['.footer p:first-child', 'bero.land. All rights reserved.'],
           ['.footer p:nth-child(2)', 'Enjoyed the project? Leave a star on the repo: <a href="https://github.com/meunomeebero/linktree" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/linktree</a>', 'html']
         ]

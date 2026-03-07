@@ -312,7 +312,7 @@
     }
 
     function playRandomSound() {
-        const audio = new Audio('public/pru.mp3');
+        const audio = new Audio('public/audio/pru.mp3');
         audio.volume = 0.3;
         audio.playbackRate = Math.random() * 2 + 0.5;
         audio.play().catch(() => {});
@@ -357,7 +357,7 @@
     }
 
     function initChaos() {
-        const audio = new Audio('public/undertale.mp3');
+        const audio = new Audio('public/audio/undertale.mp3');
         audio.loop = true
         audio.play();
 

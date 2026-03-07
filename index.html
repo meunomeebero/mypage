@@ -8,7 +8,7 @@
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#1a2028">
   <link rel="canonical" href="https://bero.land/">
-  <link rel="icon" href="https://www.bero.land/public/favicon.png" type="image/png">
+  <link rel="icon" href="./public/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="https://www.bero.land/public/banner.png">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:type" content="website">
@@ -81,17 +81,19 @@
     <main class="main">
       <div class="content">
         <div class="status-bar" aria-hidden="true">
-          <span>bero.land / index.html</span>
-          <div class="lang-switch lang-switch--desktop" aria-label="Language switcher">
-            <button type="button" data-lang-choice="pt-BR">PT</button>
-            <span class="lang-switch__sep">/</span>
-            <button type="button" data-lang-choice="en">EN</button>
+          <div class="status-bar__slot status-bar__slot--left"></div>
+          <div class="status-bar__slot status-bar__slot--right">
+            <div class="lang-switch lang-switch--desktop" aria-label="Language switcher">
+              <button type="button" data-lang-choice="pt-BR">PT</button>
+              <span class="lang-switch__sep">/</span>
+              <button type="button" data-lang-choice="en">EN</button>
+            </div>
           </div>
         </div>
 
         <header class="hero">
-          <div class="avatar" aria-hidden="true">
-            <img src="https://www.bero.land/public/fly.gif" alt="Bero">
+          <div class="avatar" aria-hidden="true" data-troll-avatar-model="./public/3d/bero-dancing.glb">
+            <img src="./public/fly.gif" alt="Bero">
           </div>
           <h1>Bero</h1>
           <p class="eyebrow">Creator / Programmer / Brand Partnerships</p>
@@ -208,6 +210,7 @@
     </main>
   </div>
   <script src="./i18n.js"></script>
+  <script src="./troll-mode.js"></script>
   <script src="./secret-link.js"></script>
 </body>
 </html>
