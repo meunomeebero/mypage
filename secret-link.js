@@ -15,7 +15,7 @@
     loaded = true;
 
     const script = document.createElement('script');
-    script.src = './chaos-mode.js';
+    script.src = '/chaos-mode.js';
     script.async = true;
     document.body.appendChild(script);
   });

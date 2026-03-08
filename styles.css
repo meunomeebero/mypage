@@ -259,6 +259,7 @@ html.troll-mode-on .avatar[data-troll-avatar-model] {
 }
 
 .avatar {
+  position: relative;
   width: 6.5rem;
   height: 6.5rem;
   margin: 0 auto 0.8rem;
@@ -274,12 +275,21 @@ html.troll-mode-on .avatar[data-troll-avatar-model] {
   object-fit: cover;
 }
 
+.avatar__model-crop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .avatar model-viewer {
   display: block;
-  width: 198%;
-  height: 242%;
+  width: 396%;
+  height: 484%;
   --poster-color: transparent;
-  transform: translate(-22%, -52%);
+  transform: translate(-34%, -52%);
+  pointer-events: none;
 }
 
 .eyebrow {
@@ -321,6 +331,11 @@ th {
 
 .subtitle {
   color: var(--soft);
+}
+
+.subtitle:empty,
+.lede:empty {
+  display: none;
 }
 
 .lede,
@@ -531,8 +546,8 @@ tbody tr + tr td {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%;
-  border-top: 1px dotted var(--line);
-  border-bottom: 1px dotted var(--line);
+  margin-top: 0.85rem;
+  margin-bottom: 0.55rem;
 }
 
 .embed-frame iframe {

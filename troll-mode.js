@@ -1,6 +1,6 @@
 (function() {
   const STORAGE_KEY = 'bero-land-troll-mode';
-  const CLICK_SOUND_SRC = './public/audio/pru.mp3';
+  const CLICK_SOUND_SRC = '/public/audio/pru.mp3';
   const POINTER_SELECTORS = 'a, button, input, textarea, select, summary, label, [role="button"]';
   const MODEL_VIEWER_SRC = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
 
@@ -90,7 +90,7 @@
         }
 
         const src = node.getAttribute('data-troll-avatar-model');
-        node.innerHTML = '<model-viewer src="' + src + '" autoplay camera-controls auto-rotate disable-zoom interaction-prompt="none" shadow-intensity="1" exposure="1.1" camera-target="0m 1.2m 0m" field-of-view="18deg"></model-viewer>';
+        node.innerHTML = '<div class="avatar__model-crop"><model-viewer src="' + src + '" autoplay camera-controls auto-rotate disable-zoom interaction-prompt="none" shadow-intensity="1" exposure="1.1" camera-target="0m 1.2m 0m" field-of-view="18deg"></model-viewer></div>';
       });
     }).catch(function() {
       // Keep original avatars if model-viewer fails to load.
@@ -100,12 +100,8 @@
   function applyMode() {
     document.documentElement.classList.toggle('troll-mode-on', enabled);
     ensureCursor();
-    if (!enabled) {
-      document.documentElement.classList.remove('is-pointer');
-      restoreAvatars();
-    } else {
-      enable3DAvatars();
-    }
+    document.documentElement.classList.remove('is-pointer');
+    restoreAvatars();
     syncButtons();
   }
 
