@@ -238,15 +238,6 @@ html.troll-mode-on.is-pointer #troll-cursor {
   background-image: url('./public/cursor/pointer.png');
 }
 
-html.troll-mode-on .avatar[data-troll-avatar-model] {
-  overflow: visible;
-  border-radius: 0;
-  border-color: transparent;
-  width: 10.5rem;
-  height: 10.5rem;
-  margin-bottom: -2rem;
-}
-
 .lang-switch--mobile {
   display: none;
 }
