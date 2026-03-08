@@ -13,6 +13,14 @@
     }
 
     loaded = true;
+    window.dispatchEvent(new CustomEvent('bero:track', {
+      detail: {
+        event: 'secret_content_unlocked',
+        properties: {
+          trigger_id: 'secret-trigger'
+        }
+      }
+    }));
 
     const script = document.createElement('script');
     script.src = '/chaos-mode.js';

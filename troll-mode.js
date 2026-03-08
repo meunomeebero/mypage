@@ -105,6 +105,17 @@
     syncButtons();
   }
 
+  function trackModeChange() {
+    window.dispatchEvent(new CustomEvent('bero:track', {
+      detail: {
+        event: 'troll_mode_changed',
+        properties: {
+          troll_mode: enabled ? 'on' : 'off'
+        }
+      }
+    }));
+  }
+
   function buildToggle() {
     document.querySelectorAll('.status-bar__slot--left').forEach(function(node) {
       if (node.querySelector('.troll-switch')) {
@@ -148,6 +159,7 @@
         enabled = choice.getAttribute('data-troll-choice') === 'on';
         window.localStorage.setItem(STORAGE_KEY, enabled ? 'on' : 'off');
         applyMode();
+        trackModeChange();
         return;
       }
 
