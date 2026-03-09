@@ -116,6 +116,14 @@
     }));
   }
 
+  function emitModeChange() {
+    window.dispatchEvent(new CustomEvent('bero:troll-mode-change', {
+      detail: {
+        enabled: enabled
+      }
+    }));
+  }
+
   function buildToggle() {
     document.querySelectorAll('.status-bar__slot--left').forEach(function(node) {
       if (node.querySelector('.troll-switch')) {
@@ -159,6 +167,7 @@
         enabled = choice.getAttribute('data-troll-choice') === 'on';
         window.localStorage.setItem(STORAGE_KEY, enabled ? 'on' : 'off');
         applyMode();
+        emitModeChange();
         trackModeChange();
         return;
       }
@@ -192,5 +201,6 @@
     buildToggle();
     bindToggle();
     applyMode();
+    emitModeChange();
   });
 })();

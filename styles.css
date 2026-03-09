@@ -665,6 +665,12 @@ tbody tr + tr td {
     line-height: 1.76;
   }
 
+  a {
+    font-weight: 600;
+    text-decoration-color: rgba(237, 241, 246, 0.55);
+    text-decoration-thickness: 1px;
+  }
+
   .sidebar__nav {
     grid-template-columns: 1fr;
   }
@@ -695,6 +701,25 @@ tbody tr + tr td {
   .avatar {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .link-row {
+    color: var(--text);
+  }
+
+  .link-row span:first-child,
+  .featured-link .link-row span:first-child,
+  .record a,
+  .body-copy a,
+  .footer a {
+    font-weight: 650;
+    text-decoration: underline;
+    text-decoration-color: rgba(237, 241, 246, 0.45);
+    text-underline-offset: 0.18rem;
+  }
+
+  .link-row__meta {
+    color: rgba(237, 241, 246, 0.78);
   }
 }
 
