@@ -1,23 +1,23 @@
-# Bero Land
+# My Page
 
-Site pessoal estático em HTML puro, sem build step e com suporte a PT-BR e inglês.
+Static personal site built with plain HTML, no build step, and support for both PT-BR and English.
 
-O projeto foi organizado para ser fácil de forkear e reutilizar como template. A ideia é manter o núcleo do site simples e isolar integrações, tracking e brincadeiras em arquivos próprios.
+This project is organized to be easy to fork and reuse as a template. The goal is to keep the core simple and isolate integrations, tracking, and joke features into separate files.
 
-## Estrutura
+## Structure
 
-- `index.html` e páginas na raiz: versão em PT-BR
-- `en/`: espelho em inglês
-- `styles.css`: visual compartilhado
-- `i18n.js`: switch de idioma e redirecionamento automático PT/EN
-- `public/`: favicon, banner e assets estáticos
-- `vercel.json`: única configuração de plataforma
+- `index.html` and root pages: PT-BR version
+- `en/`: English mirror
+- `styles.css`: shared visual system
+- `i18n.js`: language switch and automatic PT/EN redirect
+- `public/`: favicon, banner, and static assets
+- `vercel.json`: platform-specific configuration
 
-## O que faz parte do template base
+## Base template
 
-Se você quiser usar este projeto como ponto de partida para um site sério, estes arquivos formam o núcleo:
+If you want to reuse this project as a serious personal site template, these files are the core:
 
-- páginas `*.html`
+- `*.html` pages
 - `en/*.html`
 - `styles.css`
 - `i18n.js`
@@ -26,33 +26,33 @@ Se você quiser usar este projeto como ponto de partida para um site sério, est
 - `sitemap.xml`
 - `vercel.json`
 
-## Scripts opcionais
+## Optional scripts
 
-Os arquivos abaixo são isolados de propósito. Você pode removê-los em um fork se não quiser tracking ou easter eggs.
+These files are intentionally isolated. You can remove them in a fork if you do not want tracking or easter eggs.
 
 - `analytics.js`
-  - tracking com PostHog
-  - para remover: apague o `<script src="/analytics.js"></script>` das páginas
+  - PostHog tracking
+  - to remove it, delete `<script src="/analytics.js"></script>` from the pages
 
 - `troll-mode.js`
-  - toggle visual de troll mode
-  - para remover: apague o `<script src="/troll-mode.js"></script>` das páginas
+  - visual troll mode toggle
+  - to remove it, delete `<script src="/troll-mode.js"></script>` from the pages
 
 - `troll-nyancat.js`
-  - efeito visual extra do troll mode
-  - para remover: apague o `<script src="/troll-nyancat.js"></script>` das páginas
+  - extra visual effect for troll mode
+  - to remove it, delete `<script src="/troll-nyancat.js"></script>` from the pages
 
 - `secret-link.js`
-  - ativa o easter egg do link secreto da home
-  - para remover: apague o link de conteúdo secreto em `index.html` e `en/index.html`, e remova o `<script src="/secret-link.js"></script>` dessas duas páginas
+  - enables the secret link easter egg on the home page
+  - to remove it, delete the secret content link from `index.html` and `en/index.html`, and remove `<script src="/secret-link.js"></script>` from those two pages
 
 - `chaos-mode.js`
-  - rotina carregada sob demanda pelo easter egg
-  - se `secret-link.js` sair, este arquivo deixa de ser necessário
+  - loaded on demand by the easter egg
+  - if `secret-link.js` is removed, this file is no longer needed
 
 ## URLs
 
-As URLs públicas usam formato limpo:
+Public URLs use the clean format:
 
 - `/`
 - `/about`
@@ -64,28 +64,28 @@ As URLs públicas usam formato limpo:
 - `/setup`
 - `/site`
 - `/en`
-- equivalentes dentro de `/en/...`
+- matching routes inside `/en/...`
 
-As rotas antigas com `.html` continuam funcionando por redirect permanente. Essa regra fica concentrada em `vercel.json`.
+Legacy `.html` routes still work through permanent redirects. That logic is intentionally kept inside `vercel.json`.
 
 ## Deploy
 
-O projeto está preparado para deploy estático na Vercel.
+The project is ready for static deployment on Vercel.
 
-Pontos importantes:
+Important notes:
 
-- não existe build step real
-- `vercel.json` controla URLs limpas e redirects legados
-- `sitemap.xml` e metadados SEO já usam as URLs canônicas sem `.html`
+- there is no real build step
+- `vercel.json` handles clean URLs and legacy redirects
+- `sitemap.xml` and SEO metadata already use canonical URLs without `.html`
 
-## Preview local
+## Local preview
 
-Qualquer servidor estático simples resolve. Exemplo com Live Server ou similar:
+Any simple static server will work. Example with Live Server or a similar tool:
 
 ```txt
 http://127.0.0.1:5500/
 ```
 
-## Observação
+## Note
 
-A pasta `example/` existe só como referência histórica de uma versão anterior. Ela não faz parte do template base nem do deploy.
+The `example/` folder is only kept as historical reference for an older version. It is not part of the base template or the deployment setup.
