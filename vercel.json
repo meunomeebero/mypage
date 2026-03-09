@@ -2,11 +2,111 @@
   "buildCommand": "echo 'No build needed'",
   "outputDirectory": ".",
   "framework": null,
-  "rewrites": [
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
     {
-      "source": "/",
-      "destination": "/index.html"
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
     },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/media-kit.html",
+      "destination": "/media-kit",
+      "permanent": true
+    },
+    {
+      "source": "/projects.html",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/videos.html",
+      "destination": "/videos",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/minilab.html",
+      "destination": "/minilab",
+      "permanent": true
+    },
+    {
+      "source": "/setup.html",
+      "destination": "/setup",
+      "permanent": true
+    },
+    {
+      "source": "/site.html",
+      "destination": "/site",
+      "permanent": true
+    },
+    {
+      "source": "/en/index",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/index.html",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/about.html",
+      "destination": "/en/about",
+      "permanent": true
+    },
+    {
+      "source": "/en/media-kit.html",
+      "destination": "/en/media-kit",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects.html",
+      "destination": "/en/projects",
+      "permanent": true
+    },
+    {
+      "source": "/en/videos.html",
+      "destination": "/en/videos",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact.html",
+      "destination": "/en/contact",
+      "permanent": true
+    },
+    {
+      "source": "/en/minilab.html",
+      "destination": "/en/minilab",
+      "permanent": true
+    },
+    {
+      "source": "/en/setup.html",
+      "destination": "/en/setup",
+      "permanent": true
+    },
+    {
+      "source": "/en/site.html",
+      "destination": "/en/site",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
     {
       "source": "/en",
       "destination": "/en/index.html"

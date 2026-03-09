@@ -4,15 +4,17 @@
   const STORAGE_KEY = 'bero-land-posthog-init';
 
   function getPageName(pathname) {
-    if (pathname === '/' || pathname === '/index.html') {
+    const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '');
+
+    if (normalizedPath === '/' || normalizedPath === '/index' || normalizedPath === '/index.html') {
       return 'home';
     }
 
-    if (pathname === '/en/' || pathname === '/en/index.html') {
+    if (normalizedPath === '/en' || normalizedPath === '/en/index' || normalizedPath === '/en/index.html') {
       return 'home_en';
     }
 
-    return pathname
+    return normalizedPath
       .replace(/^\/en\//, '')
       .replace(/^\//, '')
       .replace(/\.html$/, '')
