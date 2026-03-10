@@ -46,6 +46,11 @@
       "permanent": true
     },
     {
+      "source": "/berolab.html",
+      "destination": "/berolab",
+      "permanent": true
+    },
+    {
       "source": "/setup.html",
       "destination": "/setup",
       "permanent": true
@@ -93,6 +98,11 @@
     {
       "source": "/en/minilab.html",
       "destination": "/en/minilab",
+      "permanent": true
+    },
+    {
+      "source": "/en/berolab.html",
+      "destination": "/en/berolab",
       "permanent": true
     },
     {

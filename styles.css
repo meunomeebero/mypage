@@ -657,6 +657,7 @@ tbody tr + tr td {
   table {
     min-width: 31rem;
   }
+
 }
 
 @media (max-width: 640px) {
