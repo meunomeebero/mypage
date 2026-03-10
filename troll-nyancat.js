@@ -206,7 +206,7 @@
       return;
     }
 
-    const size = isMobile() ? randomInt(144, 192) : randomInt(144, 192);
+    const size = isMobile() ? randomInt(288, 384) : randomInt(288, 384);
     const duration = randomInt(5000, 8000);
     const scale = Number(randomBetween(0.94, 1.08).toFixed(3));
     const route = buildRoute(size);
