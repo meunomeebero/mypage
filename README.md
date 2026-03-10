@@ -11,7 +11,9 @@ This project is organized to be easy to fork and reuse as a template. The goal i
 - `styles.css`: shared visual system
 - `i18n.js`: language switch and automatic PT/EN redirect
 - `public/`: favicon, banner, and static assets
+- `tools/`: local development helpers
 - `vercel.json`: platform-specific configuration
+- `package.json`: minimal runtime dependency for the optional Vercel function
 
 ## Base template
 
@@ -50,6 +52,10 @@ These files are intentionally isolated. You can remove them in a fork if you do 
   - loaded on demand by the easter egg
   - if `secret-link.js` is removed, this file is no longer needed
 
+- `what-is-it.html`
+  - PT-BR-only collaborative page with optional persistence
+  - if you do not want the community page, remove the file and the matching sidebar links
+
 ## URLs
 
 Public URLs use the clean format:
@@ -77,14 +83,25 @@ Important notes:
 - there is no real build step
 - `vercel.json` handles clean URLs and legacy redirects
 - `sitemap.xml` and SEO metadata already use canonical URLs without `.html`
+- the optional collaborative page uses `DATABASE_URL` if present in Vercel
+- if `DATABASE_URL` is missing, the page falls back to local browser storage instead of failing hard
 
 ## Local preview
 
-Any simple static server will work. Example with Live Server or a similar tool:
+Run the local server:
 
-```txt
-http://127.0.0.1:5500/
+```bash
+npm install
+npm run dev
 ```
+
+The dev server:
+
+- serves the HTML pages with clean URLs
+- exposes `/api/what-is-it` locally
+- automatically uses the next free port if `5500` is already taken
+
+If you only want to preview static HTML, a simple static server also works, but the collaborative page will then fall back to browser storage.
 
 ## Note
 

@@ -10,6 +10,7 @@
     ['/minilab', '/minilab.html'],
     ['/berolab', '/berolab.html'],
     ['/setup', '/setup.html'],
+    ['/what-is-it', '/what-is-it.html'],
     ['/site', '/site.html'],
     ['/en', '/en/index.html'],
     ['/en/about', '/en/about.html'],

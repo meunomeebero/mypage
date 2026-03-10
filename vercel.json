@@ -1,5 +1,6 @@
 {
   "buildCommand": "echo 'No build needed'",
+  "devCommand": "node tools/dev-server.js",
   "outputDirectory": ".",
   "framework": null,
   "cleanUrls": true,
@@ -53,6 +54,11 @@
     {
       "source": "/setup.html",
       "destination": "/setup",
+      "permanent": true
+    },
+    {
+      "source": "/what-is-it.html",
+      "destination": "/what-is-it",
       "permanent": true
     },
     {
