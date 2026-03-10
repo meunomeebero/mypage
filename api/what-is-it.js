@@ -1,6 +1,7 @@
 const { MongoClient } = require('mongodb');
 
-const COLLECTION_NAME = 'what_is_it';
+const PAGE_COLLECTION_NAME = 'what_is_it';
+const EDITORS_COLLECTION_NAME = 'what_is_it_editors';
 const PAGE_ID = 'what-is-it';
 const MONGODB_URI = process.env.DATABASE_URL || '';
 
@@ -27,7 +28,11 @@ function sanitizeText(value, maxLength) {
     .trim();
 }
 
-async function getCollection() {
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
+}
+
+async function getDatabase() {
   if (!MONGODB_URI) {
     const error = new Error('DATABASE_URL is not configured');
     error.code = 'DATABASE_URL_MISSING';
@@ -43,16 +48,32 @@ async function getCollection() {
   }
 
   const client = await clientPromise;
-  return client.db(DATABASE_NAME).collection(COLLECTION_NAME);
+  return client.db(DATABASE_NAME);
+}
+
+async function getCollections() {
+  const database = await getDatabase();
+  const pages = database.collection(PAGE_COLLECTION_NAME);
+  const editors = database.collection(EDITORS_COLLECTION_NAME);
+
+  await editors.createIndex(
+    { pageId: 1, email: 1 },
+    { unique: true, name: 'page_email_unique' }
+  );
+  await editors.createIndex(
+    { email: 1 },
+    { name: 'email_lookup' }
+  );
+
+  return { pages, editors };
 }
 
 function serializeDocument(document) {
-  const editorIds = Array.isArray(document && document.editorIds) ? document.editorIds : [];
   return {
     content: document && typeof document.content === 'string' ? document.content : '',
     updatedAt: document && document.updatedAt ? new Date(document.updatedAt).toISOString() : null,
     lastEditorName: document && typeof document.lastEditorName === 'string' ? document.lastEditorName : '',
-    editorCount: editorIds.length
+    editorCount: Number(document && document.editorCount) || 0
   };
 }
 
@@ -80,9 +101,14 @@ async function readBody(request) {
 module.exports = async function handler(request, response) {
   try {
     if (request.method === 'GET') {
-      const collection = await getCollection();
-      const document = await collection.findOne({ _id: PAGE_ID });
-      sendJson(response, 200, serializeDocument(document));
+      const collections = await getCollections();
+      const document = await collections.pages.findOne({ _id: PAGE_ID });
+      const editorCount = await collections.editors.countDocuments({ pageId: PAGE_ID });
+
+      sendJson(response, 200, serializeDocument({
+        ...(document || {}),
+        editorCount: editorCount
+      }));
       return;
     }
 
@@ -94,34 +120,62 @@ module.exports = async function handler(request, response) {
 
     const body = await readBody(request);
     const username = sanitizeText(body.username, 40);
-    const editorId = sanitizeText(body.editorId, 128);
+    const email = sanitizeText(body.email, 160).toLowerCase();
     const content = String(body.content || '').replace(/\r\n?/g, '\n').slice(0, 20000);
 
-    if (!username || !editorId) {
+    if (!username || !email) {
       sendJson(response, 400, { error: 'Missing required fields' });
       return;
     }
 
-    const collection = await getCollection();
+    if (!isValidEmail(email)) {
+      sendJson(response, 400, { error: 'Invalid email' });
+      return;
+    }
+
+    const collections = await getCollections();
     const updatedAt = new Date();
 
-    await collection.updateOne(
+    await collections.pages.updateOne(
       { _id: PAGE_ID },
       {
         $set: {
           content,
           updatedAt,
-          lastEditorName: username
-        },
-        $addToSet: {
-          editorIds: editorId
+          lastEditorName: username,
+          lastEditorEmail: email
         }
       },
       { upsert: true }
     );
 
-    const document = await collection.findOne({ _id: PAGE_ID });
-    sendJson(response, 200, serializeDocument(document));
+    await collections.editors.updateOne(
+      { pageId: PAGE_ID, email: email },
+      {
+        $set: {
+          pageId: PAGE_ID,
+          email,
+          username,
+          content,
+          updatedAt
+        },
+        $setOnInsert: {
+          createdAt: updatedAt
+        },
+        $inc: {
+          saveCount: 1
+        }
+      },
+      { upsert: true }
+    );
+
+    const document = await collections.pages.findOne({ _id: PAGE_ID });
+    const editorCount = await collections.editors.countDocuments({ pageId: PAGE_ID });
+
+    sendJson(response, 200, serializeDocument({
+      ...(document || {}),
+      editorCount: editorCount
+    }));
   } catch (error) {
     if (error && error.code === 'DATABASE_URL_MISSING') {
       sendJson(response, 503, { error: 'Database unavailable' });

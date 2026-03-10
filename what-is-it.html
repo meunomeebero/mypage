@@ -62,6 +62,10 @@
       border-color: var(--line-strong);
     }
 
+    .what-is-it-form input[aria-invalid="true"] {
+      border-color: #c56f6f;
+    }
+
     .what-is-it-note,
     .what-is-it-status,
     .what-is-it-meta {
@@ -178,11 +182,11 @@
               <div class="what-is-it-form">
                 <label>
                   Username
-                  <input id="what-is-it-username" type="text" autocomplete="nickname" maxlength="40">
+                  <input id="what-is-it-username" type="text" autocomplete="nickname" maxlength="40" required>
                 </label>
                 <label>
                   Email
-                  <input id="what-is-it-email" type="email" autocomplete="email" maxlength="120">
+                  <input id="what-is-it-email" type="email" inputmode="email" autocomplete="email" maxlength="160" required>
                 </label>
               </div>
               <p class="what-is-it-note" id="what-is-it-note">Preencha username e email para editar.</p>
@@ -280,16 +284,31 @@
       }
 
       function hasIdentity() {
-        return Boolean(usernameInput.value.trim() && emailInput.value.trim());
+        return Boolean(usernameInput.value.trim() && hasValidEmail());
+      }
+
+      function hasValidEmail() {
+        const email = emailInput.value.trim();
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       }
 
       function updateLockedState() {
         const editable = hasIdentity();
         editor.classList.toggle('is-locked', !editable);
         editor.setAttribute('contenteditable', editable ? 'true' : 'false');
-        note.textContent = editable
-          ? 'Texto salvo automaticamente 2 segundos depois que você para de digitar.'
-          : 'Preencha username e email para editar.';
+        emailInput.setAttribute('aria-invalid', emailInput.value.trim() && !hasValidEmail() ? 'true' : 'false');
+
+        if (editable) {
+          note.textContent = 'Agora você já pode tocar no texto para começar a editar.';
+          return;
+        }
+
+        if (emailInput.value.trim() && !hasValidEmail()) {
+          note.textContent = 'Coloque um email real seu sacana!';
+          return;
+        }
+
+        note.textContent = 'Preencha username e email para editar.';
       }
 
       function formatUserCount(count) {
@@ -377,8 +396,8 @@
       function writeLocalDocument(payload) {
         const existing = readLocalDocument();
         const editors = Array.isArray(existing.editors) ? existing.editors.slice() : [];
-        if (!editors.includes(payload.editorId)) {
-          editors.push(payload.editorId);
+        if (!editors.includes(payload.email)) {
+          editors.push(payload.email);
         }
 
         const nextDocument = {
@@ -423,14 +442,6 @@
         return response.json();
       }
 
-      async function sha256(value) {
-        const encoded = new TextEncoder().encode(value.trim().toLowerCase());
-        const digest = await window.crypto.subtle.digest('SHA-256', encoded);
-        return Array.from(new Uint8Array(digest)).map(function(byte) {
-          return byte.toString(16).padStart(2, '0');
-        }).join('');
-      }
-
       async function loadDocument() {
         statusLine.textContent = 'Carregando...';
 
@@ -461,7 +472,7 @@
         try {
           const payload = {
             username: usernameInput.value.trim(),
-            editorId: await sha256(emailInput.value),
+            email: emailInput.value.trim().toLowerCase(),
             content: content
           };
 
@@ -514,7 +525,15 @@
           }
 
           if (!hasIdentity()) {
-            usernameInput.focus();
+            if (!usernameInput.value.trim()) {
+              usernameInput.focus();
+              return;
+            }
+
+            if (!hasValidEmail()) {
+              updateLockedState();
+              emailInput.focus();
+            }
           }
         });
 
@@ -529,7 +548,12 @@
           if (!hasIdentity()) {
             editor.textContent = lastSavedContent;
             updateLockedState();
-            usernameInput.focus();
+            if (!usernameInput.value.trim()) {
+              usernameInput.focus();
+              return;
+            }
+
+            emailInput.focus();
             return;
           }
 
