@@ -69,7 +69,7 @@
           </div>
         </div>
         <nav class="sidebar__nav">
-          <a href="/en">00. links</a>
+          <a href="/en">00. index</a>
           <a class="nav-subitem is-active" href="/en/minilab">00.1 minilab</a>
           <a class="nav-subitem" href="/en/berolab">00.2 berolab</a>
           <a class="nav-subitem" href="/en/setup">00.3 my setup</a>
@@ -85,7 +85,7 @@
 
     <main class="main">
       <div class="content">
-        <div class="status-bar" aria-hidden="true">
+        <div class="status-bar">
           <div class="status-bar__slot status-bar__slot--left"></div>
           <div class="status-bar__slot status-bar__slot--right">
             <div class="lang-switch lang-switch--desktop" aria-label="Switch language">
@@ -98,7 +98,7 @@
 
         <header class="hero">
           <div class="avatar" aria-hidden="true" data-troll-avatar-model="/public/3d/bero-dancing.glb">
-            <img src="/public/fly.gif" alt="Bero">
+            <img src="/public/fly-128.png" alt="Bero" width="128" height="128" decoding="async" fetchpriority="high">
           </div>
           <p class="eyebrow">MiniLab JavaScript</p>
           <h1>From zero to an AI WhatsApp bot</h1>
@@ -111,12 +111,26 @@
             <h2 id="video-title">Preview</h2>
           </div>
           <div class="embed-frame">
-            <iframe
-              src="https://www.youtube.com/embed/vsfZlkO4fcQ"
-              title="MiniLab JavaScript"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
+            <button
+              class="video-embed"
+              type="button"
+              data-lite-embed
+              data-video-id="vsfZlkO4fcQ"
+              data-video-title="MiniLab JavaScript"
+              aria-label="Load the MiniLab JavaScript preview on YouTube">
+              <img src="/public/video/minilab-poster.jpg" alt="" width="1280" height="720" decoding="async" loading="lazy">
+              <span class="video-embed__play">Watch preview</span>
+            </button>
+            <noscript>
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/vsfZlkO4fcQ"
+                title="MiniLab JavaScript"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </noscript>
           </div>
         </section>
 
@@ -175,7 +189,6 @@
   <script src="/analytics.js"></script>
   <script src="/local-routing.js"></script>
   <script src="/i18n.js"></script>
-  <script src="/troll-mode.js"></script>
-  <script src="/troll-nyancat.js"></script>
+  <script src="/lite-embed.js"></script>
 </body>
 </html>
