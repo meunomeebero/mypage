@@ -11,9 +11,7 @@ This project is organized to be easy to fork and reuse as a template. The goal i
 - `styles.css`: shared visual system
 - `i18n.js`: language switch and automatic PT/EN redirect
 - `public/`: favicon, banner, and static assets
-- `tools/`: local development helpers
 - `vercel.json`: platform-specific configuration
-- `package.json`: minimal runtime dependency for the optional Vercel function
 
 ## Base template
 
@@ -52,10 +50,6 @@ These files are intentionally isolated. You can remove them in a fork if you do 
   - loaded on demand by the easter egg
   - if `secret-link.js` is removed, this file is no longer needed
 
-- `what-is-it.html`
-  - PT-BR-only collaborative page with optional persistence
-  - if you do not want the community page, remove the file and the matching sidebar links
-
 ## URLs
 
 Public URLs use the clean format:
@@ -80,28 +74,19 @@ The project is ready for static deployment on Vercel.
 
 Important notes:
 
-- there is no real build step
+- there is no build step
 - `vercel.json` handles clean URLs and legacy redirects
 - `sitemap.xml` and SEO metadata already use canonical URLs without `.html`
-- the optional collaborative page uses `DATABASE_URL` if present in Vercel
-- if `DATABASE_URL` is missing, the page falls back to local browser storage instead of failing hard
 
 ## Local preview
 
-Run the local server:
+Open the HTML files directly in a browser, or use any static file server:
 
 ```bash
-npm install
-npm run dev
+python3 -m http.server 5500
 ```
 
-The dev server:
-
-- serves the HTML pages with clean URLs
-- exposes `/api/what-is-it` locally
-- automatically uses the next free port if `5500` is already taken
-
-If you only want to preview static HTML, a simple static server also works, but the collaborative page will then fall back to browser storage.
+The `local-routing.js` script rewrites clean URLs to `.html` paths automatically when running on localhost.
 
 ## Note
 

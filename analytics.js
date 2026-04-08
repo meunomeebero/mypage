@@ -2,6 +2,9 @@
   const POSTHOG_KEY = 'phc_j0R4f80F53ctkaYdSz9VEc0Vz1wFrs7V34jQszuSdN7';
   const POSTHOG_HOST = 'https://analytics.bero.land';
   const STORAGE_KEY = 'bero-land-posthog-init';
+  let hasBootstrapped = false;
+  let clickTrackingBound = false;
+  let customTrackingBound = false;
 
   function getPageName(pathname) {
     const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '');
@@ -96,7 +99,7 @@
       capture_pageview: true,
       capture_pageleave: true,
       persistence: 'localStorage',
-      autocapture: true
+      autocapture: false
     });
   }
 
@@ -135,6 +138,11 @@
   }
 
   function bindClickTracking() {
+    if (clickTrackingBound) {
+      return;
+    }
+
+    clickTrackingBound = true;
     document.addEventListener('click', function(event) {
       const anchor = event.target.closest('a');
       if (anchor) {
@@ -164,6 +172,11 @@
   }
 
   function bindCustomTracking() {
+    if (customTrackingBound) {
+      return;
+    }
+
+    customTrackingBound = true;
     window.addEventListener('bero:track', function(event) {
       const detail = event.detail || {};
       if (!detail.event) {
@@ -175,6 +188,11 @@
   }
 
   function bootstrap() {
+    if (hasBootstrapped) {
+      return;
+    }
+
+    hasBootstrapped = true;
     loadPostHog();
 
     if (!window.sessionStorage.getItem(STORAGE_KEY)) {
@@ -186,5 +204,24 @@
     bindCustomTracking();
   }
 
-  bootstrap();
+  bindClickTracking();
+  bindCustomTracking();
+
+  if (document.readyState === 'complete') {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(bootstrap, { timeout: 3000 });
+    } else {
+      window.setTimeout(bootstrap, 1200);
+    }
+    return;
+  }
+
+  window.addEventListener('load', function() {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(bootstrap, { timeout: 3000 });
+      return;
+    }
+
+    window.setTimeout(bootstrap, 1200);
+  }, { once: true });
 })();
