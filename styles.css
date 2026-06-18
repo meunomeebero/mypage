@@ -17,6 +17,7 @@
 }
 
 html {
+  font-size: 110%;
   scroll-behavior: smooth;
 }
 
@@ -26,7 +27,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: "Noto Sans Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.82;
   font-weight: 500;
   text-rendering: optimizeLegibility;
@@ -698,7 +699,7 @@ tbody tr + tr td {
 
 @media (max-width: 640px) {
   body {
-    font-size: 14px;
+    font-size: 0.875rem;
     line-height: 1.76;
   }
 
