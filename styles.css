@@ -683,45 +683,18 @@ tbody tr + tr td {
 }
 
 .gallery__frame {
-  position: relative;
   display: block;
-  padding: 0.5rem;
-  border: 1px dotted rgba(215, 223, 234, 0.5);
-  background: rgba(237, 241, 246, 0.02);
-  transition: border-color 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .gallery__frame img {
   display: block;
   width: 100%;
   height: auto;
-  transition: opacity 0.2s ease;
 }
-
-.gallery__dot {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(215, 223, 234, 0.6);
-  transition: background-color 0.2s ease;
-}
-
-.gallery__dot--tl { top: -4px; left: -4px; }
-.gallery__dot--tr { top: -4px; right: -4px; }
-.gallery__dot--bl { bottom: -4px; left: -4px; }
-.gallery__dot--br { bottom: -4px; right: -4px; }
 
 .gallery__frame:hover {
-  border-color: rgba(215, 223, 234, 0.85);
-}
-
-.gallery__frame:hover img {
-  opacity: 0.92;
-}
-
-.gallery__frame:hover .gallery__dot {
-  background: var(--text);
+  opacity: 0.9;
 }
 
 .gallery__frame:focus-visible {
