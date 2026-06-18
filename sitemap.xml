@@ -73,6 +73,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/site" />
   </url>
   <url>
+    <loc>https://bero.land/gallery</loc>
+    <lastmod>2026-06-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/gallery" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/gallery" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/gallery" />
+  </url>
+  <url>
     <loc>https://bero.land/en</loc>
     <lastmod>2026-03-09</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/" />
@@ -141,5 +148,12 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/site" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/site" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/site" />
+  </url>
+  <url>
+    <loc>https://bero.land/en/gallery</loc>
+    <lastmod>2026-06-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/gallery" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/gallery" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/gallery" />
   </url>
 </urlset>

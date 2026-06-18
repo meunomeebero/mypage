@@ -61,6 +61,11 @@
       "permanent": true
     },
     {
+      "source": "/gallery.html",
+      "destination": "/gallery",
+      "permanent": true
+    },
+    {
       "source": "/en/index",
       "destination": "/en",
       "permanent": true
@@ -113,6 +118,11 @@
     {
       "source": "/en/site.html",
       "destination": "/en/site",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery.html",
+      "destination": "/en/gallery",
       "permanent": true
     }
   ],
