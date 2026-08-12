@@ -79,4 +79,5 @@
   }
 
   rewriteLocalNavigation();
+  window.addEventListener('bero:page-enter', rewriteLocalNavigation);
 })();

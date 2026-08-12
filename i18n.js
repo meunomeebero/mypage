@@ -69,6 +69,10 @@
 
   function bindLanguageSwitch() {
     document.addEventListener('click', function(event) {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
       const button = event.target.closest('[data-lang-choice]');
       if (!button) {
         return;
@@ -89,20 +93,131 @@
 
       const nextUrl = new URL(target, window.location.href);
       if (nextUrl.href !== window.location.href) {
-        window.location.assign(nextUrl.href);
+        if (window.BeroRouter) {
+          window.BeroRouter.navigate(nextUrl.href, { animate: event.detail > 0 });
+        } else {
+          window.location.assign(nextUrl.href);
+        }
       }
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  function setupIndexSubnavigation() {
+    document.querySelectorAll('.sidebar__nav').forEach(function(nav, navIndex) {
+      if (nav.querySelector(':scope > .sidebar__index-group')) {
+        return;
+      }
+
+      const subitems = Array.from(nav.querySelectorAll('.nav-subitem'));
+      const indexLink = subitems.length ? subitems[0].previousElementSibling : null;
+
+      if (!indexLink || indexLink.tagName !== 'A') {
+        return;
+      }
+
+      const locale = currentLocale();
+      const itemCount = subitems.length;
+      const group = document.createElement('div');
+      const subnav = document.createElement('div');
+      const toggle = document.createElement('button');
+      const subnavId = 'index-subnav-' + navIndex;
+      const hasActiveSubitem = subitems.some(function(item) {
+        return item.classList.contains('is-active');
+      });
+      let isExpanded = hasActiveSubitem;
+      let hideTimer;
+
+      group.className = 'sidebar__index-group';
+      group.classList.toggle('is-route-active', hasActiveSubitem);
+      subnav.className = 'sidebar__subnav';
+      subnav.id = subnavId;
+      toggle.className = 'sidebar__subnav-toggle';
+      toggle.type = 'button';
+      toggle.setAttribute('aria-controls', subnavId);
+      toggle.setAttribute(
+        'aria-label',
+        locale === 'pt-BR'
+          ? 'Mostrar ' + itemCount + ' links do indice'
+          : 'Show ' + itemCount + ' index links'
+      );
+
+      nav.insertBefore(group, indexLink);
+      group.appendChild(indexLink);
+      group.appendChild(toggle);
+      group.appendChild(subnav);
+      subitems.forEach(function(item) {
+        subnav.appendChild(item);
+      });
+
+      function setExpanded(nextExpanded, shouldAnimate) {
+        window.clearTimeout(hideTimer);
+        isExpanded = nextExpanded;
+        toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        toggle.setAttribute(
+          'aria-label',
+          locale === 'pt-BR'
+            ? (isExpanded ? 'Ocultar ' : 'Mostrar ') + itemCount + ' links do indice'
+            : (isExpanded ? 'Hide ' : 'Show ') + itemCount + ' index links'
+        );
+        toggle.textContent = (isExpanded ? '- ' : '+ ') + itemCount + ' links';
+        subnav.setAttribute('aria-hidden', isExpanded ? 'false' : 'true');
+        subnav.inert = !isExpanded;
+
+        if (!shouldAnimate) {
+          subnav.classList.add('is-motion-instant');
+          subnav.classList.toggle('is-expanded', isExpanded);
+          subnav.hidden = !isExpanded;
+          window.requestAnimationFrame(function() {
+            subnav.classList.remove('is-motion-instant');
+          });
+          return;
+        }
+
+        if (isExpanded) {
+          subnav.hidden = false;
+          window.requestAnimationFrame(function() {
+            subnav.classList.add('is-expanded');
+          });
+          return;
+        }
+
+        subnav.classList.remove('is-expanded');
+        hideTimer = window.setTimeout(function() {
+          if (!isExpanded) {
+            subnav.hidden = true;
+          }
+        }, 160);
+      }
+
+      toggle.addEventListener('click', function(event) {
+        const nextExpanded = !isExpanded;
+        setExpanded(nextExpanded, event.detail > 0);
+        window.dispatchEvent(new CustomEvent('bero:sound', {
+          detail: { kind: nextExpanded ? 'expand' : 'collapse', profile: 'navigation' }
+        }));
+      });
+
+      setExpanded(hasActiveSubitem, false);
+    });
+  }
+
+  function initPage(options) {
     const locale = currentLocale();
     const preferredLocale = detectPreferredLocale();
 
-    bindLanguageSwitch();
     syncButtons(locale);
+    setupIndexSubnavigation();
 
-    if (preferredLocale !== locale) {
+    if (options && options.allowRedirect && preferredLocale !== locale) {
       maybeRedirect(preferredLocale);
     }
+  }
+
+  bindLanguageSwitch();
+  document.addEventListener('DOMContentLoaded', function() {
+    initPage({ allowRedirect: true });
+  });
+  window.addEventListener('bero:page-enter', function() {
+    initPage({ allowRedirect: false });
   });
 })();

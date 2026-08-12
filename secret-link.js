@@ -1,18 +1,24 @@
 (function() {
-  const trigger = document.getElementById('secret-trigger');
-
-  if (!trigger) {
-    return;
-  }
-
   let loaded = false;
 
-  trigger.addEventListener('click', function() {
+  document.addEventListener('click', function(event) {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const trigger = event.target.closest('#secret-trigger');
+    if (!trigger) {
+      return;
+    }
+
     if (loaded) {
       return;
     }
 
     loaded = true;
+    window.dispatchEvent(new CustomEvent('bero:sound', {
+      detail: { kind: 'success', profile: 'secret' }
+    }));
     window.dispatchEvent(new CustomEvent('bero:track', {
       detail: {
         event: 'secret_content_unlocked',
@@ -25,6 +31,6 @@
     const script = document.createElement('script');
     script.src = '/chaos-mode.js';
     script.async = true;
-    document.body.appendChild(script);
+    document.head.appendChild(script);
   });
 })();

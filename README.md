@@ -2,7 +2,7 @@
 
 Static personal site built with plain HTML, no build step, and support for both PT-BR and English.
 
-This project is organized to be easy to fork and reuse as a template. The goal is to keep the core simple and isolate integrations, tracking, and joke features into separate files.
+This project is organized to be easy to fork and reuse as a template. The goal is to keep the core simple and isolate integrations, tracking, sound feedback, and easter eggs into separate files.
 
 ## Structure
 
@@ -10,6 +10,8 @@ This project is organized to be easy to fork and reuse as a template. The goal i
 - `en/`: English mirror
 - `styles.css`: shared visual system
 - `i18n.js`: language switch and automatic PT/EN redirect
+- `app-router.js`: progressive internal navigation that preserves the document and audio context
+- `interaction-sounds.js`: delegated sound feedback for global interactions
 - `public/`: favicon, banner, and static assets
 - `vercel.json`: platform-specific configuration
 
@@ -33,14 +35,6 @@ These files are intentionally isolated. You can remove them in a fork if you do 
 - `analytics.js`
   - PostHog tracking
   - to remove it, delete `<script src="/analytics.js"></script>` from the pages
-
-- `troll-mode.js`
-  - visual troll mode toggle
-  - to remove it, delete `<script src="/troll-mode.js"></script>` from the pages
-
-- `troll-nyancat.js`
-  - extra visual effect for troll mode
-  - to remove it, delete `<script src="/troll-nyancat.js"></script>` from the pages
 
 - `secret-link.js`
   - enables the secret link easter egg on the home page
@@ -87,6 +81,12 @@ python3 -m http.server 5500
 ```
 
 The `local-routing.js` script rewrites clean URLs to `.html` paths automatically when running on localhost.
+
+## Interaction runtime
+
+Internal links are progressively enhanced by `app-router.js`. The server still receives regular static HTML requests on direct access, while in-page navigation swaps the next document body and preserves the global runtime. This keeps language changes, browser history, metadata, scroll restoration, motion, and the Web Audio context synchronized across PT-BR and English pages.
+
+`interaction-sounds.js` uses delegated events instead of per-component listeners. It classifies links, controls, fields, scrolling, navigation, and expandable content globally. The sound preference is stored locally and can be changed with the `SOM` / `SOUND` control in the status bar.
 
 ## Note
 

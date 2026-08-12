@@ -23,6 +23,10 @@
   }
 
   document.addEventListener('click', function(event) {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
     const button = event.target.closest('[data-lite-embed]');
     if (!button) {
       return;
@@ -32,6 +36,10 @@
     const videoId = button.getAttribute('data-video-id') || '';
     const title = button.getAttribute('data-video-title') || 'Video';
     button.replaceWith(iframe);
+
+    window.dispatchEvent(new CustomEvent('bero:sound', {
+      detail: { kind: 'media', profile: 'video' }
+    }));
 
     window.dispatchEvent(new CustomEvent('bero:track', {
       detail: {

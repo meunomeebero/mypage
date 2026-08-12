@@ -185,6 +185,10 @@
 
       capture(detail.event, detail.properties || {});
     });
+
+    window.addEventListener('bero:route-complete', function() {
+      capture('page_view', { navigation_type: 'soft' });
+    });
   }
 
   function bootstrap() {
