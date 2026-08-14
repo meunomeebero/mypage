@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 
-const styleVersion = "20260804-11";
+const styleVersion = "20260814-2";
 const scriptVersion = "20260804-5";
 const globalScripts = [
   "analytics.js",
@@ -88,6 +88,10 @@ assert.match(styles, /@keyframes gallery-gate-jelly-out/);
 assert.doesNotMatch(styles, /gallery-gate__panel/);
 assert.match(styles, /\.gallery__item\.is-revealing\s*\{[^}]*gallery-item-jelly-in 460ms/s);
 assert.match(styles, /@keyframes gallery-item-jelly-in/);
+assert.match(styles, /\.gallery\s*\{[^}]*position:\s*relative[^}]*min-height/s);
+assert.doesNotMatch(styles, /column-width:\s*19rem/);
+assert.match(styles, /\.gallery__item:nth-child\(6\)\s*\{[^}]*z-index:\s*2/s);
+assert.match(styles, /\.gallery__item\.is-revealed:hover\s*\{[^}]*z-index:\s*20/s);
 assert.doesNotMatch(styles, /\.gallery-portal\.is-open \.gallery__item:nth-child/);
 assert.doesNotMatch(styles, /\.content--gallery::before/);
 assert.doesNotMatch(styles, /gallery-backdrop-in/);
