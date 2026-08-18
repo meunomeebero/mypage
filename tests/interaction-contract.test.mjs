@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 
-const styleVersion = "20260814-2";
+const styleVersion = "20260818-6";
 const scriptVersion = "20260804-5";
 const globalScripts = [
   "analytics.js",
@@ -25,7 +25,7 @@ for (const page of activePages) {
   const html = readFileSync(page, "utf8");
   assert.match(html, new RegExp(`/styles\\.css\\?v=${styleVersion}`), `${page} must version styles.css`);
   for (const script of globalScripts) {
-    const version = script === "interaction-sounds.js" ? "20260804-6" : scriptVersion;
+    const version = script === "interaction-sounds.js" ? "20260818-1" : scriptVersion;
     assert.match(html, new RegExp(`/${script.replaceAll(".", "\\.")}\\?v=${version}`), `${page} must load ${script}`);
   }
   assert.match(html, /\/gallery-gate\.js\?v=20260804-3/, `${page} must load the gallery gate lifecycle`);
@@ -76,6 +76,7 @@ assert.match(styles, /html\.is-route-entering \.main/);
 assert.match(styles, /transition:\s*opacity var\(--route-duration\) var\(--ease-out\)/);
 assert.match(styles, /html\.is-route-entering \.content\s*\{[^}]*translateY\(0\.25rem\)/s);
 assert.match(styles, /\.sound-control\[aria-pressed="false"\]/);
+assert.match(styles, /\.status-bar\s*\{[^}]*justify-content:\s*space-between/s);
 assert.match(styles, /html\[data-input-mode="pointer"\] \.link-row:active/);
 assert.match(styles, /@media \(hover: hover\) and \(pointer: fine\)/);
 assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
@@ -83,20 +84,26 @@ assert.doesNotMatch(styles, /troll-switch|troll-mode-on|troll-cursor/);
 assert.match(styles, /url\("\/public\/assets\/obra-de-arte-parallax\.webp\?v=2"\)/);
 assert.match(styles, /\.gallery-gate__float\s*\{[^}]*gallery-gate-float/s);
 assert.match(styles, /\.gallery-gate\s*\{[^}]*position:\s*relative/s);
+assert.match(styles, /\.gallery-gate-stage\s*\{[^}]*place-items:\s*start center[^}]*padding-top:/s);
 assert.match(styles, /\.gallery-portal\.is-bouncing \.gallery-gate\s*\{[^}]*gallery-gate-jelly-out 520ms/s);
 assert.match(styles, /@keyframes gallery-gate-jelly-out/);
 assert.doesNotMatch(styles, /gallery-gate__panel/);
 assert.match(styles, /\.gallery__item\.is-revealing\s*\{[^}]*gallery-item-jelly-in 460ms/s);
 assert.match(styles, /@keyframes gallery-item-jelly-in/);
-assert.match(styles, /\.gallery\s*\{[^}]*position:\s*relative[^}]*min-height/s);
+assert.match(styles, /\.gallery\s*\{[^}]*position:\s*relative[^}]*isolation:\s*isolate/s);
+assert.match(styles, /\.gallery__cluster--primary\s*\{[^}]*min-height:\s*clamp\(31rem, 64vw, 44rem\)/s);
+assert.match(styles, /\.gallery__cluster--secondary\s*\{[^}]*margin-top:\s*clamp\(6rem, 10vw, 9rem\)/s);
 assert.doesNotMatch(styles, /column-width:\s*19rem/);
-assert.match(styles, /\.gallery__item:nth-child\(6\)\s*\{[^}]*z-index:\s*2/s);
+assert.match(styles, /\.gallery__cluster--primary > \.gallery__item:nth-child\(6\)\s*\{[^}]*z-index:\s*2/s);
 assert.match(styles, /\.gallery__item\.is-revealed:hover\s*\{[^}]*z-index:\s*20/s);
+assert.match(styles, /\.gallery__item--lab\s*\{[^}]*top:\s*42%/s);
 assert.doesNotMatch(styles, /\.gallery-portal\.is-open \.gallery__item:nth-child/);
 assert.doesNotMatch(styles, /\.content--gallery::before/);
 assert.doesNotMatch(styles, /gallery-backdrop-in/);
 assert.doesNotMatch(styles, /--gallery-parallax-opacity/);
 assert.doesNotMatch(styles, /\.gallery-parallax/);
+assert.match(styles, /\.record--product\s*\{[^}]*grid-template-columns:/s);
+assert.match(styles, /\.record__image img\s*\{[^}]*object-fit:\s*contain/s);
 assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.gallery-gate__float[\s\S]*animation:\s*none/s);
 assert.equal(existsSync("public/assets/obra-de-arte-parallax.webp"), true, "gallery parallax image must exist");
 
@@ -107,7 +114,40 @@ for (const page of ["gallery.html", "en/gallery.html"]) {
   assert.match(html, /class="gallery-gate__art"/, `${page} must render the illustration as one piece`);
   assert.doesNotMatch(html, /gallery-gate__panel/, `${page} must not split the illustration`);
   assert.match(html, /class="gallery" id="gallery-collection"/, `${page} must connect the collection to its gate`);
+  assert.match(html, /class="gallery__cluster gallery__cluster--primary"/, `${page} must preserve the original gallery pile`);
+  assert.match(html, /class="gallery__cluster gallery__cluster--secondary"/, `${page} must render the second gallery pile separately`);
   assert.match(html, /rel="preload" as="image" href="\/public\/assets\/obra-de-arte-parallax\.webp\?v=2"/, `${page} must preload the backdrop`);
+  assert.equal((html.match(/class="gallery__item/g) || []).length, 9, `${page} must render both gallery piles`);
+  assert.equal((html.match(/\/public\/assets\/gallery\/[^\"]+\.webp/g) || []).length, 6, `${page} must use three optimized assets in the second pile`);
+  assert.doesNotMatch(html, /bero-duck|star-eyes|bero-grin|bero-skeptic/, `${page} must not render the removed transparent characters`);
+}
+
+for (const asset of [
+  "coder-relaxing.webp",
+  "mirror-horse.webp",
+  "html-lab.webp",
+]) {
+  assert.equal(existsSync(`public/assets/gallery/${asset}`), true, `${asset} must exist`);
+}
+
+for (const page of ["setup.html", "en/setup.html"]) {
+  const html = readFileSync(page, "utf8");
+  assert.equal((html.match(/record--product/g) || []).length, 8, `${page} must render a product image for every setup item`);
+  assert.equal((html.match(/class="record__image"/g) || []).length, 8, `${page} must make every product image clickable`);
+  assert.equal((html.match(/\/public\/assets\/setup\/[^"]+\.webp/g) || []).length, 8, `${page} must use optimized local product thumbnails`);
+}
+
+for (const asset of [
+  "macbook-pro-14-m5.webp",
+  "aoc-24g15n.webp",
+  "logitech-mx-vertical.webp",
+  "adamantiun-akira.webp",
+  "nintendo-switch-2.webp",
+  "airpods-pro-3.webp",
+  "hyperx-quadcast.webp",
+  "logitech-c920s.webp",
+]) {
+  assert.equal(existsSync(`public/assets/setup/${asset}`), true, `${asset} must exist`);
 }
 
 const galleryGate = readFileSync("gallery-gate.js", "utf8");
@@ -133,6 +173,10 @@ const sounds = readFileSync("interaction-sounds.js", "utf8");
 assert.match(sounds, /const INTERACTION_RULES = \[/);
 assert.match(sounds, /window\.BeroSound = Object\.freeze/);
 assert.match(sounds, /\.link-row, \.cta-button, \.gallery__frame/);
+assert.match(sounds, /document\.querySelectorAll\("\.status-bar"\)/);
+assert.match(sounds, /status-bar__slot status-bar__slot--left/);
+assert.match(sounds, /statusBar\.prepend\(slot\)/);
+assert.doesNotMatch(sounds, /sound-control__separator/);
 assert.match(sounds, /button:not\(\[disabled\]\), summary, \[role='button'\]/);
 assert.match(sounds, /document\.addEventListener\("pointerover"/);
 assert.match(sounds, /document\.addEventListener\("pointerdown"/);

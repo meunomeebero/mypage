@@ -276,19 +276,21 @@
   }
 
   function mountControls() {
-    document.querySelectorAll(".status-bar__slot--right").forEach(function (slot) {
+    document.querySelectorAll(".status-bar").forEach(function (statusBar) {
+      let slot = statusBar.querySelector(".status-bar__slot--left");
+      if (!slot) {
+        slot = document.createElement("div");
+        slot.className = "status-bar__slot status-bar__slot--left";
+        statusBar.prepend(slot);
+      }
       if (slot.querySelector("[data-sound-toggle]")) return;
 
-      const separator = document.createElement("span");
       const button = document.createElement("button");
-      separator.className = "status-bar__separator sound-control__separator";
-      separator.setAttribute("aria-hidden", "true");
-      separator.textContent = "/";
       button.type = "button";
       button.className = "sound-control";
       button.setAttribute("data-sound-toggle", "");
       button.setAttribute("data-sound", "control");
-      slot.append(separator, button);
+      slot.append(button);
     });
     syncControls();
   }
