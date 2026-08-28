@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 
-const styleVersion = "20260828-2";
+const styleVersion = "20260828-3";
 const scriptVersion = "20260804-5";
 const globalScripts = [
   "analytics.js",
