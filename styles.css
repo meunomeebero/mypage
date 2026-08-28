@@ -831,6 +831,19 @@ tbody tr + tr td {
   transition: color var(--motion-fast) ease, text-decoration-color var(--motion-fast) ease;
 }
 
+.footer__brand {
+  display: inline-flex;
+  align-items: flex-start;
+  letter-spacing: 0.035em;
+}
+
+.footer__registered {
+  margin-left: 0.08em;
+  font-size: 0.58em;
+  line-height: 1;
+  transform: translateY(-0.16em);
+}
+
 .content--gallery {
   max-width: 58rem;
 }

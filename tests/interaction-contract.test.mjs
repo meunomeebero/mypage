@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 
-const styleVersion = "20260828-1";
+const styleVersion = "20260828-2";
 const scriptVersion = "20260804-5";
 const globalScripts = [
   "analytics.js",
@@ -19,13 +19,17 @@ const activePages = [
   ...readdirSync("en").filter((file) => file.endsWith(".html")).map((file) => `en/${file}`),
 ];
 
-assert.equal(activePages.length, 26, "expected all 26 active pages");
+assert.equal(activePages.length, 28, "expected all 28 active pages");
 
 for (const page of activePages) {
   const html = readFileSync(page, "utf8");
   assert.match(html, new RegExp(`/styles\\.css\\?v=${styleVersion}`), `${page} must version styles.css`);
   for (const script of globalScripts) {
-    const version = script === "interaction-sounds.js" ? "20260818-1" : scriptVersion;
+    const version = script === "interaction-sounds.js"
+      ? "20260818-1"
+      : script === "local-routing.js"
+        ? "20260828-1"
+        : scriptVersion;
     assert.match(html, new RegExp(`/${script.replaceAll(".", "\\.")}\\?v=${version}`), `${page} must load ${script}`);
   }
   assert.match(html, /\/gallery-gate\.js\?v=20260804-3/, `${page} must load the gallery gate lifecycle`);
@@ -223,4 +227,4 @@ const previews = readFileSync("link-previews.js", "utf8");
 assert.match(previews, /\.featured-link > \.link-row/);
 assert.match(previews, /sourceNodes\.forEach\(function\(node\) \{ node\.remove\(\); \}\)/);
 
-console.log("interaction contract: 26 pages, persistent router, global sound lifecycle, and 20 home previews verified");
+console.log("interaction contract: 28 pages, persistent router, global sound lifecycle, and 20 home previews verified");

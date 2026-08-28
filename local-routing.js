@@ -12,6 +12,7 @@
     ['/setup', '/setup.html'],
     ['/site', '/site.html'],
     ['/gallery', '/gallery.html'],
+    ['/links', '/links.html'],
     ['/terms', '/terms.html'],
     ['/privacy', '/privacy.html'],
     ['/en', '/en/index.html'],
@@ -25,6 +26,7 @@
     ['/en/setup', '/en/setup.html'],
     ['/en/site', '/en/site.html'],
     ['/en/gallery', '/en/gallery.html'],
+    ['/en/links', '/en/links.html'],
     ['/en/terms', '/en/terms.html'],
     ['/en/privacy', '/en/privacy.html']
   ]);

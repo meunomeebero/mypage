@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bero | Links oficiais, projetos e contato</title>
-  <meta name="description" content="Links oficiais de Bero, nome artístico de Roberto Junior. Criador de conteúdo, programador, projetos, comunidade e contato comercial.">
+  <title>Bero | Criador, programador e links oficiais</title>
+  <meta name="description" content="Site oficial de Bero (Roberto Junior), criador de conteúdo e programador. Encontre links, projetos, setup, media kit e contato comercial.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Roberto Junior">
   <meta name="theme-color" content="#191919">
@@ -12,77 +12,92 @@
   <link rel="alternate" hreflang="pt-BR" href="https://bero.land/">
   <link rel="alternate" hreflang="en" href="https://bero.land/en">
   <link rel="alternate" hreflang="x-default" href="https://bero.land/">
+  <link rel="describedby" href="/llms.txt">
+  <link rel="alternate" type="text/markdown" href="https://bero.land/index.md">
   <link rel="icon" href="/public/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="https://bero.land/public/banner.png">
-  <meta property="og:site_name" content="Bero Land">
+  <meta property="og:site_name" content="Bero">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Bero | Links oficiais, projetos e contato">
-  <meta property="og:description" content="Links oficiais de Bero, nome artístico de Roberto Junior. Criador de conteúdo, programador, projetos, comunidade e contato comercial.">
+  <meta property="og:title" content="Bero | Criador, programador e links oficiais">
+  <meta property="og:description" content="Site oficial de Bero (Roberto Junior), criador de conteúdo e programador. Links, projetos, setup, media kit e contato.">
   <meta property="og:url" content="https://bero.land/">
   <meta property="og:image" content="https://bero.land/public/banner.png">
-  <meta property="og:image:alt" content="Banner da Bero Land">
+  <meta property="og:image:alt" content="Banner oficial do Bero">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@meunomeebero">
   <meta name="twitter:creator" content="@meunomeebero">
-  <meta name="twitter:title" content="Bero | Links oficiais, projetos e contato">
-  <meta name="twitter:description" content="Links oficiais de Bero, nome artístico de Roberto Junior. Criador de conteúdo, programador, projetos, comunidade e contato comercial.">
+  <meta name="twitter:title" content="Bero | Criador, programador e links oficiais">
+  <meta name="twitter:description" content="Site oficial de Bero (Roberto Junior), criador de conteúdo e programador. Links, projetos, setup, media kit e contato.">
   <meta name="twitter:image" content="https://bero.land/public/banner.png">
-  <meta name="twitter:image:alt" content="Banner da Bero Land">
+  <meta name="twitter:image:alt" content="Banner oficial do Bero">
   <link rel="preconnect" href="https://static.ietf.org" crossorigin>
   <link rel="stylesheet" href="https://static.ietf.org/fonts/noto-sans-mono/import.css">
-  <link rel="stylesheet" href="/styles.css?v=20260828-1">
+  <link rel="stylesheet" href="/styles.css?v=20260828-2">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "ProfilePage",
-      "@id": "https://bero.land/#profile",
-      "url": "https://bero.land/",
-      "name": "Bero | Links oficiais",
-      "dateModified": "2026-03-09",
-      "mainEntity": {
-        "@type": "Person",
-        "@id": "https://bero.land/#person",
-        "name": "Roberto Junior",
-        "alternateName": "Bero",
-        "url": "https://bero.land/",
-        "image": "https://bero.land/public/fly.gif",
-        "description": "Criador de conteúdo e programador brasileiro baseado em São José dos Campos.",
-        "email": "mailto:mail@bero.land",
-        "jobTitle": [
-          "Criador de conteúdo",
-          "Software Engineer"
-        ],
-        "homeLocation": {
-          "@type": "Place",
-          "name": "São José dos Campos, Brasil"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://bero.land/#website",
+          "url": "https://bero.land/",
+          "name": "Bero",
+          "alternateName": ["Bero Land", "bero.land"],
+          "inLanguage": ["pt-BR", "en"],
+          "publisher": { "@id": "https://bero.land/#person" }
         },
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Ask.com"
+        {
+          "@type": "ProfilePage",
+          "@id": "https://bero.land/#profile",
+          "url": "https://bero.land/",
+          "name": "Bero | Site oficial",
+          "description": "Site oficial de Bero, nome artístico de Roberto Junior.",
+          "dateModified": "2026-08-28",
+          "isPartOf": { "@id": "https://bero.land/#website" },
+          "mainEntity": { "@id": "https://bero.land/#person" }
         },
-        "knowsAbout": [
-          "Programação",
-          "Golang",
-          "Python",
-          "Node.js",
-          "TypeScript",
-          "Next.js",
-          "Inteligência artificial",
-          "Carreira em tecnologia",
-          "Criação de conteúdo"
-        ],
-        "sameAs": [
-          "https://x.com/meunomeebero",
-          "https://www.instagram.com/meunomeebero",
-          "https://www.youtube.com/@beroodev",
-          "https://www.youtube.com/@meunomeebero",
-          "https://discord.com/servers/mansao-dev-1132161173484224642",
-          "https://github.com/meunomeebero",
-          "https://www.tiktok.com/@meunomeebero"
-        ]
-      }
+        {
+          "@type": "Person",
+          "@id": "https://bero.land/#person",
+          "name": "Roberto Junior",
+          "alternateName": "Bero",
+          "url": "https://bero.land/",
+          "image": "https://bero.land/public/fly.gif",
+          "description": "Criador de conteúdo e programador brasileiro baseado em São José dos Campos.",
+          "email": "mailto:mail@bero.land",
+          "jobTitle": ["Criador de conteúdo", "Software Engineer"],
+          "homeLocation": {
+            "@type": "Place",
+            "name": "São José dos Campos, Brasil"
+          },
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Ask.com"
+          },
+          "knowsAbout": [
+            "Programação",
+            "Golang",
+            "Python",
+            "Node.js",
+            "TypeScript",
+            "Next.js",
+            "Inteligência artificial",
+            "Carreira em tecnologia",
+            "Criação de conteúdo"
+          ],
+          "sameAs": [
+            "https://x.com/meunomeebero",
+            "https://www.instagram.com/meunomeebero",
+            "https://www.youtube.com/@beroodev",
+            "https://www.youtube.com/@meunomeebero",
+            "https://discord.com/servers/mansao-dev-1132161173484224642",
+            "https://github.com/meunomeebero",
+            "https://www.tiktok.com/@meunomeebero"
+          ]
+        }
+      ]
     }
   </script>
 </head>
@@ -92,24 +107,25 @@
       <div class="sidebar__inner">
         <div class="sidebar__top">
           <p class="sidebar__label">páginas</p>
-          <div class="lang-switch lang-switch--mobile" aria-label="Alternar idioma">
+          <div class="lang-switch lang-switch--mobile" role="group" aria-label="Alternar idioma">
             <button type="button" class="is-active" data-lang-choice="pt-BR" data-lang-target="/" aria-pressed="true">PT</button>
             <span class="lang-switch__sep">/</span>
             <button type="button" data-lang-choice="en" data-lang-target="/en" aria-pressed="false">EN</button>
           </div>
         </div>
-        <nav class="sidebar__nav">
+        <nav class="sidebar__nav" aria-label="Navegação principal">
           <a class="is-active" href="/">00. índice</a>
           <a class="nav-subitem" href="/minilab">00.1 minilab</a>
           <a class="nav-subitem" href="/berolab">00.2 berolab</a>
-          <a class="nav-subitem" href="/setup">00.3 meu setup</a>
+          <a class="nav-subitem" href="/setup">00.3 setup do Bero</a>
           <a href="/about">01. sobre</a>
-          <a href="/media-kit">02. media kit</a>
-          <a href="/projects">03. projetos</a>
+          <a href="/media-kit">02. media kit do Bero</a>
+          <a href="/projects">03. projetos do Bero</a>
           <a href="/videos">04. vídeos</a>
           <a href="/contact">05. contato</a>
           <a href="/gallery">06. galeria</a>
           <a href="/site">07. este site</a>
+          <a href="/links">08. links do Bero</a>
         </nav>
       </div>
     </aside>
@@ -118,7 +134,7 @@
       <div class="content">
         <div class="status-bar">
           <div class="status-bar__slot status-bar__slot--right">
-            <div class="lang-switch lang-switch--desktop" aria-label="Alternar idioma">
+            <div class="lang-switch lang-switch--desktop" role="group" aria-label="Alternar idioma">
               <button type="button" class="is-active" data-lang-choice="pt-BR" data-lang-target="/" aria-pressed="true">PT</button>
               <span class="lang-switch__sep">/</span>
               <button type="button" data-lang-choice="en" data-lang-target="/en" aria-pressed="false">EN</button>
@@ -132,7 +148,7 @@
           </div>
           <h1>Bero</h1>
           <p class="eyebrow">Creator / Programmer / Brand Partnerships</p>
-          <p class="lede"></p>
+          <p class="lede">Site oficial de Roberto Junior, o Bero.</p>
         </header>
 
         <section class="section" aria-labelledby="primary-links-title">
@@ -298,8 +314,13 @@
             <h2 id="secondary-links-title">Outros links</h2>
           </div>
           <nav class="link-list" aria-label="Outros links">
+            <a class="link-row" href="/links">
+              <span>Links do Bero</span>
+              <span class="link-row__dots" aria-hidden="true"></span>
+              <span class="link-row__meta">diretório</span>
+            </a>
             <a class="link-row" href="/setup" data-link-detail="Equipamentos, periféricos e ferramentas que uso para criar, programar e gravar.">
-              <span>Meu Setup</span>
+              <span>Setup do Bero</span>
               <span class="link-row__dots" aria-hidden="true"></span>
               <span class="link-row__meta">equipamentos</span>
             </a>
@@ -307,7 +328,7 @@
         </section>
 
         <footer class="footer">
-          <p><a href="/">bero.land</a> · <a href="mailto:mail@bero.land">mail@bero.land</a></p>
+          <p><a class="footer__brand" href="/" aria-label="bero.land, marca registrada">bero.land<sup class="footer__registered" aria-hidden="true">®</sup></a> · <a href="mailto:mail@bero.land">mail@bero.land</a></p>
           <p>CNPJ: 61.026.871/0001-79</p>
           <p><a href="/terms">Termos de Uso</a> · <a href="/privacy">Política de Privacidade</a></p>
         </footer>
@@ -315,7 +336,7 @@
     </main>
   </div>
   <script src="/analytics.js?v=20260804-5"></script>
-  <script src="/local-routing.js?v=20260804-5"></script>
+  <script src="/local-routing.js?v=20260828-1"></script>
   <script src="/i18n.js?v=20260804-5"></script>
   <script src="/interaction-sounds.js?v=20260818-1"></script>
   <script src="/gallery-gate.js?v=20260804-3"></script>

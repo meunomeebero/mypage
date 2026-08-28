@@ -4,28 +4,35 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://bero.land/</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/" />
   </url>
   <url>
     <loc>https://bero.land/about</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/about" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/about" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/about" />
   </url>
   <url>
+    <loc>https://bero.land/links</loc>
+    <lastmod>2026-08-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/links" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/links" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/links" />
+  </url>
+  <url>
     <loc>https://bero.land/media-kit</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/media-kit" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/media-kit" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/media-kit" />
   </url>
   <url>
     <loc>https://bero.land/projects</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/projects" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/projects" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/projects" />
@@ -60,7 +67,7 @@
   </url>
   <url>
     <loc>https://bero.land/setup</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/setup" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/setup" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/setup" />
@@ -95,28 +102,35 @@
   </url>
   <url>
     <loc>https://bero.land/en</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/" />
   </url>
   <url>
     <loc>https://bero.land/en/about</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/about" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/about" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/about" />
   </url>
   <url>
+    <loc>https://bero.land/en/links</loc>
+    <lastmod>2026-08-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/links" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/links" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/links" />
+  </url>
+  <url>
     <loc>https://bero.land/en/media-kit</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/media-kit" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/media-kit" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/media-kit" />
   </url>
   <url>
     <loc>https://bero.land/en/projects</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/projects" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/projects" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/projects" />
@@ -151,7 +165,7 @@
   </url>
   <url>
     <loc>https://bero.land/en/setup</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/setup" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/setup" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/setup" />

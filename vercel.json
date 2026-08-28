@@ -66,6 +66,11 @@
       "permanent": true
     },
     {
+      "source": "/links.html",
+      "destination": "/links",
+      "permanent": true
+    },
+    {
       "source": "/terms.html",
       "destination": "/terms",
       "permanent": true
@@ -136,6 +141,11 @@
       "permanent": true
     },
     {
+      "source": "/en/links.html",
+      "destination": "/en/links",
+      "permanent": true
+    },
+    {
       "source": "/en/terms.html",
       "destination": "/en/terms",
       "permanent": true
@@ -144,6 +154,30 @@
       "source": "/en/privacy.html",
       "destination": "/en/privacy",
       "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
     }
   ],
   "rewrites": [

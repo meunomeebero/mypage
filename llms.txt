@@ -1,0 +1,46 @@
+# Bero
+
+> Official website of Roberto Junior, known online as Bero: software engineer, creator, illustrator and founder of BeroLab.
+
+Bero is the primary site name. Bero Land and bero.land are alternate names for the same official website.
+
+- Canonical website: https://bero.land/
+- Languages: Portuguese (primary) and English
+- Contact: mail@bero.land
+- Company registration (Brazil): CNPJ 61.026.871/0001-79
+- Last updated: 2026-08-28
+
+## Portugues
+
+- [Inicio](https://bero.land/index.md): identidade, principais destinos e contato
+- [Sobre o Bero](https://bero.land/about.md): biografia, carreira e trabalho criativo
+- [Links do Bero](https://bero.land/links.md): perfis e canais oficiais
+- [Setup do Bero](https://bero.land/setup.md): equipamentos e ferramentas atuais
+- [Projetos do Bero](https://bero.land/projects.md): apps, open source e comunidade
+- [Media Kit do Bero](https://bero.land/media-kit.md): audiencia, formatos e parcerias
+
+## English
+
+- [Home](https://bero.land/en/index.md): identity, key destinations and contact
+- [About Bero](https://bero.land/en/about.md): biography, career and creative work
+- [Bero's Links](https://bero.land/en/links.md): official profiles and channels
+- [Bero's Setup](https://bero.land/en/setup.md): current equipment and tools
+- [Bero's Projects](https://bero.land/en/projects.md): apps, open source and community
+- [Bero Media Kit](https://bero.land/en/media-kit.md): audience, formats and partnerships
+
+## Official Profiles
+
+- [X / Twitter](https://x.com/meunomeebero)
+- [Instagram](https://www.instagram.com/meunomeebero)
+- [YouTube: Bero o Dev](https://www.youtube.com/@beroodev)
+- [YouTube: Meu Nome e Bero](https://www.youtube.com/@meunomeebero)
+- [TikTok](https://www.tiktok.com/@meunomeebero)
+- [GitHub](https://github.com/meunomeebero)
+- [Discord: Mansao Dev](https://discord.com/servers/mansao-dev-1132161173484224642)
+
+## Legal
+
+- [Termos de uso](https://bero.land/terms)
+- [Politica de privacidade](https://bero.land/privacy)
+- [Terms of use](https://bero.land/en/terms)
+- [Privacy policy](https://bero.land/en/privacy)

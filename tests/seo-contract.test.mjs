@@ -1,0 +1,112 @@
+import assert from "node:assert/strict";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+
+const pages = [
+  ...readdirSync(".").filter((file) => file.endsWith(".html")),
+  ...readdirSync("en").filter((file) => file.endsWith(".html")).map((file) => `en/${file}`),
+];
+
+const mirrorPages = new Map([
+  ["index.html", "https://bero.land/index.md"],
+  ["about.html", "https://bero.land/about.md"],
+  ["links.html", "https://bero.land/links.md"],
+  ["setup.html", "https://bero.land/setup.md"],
+  ["projects.html", "https://bero.land/projects.md"],
+  ["media-kit.html", "https://bero.land/media-kit.md"],
+  ["en/index.html", "https://bero.land/en/index.md"],
+  ["en/about.html", "https://bero.land/en/about.md"],
+  ["en/links.html", "https://bero.land/en/links.md"],
+  ["en/setup.html", "https://bero.land/en/setup.md"],
+  ["en/projects.html", "https://bero.land/en/projects.md"],
+  ["en/media-kit.html", "https://bero.land/en/media-kit.md"],
+]);
+
+assert.equal(pages.length, 28, "sitemap and navigation expect 28 active HTML pages");
+
+for (const page of pages) {
+  const html = readFileSync(page, "utf8");
+  const isEnglish = page.startsWith("en/");
+
+  assert.match(html, /<title>[^<]{12,}[^<]*<\/title>/, `${page} must have a useful title`);
+  assert.match(html, /<meta name="description" content="[^"]{50,}">/, `${page} must have a useful description`);
+  assert.match(html, /<meta name="robots" content="index,follow(?:,max-image-preview:large)?">/, `${page} must be indexable`);
+  assert.match(html, /<link rel="canonical" href="https:\/\/bero\.land\/[^"]*">/, `${page} must have a canonical URL`);
+  assert.match(html, /<link rel="alternate" hreflang="pt-BR" href="https:\/\/bero\.land\/[^"]*">/, `${page} must have a PT alternate`);
+  assert.match(html, /<link rel="alternate" hreflang="en" href="https:\/\/bero\.land\/en[^"]*">/, `${page} must have an EN alternate`);
+  assert.match(html, /<link rel="alternate" hreflang="x-default" href="https:\/\/bero\.land\/[^"]*">/, `${page} must have an x-default alternate`);
+  assert.match(html, /<link rel="describedby" href="\/llms\.txt">/, `${page} must reference llms.txt`);
+  assert.match(html, /<meta property="og:site_name" content="Bero">/, `${page} must use Bero as the site name`);
+  assert.match(html, isEnglish ? /href="\/en\/links">08\. Bero links<\/a>/ : /href="\/links">08\. links do Bero<\/a>/, `${page} must expose the links directory`);
+
+  for (const json of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    assert.doesNotThrow(() => JSON.parse(json[1]), `${page} must contain valid JSON-LD`);
+  }
+
+  const registeredCount = (html.match(/®/g) || []).length;
+  const shouldShowRegisteredBrand = page === "index.html" || page === "en/index.html";
+  assert.equal(registeredCount, shouldShowRegisteredBrand ? 1 : 0, `${page} must follow the home-only registered brand rule`);
+}
+
+for (const [page, markdownUrl] of mirrorPages) {
+  const html = readFileSync(page, "utf8");
+  assert.match(html, new RegExp(`<link rel="alternate" type="text/markdown" href="${markdownUrl.replaceAll(".", "\\.")}">`), `${page} must link to its Markdown mirror`);
+
+  const markdownPath = markdownUrl.replace("https://bero.land/", "");
+  assert.equal(existsSync(markdownPath), true, `${markdownPath} must exist`);
+  const markdown = readFileSync(markdownPath, "utf8");
+  assert.match(markdown, /^# /, `${markdownPath} must start with a heading`);
+  assert.match(markdown, /https:\/\/bero\.land\//, `${markdownPath} must reference a canonical HTML page`);
+  assert.match(markdown, /Last updated: 2026-08-28/, `${markdownPath} must expose its update date`);
+}
+
+const priorityPages = new Map([
+  ["setup.html", ["Setup do Bero", "Setup do Bero | Equipamentos e ferramentas"]],
+  ["links.html", ["Links do Bero", "Links do Bero | Perfis, canais e contato"]],
+  ["projects.html", ["Projetos do Bero", "Projetos do Bero | Apps, open source e comunidade"]],
+  ["media-kit.html", ["Media Kit do Bero", "Media Kit do Bero | Publicidade e parcerias"]],
+  ["en/setup.html", ["Bero's Setup", "Bero's Setup | Equipment and tools"]],
+  ["en/links.html", ["Bero's Links", "Bero's Links | Profiles, channels and contact"]],
+  ["en/projects.html", ["Bero's Projects", "Bero's Projects | Apps, open source and community"]],
+  ["en/media-kit.html", ["Bero Media Kit", "Bero Media Kit | Advertising and partnerships"]],
+]);
+
+for (const [page, [heading, title]] of priorityPages) {
+  const html = readFileSync(page, "utf8");
+  assert.match(html, new RegExp(`<h1>${heading.replaceAll("'", "\\'")}<\\/h1>`), `${page} must use the planned H1`);
+  assert.match(html, new RegExp(`<title>${title.replaceAll("'", "\\'")}<\\/title>`), `${page} must use the planned title`);
+}
+
+const homeSchema = JSON.parse(readFileSync("index.html", "utf8").match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+const website = homeSchema["@graph"].find((item) => item["@type"] === "WebSite");
+assert.equal(website.name, "Bero");
+assert.deepEqual(website.alternateName, ["Bero Land", "bero.land"]);
+
+for (const page of ["links.html", "en/links.html"]) {
+  const html = readFileSync(page, "utf8");
+  const schema = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(schema["@type"], "CollectionPage", `${page} must describe a collection`);
+  assert.equal(schema.mainEntity["@type"], "ItemList", `${page} must describe its list`);
+  assert.equal(schema.mainEntity.itemListElement.length, 8, `${page} must list eight official destinations`);
+}
+
+const llms = readFileSync("llms.txt", "utf8");
+assert.match(llms, /^# Bero/m);
+assert.match(llms, /## Portugues/);
+assert.match(llms, /## English/);
+assert.match(llms, /mail@bero\.land/);
+assert.match(llms, /61\.026\.871\/0001-79/);
+
+const sitemap = readFileSync("sitemap.xml", "utf8");
+assert.equal((sitemap.match(/<loc>/g) || []).length, 28, "sitemap must list all 28 HTML pages");
+assert.match(sitemap, /<loc>https:\/\/bero\.land\/links<\/loc>/);
+assert.match(sitemap, /<loc>https:\/\/bero\.land\/en\/links<\/loc>/);
+assert.doesNotMatch(sitemap, /\.md<\/loc>/, "Markdown mirrors must not be indexed through the sitemap");
+
+const vercel = JSON.parse(readFileSync("vercel.json", "utf8"));
+const llmsHeaders = vercel.headers.find((entry) => entry.source === "/llms.txt");
+const markdownHeaders = vercel.headers.find((entry) => entry.source.includes(".md"));
+assert.equal(llmsHeaders.headers.some((header) => header.key === "X-Robots-Tag" && header.value === "noindex, follow"), true);
+assert.equal(markdownHeaders.headers.some((header) => header.key === "Content-Type" && header.value.startsWith("text/markdown")), true);
+assert.equal(markdownHeaders.headers.some((header) => header.key === "X-Robots-Tag" && header.value === "noindex, follow"), true);
+
+console.log("seo contract: brand, 28 pages, structured data, sitemap, and agent-readable mirrors verified");

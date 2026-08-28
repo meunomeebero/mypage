@@ -13,6 +13,7 @@ This project is organized to be easy to fork and reuse as a template. The goal i
 - `app-router.js`: progressive internal navigation that preserves the document and audio context
 - `interaction-sounds.js`: delegated sound feedback for global interactions
 - `public/`: favicon, banner, and static assets
+- `llms.txt` and `*.md`: agent-readable site guide and canonical page summaries
 - `vercel.json`: platform-specific configuration
 
 ## Base template
@@ -50,13 +51,18 @@ Public URLs use the clean format:
 
 - `/`
 - `/about`
+- `/links`
 - `/media-kit`
 - `/projects`
 - `/videos`
 - `/contact`
 - `/minilab`
+- `/berolab`
 - `/setup`
+- `/gallery`
 - `/site`
+- `/terms`
+- `/privacy`
 - `/en`
 - matching routes inside `/en/...`
 
@@ -87,6 +93,10 @@ The `local-routing.js` script rewrites clean URLs to `.html` paths automatically
 Internal links are progressively enhanced by `app-router.js`. The server still receives regular static HTML requests on direct access, while in-page navigation swaps the next document body and preserves the global runtime. This keeps language changes, browser history, metadata, scroll restoration, motion, and the Web Audio context synchronized across PT-BR and English pages.
 
 `interaction-sounds.js` uses delegated events instead of per-component listeners. It classifies links, controls, fields, scrolling, navigation, and expandable content globally. The sound preference is stored locally and can be changed with the `SOM` / `SOUND` control in the status bar.
+
+## Search and agent discovery
+
+Every public HTML page declares canonical and language-alternate URLs. `sitemap.xml` lists the 28 Portuguese and English pages, while `llms.txt` points agents to concise Markdown summaries of the main content. The Markdown mirrors are served with `X-Robots-Tag: noindex, follow` so they do not compete with the canonical HTML pages in search results.
 
 ## Note
 
