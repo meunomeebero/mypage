@@ -19,7 +19,7 @@ const activePages = [
   ...readdirSync("en").filter((file) => file.endsWith(".html")).map((file) => `en/${file}`),
 ];
 
-assert.equal(activePages.length, 22, "expected all 22 active pages");
+assert.equal(activePages.length, 26, "expected all 26 active pages");
 
 for (const page of activePages) {
   const html = readFileSync(page, "utf8");
@@ -30,6 +30,19 @@ for (const page of activePages) {
   }
   assert.match(html, /\/gallery-gate\.js\?v=20260804-3/, `${page} must load the gallery gate lifecycle`);
   assert.doesNotMatch(html, /troll-mode|troll-nyancat|data-troll/, `${page} must not load troll mode`);
+
+  const isEnglish = page.startsWith("en/");
+  const footer = html.match(/<footer class="footer">[\s\S]*?<\/footer>/)?.[0] || "";
+  assert.match(footer, /mailto:mail@bero\.land/, `${page} must display a contact email in the footer`);
+  assert.match(footer, /CNPJ: 61\.026\.871\/0001-79/, `${page} must display the CNPJ in the footer`);
+  assert.match(footer, isEnglish ? /href="\/en\/terms"/ : /href="\/terms"/, `${page} must link to terms in the footer`);
+  assert.match(footer, isEnglish ? /href="\/en\/privacy"/ : /href="\/privacy"/, `${page} must link to privacy in the footer`);
+}
+
+for (const page of ["terms.html", "privacy.html", "en/terms.html", "en/privacy.html"]) {
+  const html = readFileSync(page, "utf8");
+  assert.match(html, /CNPJ: 61\.026\.871\/0001-79/, `${page} must identify the business registration`);
+  assert.match(html, /mail@bero\.land/, `${page} must expose the privacy contact channel`);
 }
 
 for (const page of ["index.html", "en/index.html"]) {
@@ -210,4 +223,4 @@ const previews = readFileSync("link-previews.js", "utf8");
 assert.match(previews, /\.featured-link > \.link-row/);
 assert.match(previews, /sourceNodes\.forEach\(function\(node\) \{ node\.remove\(\); \}\)/);
 
-console.log("interaction contract: 22 pages, persistent router, global sound lifecycle, and 20 home previews verified");
+console.log("interaction contract: 26 pages, persistent router, global sound lifecycle, and 20 home previews verified");

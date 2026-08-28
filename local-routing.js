@@ -12,6 +12,8 @@
     ['/setup', '/setup.html'],
     ['/site', '/site.html'],
     ['/gallery', '/gallery.html'],
+    ['/terms', '/terms.html'],
+    ['/privacy', '/privacy.html'],
     ['/en', '/en/index.html'],
     ['/en/about', '/en/about.html'],
     ['/en/media-kit', '/en/media-kit.html'],
@@ -22,7 +24,9 @@
     ['/en/berolab', '/en/berolab.html'],
     ['/en/setup', '/en/setup.html'],
     ['/en/site', '/en/site.html'],
-    ['/en/gallery', '/en/gallery.html']
+    ['/en/gallery', '/en/gallery.html'],
+    ['/en/terms', '/en/terms.html'],
+    ['/en/privacy', '/en/privacy.html']
   ]);
 
   function isLocalEnvironment() {

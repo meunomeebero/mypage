@@ -66,6 +66,16 @@
       "permanent": true
     },
     {
+      "source": "/terms.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
       "source": "/en/index",
       "destination": "/en",
       "permanent": true
@@ -123,6 +133,16 @@
     {
       "source": "/en/gallery.html",
       "destination": "/en/gallery",
+      "permanent": true
+    },
+    {
+      "source": "/en/terms.html",
+      "destination": "/en/terms",
+      "permanent": true
+    },
+    {
+      "source": "/en/privacy.html",
+      "destination": "/en/privacy",
       "permanent": true
     }
   ],
