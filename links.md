@@ -1,4 +1,4 @@
-# Links do Bero
+# Links
 
 Canonical page: [https://bero.land/links](https://bero.land/links)
 

@@ -6,10 +6,10 @@ Bero is Roberto Junior, a Brazilian software engineer, creator and illustrator. 
 
 ## Main destinations
 
-- [Bero's Links](https://bero.land/en/links)
-- [Bero's Projects](https://bero.land/en/projects)
-- [Bero's Setup](https://bero.land/en/setup)
-- [Bero Media Kit](https://bero.land/en/media-kit)
+- [Links](https://bero.land/en/links)
+- [Projects](https://bero.land/en/projects)
+- [Setup](https://bero.land/en/setup)
+- [Media Kit](https://bero.land/en/media-kit)
 - [About Bero](https://bero.land/en/about)
 - [Contact](https://bero.land/en/contact)
 

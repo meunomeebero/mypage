@@ -36,7 +36,11 @@ for (const page of pages) {
   assert.match(html, /<link rel="alternate" hreflang="x-default" href="https:\/\/bero\.land\/[^"]*">/, `${page} must have an x-default alternate`);
   assert.match(html, /<link rel="describedby" href="\/llms\.txt">/, `${page} must reference llms.txt`);
   assert.match(html, /<meta property="og:site_name" content="Bero">/, `${page} must use Bero as the site name`);
-  assert.match(html, isEnglish ? /href="\/en\/links">08\. Bero links<\/a>/ : /href="\/links">08\. links do Bero<\/a>/, `${page} must expose the links directory`);
+  assert.doesNotMatch(
+    html,
+    isEnglish ? /<a[^>]*href="\/en\/links">08\.[^<]*<\/a>/ : /<a[^>]*href="\/links">08\.[^<]*<\/a>/,
+    `${page} must keep the links directory out of the global sidebar`,
+  );
 
   for (const json of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     assert.doesNotThrow(() => JSON.parse(json[1]), `${page} must contain valid JSON-LD`);
@@ -60,21 +64,24 @@ for (const [page, markdownUrl] of mirrorPages) {
 }
 
 const priorityPages = new Map([
-  ["setup.html", ["Setup do Bero", "Setup do Bero | Equipamentos e ferramentas"]],
-  ["links.html", ["Links do Bero", "Links do Bero | Perfis, canais e contato"]],
-  ["projects.html", ["Projetos do Bero", "Projetos do Bero | Apps, open source e comunidade"]],
-  ["media-kit.html", ["Media Kit do Bero", "Media Kit do Bero | Publicidade e parcerias"]],
-  ["en/setup.html", ["Bero's Setup", "Bero's Setup | Equipment and tools"]],
-  ["en/links.html", ["Bero's Links", "Bero's Links | Profiles, channels and contact"]],
-  ["en/projects.html", ["Bero's Projects", "Bero's Projects | Apps, open source and community"]],
-  ["en/media-kit.html", ["Bero Media Kit", "Bero Media Kit | Advertising and partnerships"]],
+  ["setup.html", ["Setup", "Setup | Equipamentos e ferramentas"]],
+  ["links.html", ["Links", "Links | Perfis, canais e contato"]],
+  ["projects.html", ["Projetos", "Projetos | Apps, open source e comunidade"]],
+  ["media-kit.html", ["Media Kit", "Media Kit | Publicidade e parcerias"]],
+  ["en/setup.html", ["Setup", "Setup | Gear and tools"]],
+  ["en/links.html", ["Links", "Links | Profiles, channels and contact"]],
+  ["en/projects.html", ["Projects", "Projects | Apps, open source and community"]],
+  ["en/media-kit.html", ["Media Kit", "Media Kit | Brand partnerships"]],
 ]);
 
 for (const [page, [heading, title]] of priorityPages) {
   const html = readFileSync(page, "utf8");
-  assert.match(html, new RegExp(`<h1>${heading.replaceAll("'", "\\'")}<\\/h1>`), `${page} must use the planned H1`);
-  assert.match(html, new RegExp(`<title>${title.replaceAll("'", "\\'")}<\\/title>`), `${page} must use the planned title`);
+  assert.equal(html.includes(`<h1>${heading}</h1>`), true, `${page} must use the planned H1`);
+  assert.equal(html.includes(`<title>${title}</title>`), true, `${page} must use the planned title`);
 }
+
+assert.match(readFileSync("index.html", "utf8"), /href="\/links"[\s\S]*?<span>Links<\/span>/, "PT home must keep a contextual link to the directory");
+assert.match(readFileSync("en/index.html", "utf8"), /href="\/en\/links"[\s\S]*?<span>Links<\/span>/, "EN home must keep a contextual link to the directory");
 
 const homeSchema = JSON.parse(readFileSync("index.html", "utf8").match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
 const website = homeSchema["@graph"].find((item) => item["@type"] === "WebSite");

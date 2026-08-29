@@ -1,4 +1,4 @@
-# Bero's Setup
+# Setup
 
 Canonical page: [https://bero.land/en/setup](https://bero.land/en/setup)
 

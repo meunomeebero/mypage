@@ -1,4 +1,4 @@
-# Bero's Projects
+# Projects
 
 Canonical page: [https://bero.land/en/projects](https://bero.land/en/projects)
 

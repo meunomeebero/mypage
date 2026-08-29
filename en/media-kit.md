@@ -1,4 +1,4 @@
-# Bero Media Kit
+# Media Kit
 
 Canonical page: [https://bero.land/en/media-kit](https://bero.land/en/media-kit)
 
