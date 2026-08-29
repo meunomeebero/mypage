@@ -17,13 +17,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/about" />
   </url>
   <url>
-    <loc>https://bero.land/links</loc>
-    <lastmod>2026-08-28</lastmod>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/links" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/links" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/links" />
-  </url>
-  <url>
     <loc>https://bero.land/media-kit</loc>
     <lastmod>2026-08-28</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/media-kit" />
@@ -113,13 +106,6 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/about" />
     <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/about" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/about" />
-  </url>
-  <url>
-    <loc>https://bero.land/en/links</loc>
-    <lastmod>2026-08-28</lastmod>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bero.land/links" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://bero.land/en/links" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://bero.land/links" />
   </url>
   <url>
     <loc>https://bero.land/en/media-kit</loc>

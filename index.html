@@ -34,7 +34,7 @@
   <meta name="twitter:image:alt" content="Banner oficial do Bero">
   <link rel="preconnect" href="https://static.ietf.org" crossorigin>
   <link rel="stylesheet" href="https://static.ietf.org/fonts/noto-sans-mono/import.css">
-  <link rel="stylesheet" href="/styles.css?v=20260828-3">
+  <link rel="stylesheet" href="/styles.css?v=20260828-4">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -132,6 +132,13 @@
     <main class="main">
       <div class="content">
         <div class="status-bar">
+          <div class="status-bar__slot status-bar__slot--left">
+            <dl class="visitor-stats" data-visitor-stats data-state="idle" aria-label="Visitantes únicos">
+              <div class="visitor-stats__item"><dt>hoje</dt><dd data-visitor-today aria-live="polite">—</dd></div>
+              <span class="visitor-stats__sep" aria-hidden="true">/</span>
+              <div class="visitor-stats__item"><dt>mês</dt><dd data-visitor-month aria-live="polite">—</dd></div>
+            </dl>
+          </div>
           <div class="status-bar__slot status-bar__slot--right">
             <div class="lang-switch lang-switch--desktop" role="group" aria-label="Alternar idioma">
               <button type="button" class="is-active" data-lang-choice="pt-BR" data-lang-target="/" aria-pressed="true">PT</button>
@@ -312,11 +319,6 @@
             <h2 id="secondary-links-title">Outros links</h2>
           </div>
           <nav class="link-list" aria-label="Outros links">
-            <a class="link-row" href="/links">
-              <span>Links</span>
-              <span class="link-row__dots" aria-hidden="true"></span>
-              <span class="link-row__meta">diretório</span>
-            </a>
             <a class="link-row" href="/setup" data-link-detail="Equipamentos, periféricos e ferramentas que uso para criar, programar e gravar.">
               <span>Setup</span>
               <span class="link-row__dots" aria-hidden="true"></span>
@@ -333,7 +335,7 @@
       </div>
     </main>
   </div>
-  <script src="/analytics.js?v=20260804-5"></script>
+  <script src="/analytics.js?v=20260828-6"></script>
   <script src="/local-routing.js?v=20260828-1"></script>
   <script src="/i18n.js?v=20260804-5"></script>
   <script src="/interaction-sounds.js?v=20260818-1"></script>

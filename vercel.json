@@ -67,7 +67,12 @@
     },
     {
       "source": "/links.html",
-      "destination": "/links",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/links",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -142,7 +147,12 @@
     },
     {
       "source": "/en/links.html",
-      "destination": "/en/links",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/links",
+      "destination": "/en",
       "permanent": true
     },
     {

@@ -14,7 +14,6 @@ Bero is the primary site name. Bero Land and bero.land are alternate names for t
 
 - [Inicio](https://bero.land/index.md): identidade, principais destinos e contato
 - [Sobre o Bero](https://bero.land/about.md): biografia, carreira e trabalho criativo
-- [Links](https://bero.land/links.md): perfis e canais oficiais
 - [Setup](https://bero.land/setup.md): equipamentos e ferramentas atuais
 - [Projetos](https://bero.land/projects.md): apps, open source e comunidade
 - [Media Kit](https://bero.land/media-kit.md): audiencia, formatos e parcerias
@@ -23,7 +22,6 @@ Bero is the primary site name. Bero Land and bero.land are alternate names for t
 
 - [Home](https://bero.land/en/index.md): identity, key destinations and contact
 - [About Bero](https://bero.land/en/about.md): biography, career and creative work
-- [Links](https://bero.land/en/links.md): official profiles and channels
 - [Setup](https://bero.land/en/setup.md): current equipment and tools
 - [Projects](https://bero.land/en/projects.md): apps, open source and community
 - [Media Kit](https://bero.land/en/media-kit.md): audience, formats and partnerships

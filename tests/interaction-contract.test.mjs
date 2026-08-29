@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 
-const styleVersion = "20260828-3";
+const styleVersion = "20260828-4";
 const scriptVersion = "20260804-5";
 const globalScripts = [
   "analytics.js",
@@ -19,13 +19,15 @@ const activePages = [
   ...readdirSync("en").filter((file) => file.endsWith(".html")).map((file) => `en/${file}`),
 ];
 
-assert.equal(activePages.length, 28, "expected all 28 active pages");
+assert.equal(activePages.length, 26, "expected all 26 active pages");
 
 for (const page of activePages) {
   const html = readFileSync(page, "utf8");
   assert.match(html, new RegExp(`/styles\\.css\\?v=${styleVersion}`), `${page} must version styles.css`);
   for (const script of globalScripts) {
-    const version = script === "interaction-sounds.js"
+    const version = script === "analytics.js"
+      ? "20260828-6"
+      : script === "interaction-sounds.js"
       ? "20260818-1"
       : script === "local-routing.js"
         ? "20260828-1"
@@ -94,6 +96,7 @@ assert.match(styles, /transition:\s*opacity var\(--route-duration\) var\(--ease-
 assert.match(styles, /html\.is-route-entering \.content\s*\{[^}]*translateY\(0\.25rem\)/s);
 assert.match(styles, /\.sound-control\[aria-pressed="false"\]/);
 assert.match(styles, /\.status-bar\s*\{[^}]*justify-content:\s*space-between/s);
+assert.match(styles, /\.visitor-stats\s*\{[^}]*font-variant-numeric|\.visitor-stats dd\s*\{[^}]*font-variant-numeric/s);
 assert.match(styles, /html\[data-input-mode="pointer"\] \.link-row:active/);
 assert.match(styles, /@media \(hover: hover\) and \(pointer: fine\)/);
 assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
@@ -119,8 +122,7 @@ assert.doesNotMatch(styles, /\.content--gallery::before/);
 assert.doesNotMatch(styles, /gallery-backdrop-in/);
 assert.doesNotMatch(styles, /--gallery-parallax-opacity/);
 assert.doesNotMatch(styles, /\.gallery-parallax/);
-assert.match(styles, /\.record--product\s*\{[^}]*grid-template-columns:/s);
-assert.match(styles, /\.record__image img\s*\{[^}]*object-fit:\s*contain/s);
+assert.doesNotMatch(styles, /\.record--product|\.record__image/);
 assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.gallery-gate__float[\s\S]*animation:\s*none/s);
 assert.equal(existsSync("public/assets/obra-de-arte-parallax.webp"), true, "gallery parallax image must exist");
 
@@ -149,22 +151,8 @@ for (const asset of [
 
 for (const page of ["setup.html", "en/setup.html"]) {
   const html = readFileSync(page, "utf8");
-  assert.equal((html.match(/record--product/g) || []).length, 8, `${page} must render a product image for every setup item`);
-  assert.equal((html.match(/class="record__image"/g) || []).length, 8, `${page} must make every product image clickable`);
-  assert.equal((html.match(/\/public\/assets\/setup\/[^"]+\.webp/g) || []).length, 8, `${page} must use optimized local product thumbnails`);
-}
-
-for (const asset of [
-  "macbook-pro-14-m5.webp",
-  "aoc-24g15n.webp",
-  "logitech-mx-vertical.webp",
-  "adamantiun-akira.webp",
-  "nintendo-switch-2.webp",
-  "airpods-pro-3.webp",
-  "hyperx-quadcast.webp",
-  "logitech-c920s.webp",
-]) {
-  assert.equal(existsSync(`public/assets/setup/${asset}`), true, `${asset} must exist`);
+  assert.equal((html.match(/<article class="record">/g) || []).length, 8, `${page} must render all setup items`);
+  assert.doesNotMatch(html, /record--product|record__image|\/public\/assets\/setup\//, `${page} must keep the setup list text-only`);
 }
 
 const galleryGate = readFileSync("gallery-gate.js", "utf8");
@@ -227,4 +215,4 @@ const previews = readFileSync("link-previews.js", "utf8");
 assert.match(previews, /\.featured-link > \.link-row/);
 assert.match(previews, /sourceNodes\.forEach\(function\(node\) \{ node\.remove\(\); \}\)/);
 
-console.log("interaction contract: 28 pages, persistent router, global sound lifecycle, and 20 home previews verified");
+console.log("interaction contract: 26 pages, persistent router, global sound lifecycle, and 20 home previews verified");

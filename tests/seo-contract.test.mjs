@@ -9,19 +9,17 @@ const pages = [
 const mirrorPages = new Map([
   ["index.html", "https://bero.land/index.md"],
   ["about.html", "https://bero.land/about.md"],
-  ["links.html", "https://bero.land/links.md"],
   ["setup.html", "https://bero.land/setup.md"],
   ["projects.html", "https://bero.land/projects.md"],
   ["media-kit.html", "https://bero.land/media-kit.md"],
   ["en/index.html", "https://bero.land/en/index.md"],
   ["en/about.html", "https://bero.land/en/about.md"],
-  ["en/links.html", "https://bero.land/en/links.md"],
   ["en/setup.html", "https://bero.land/en/setup.md"],
   ["en/projects.html", "https://bero.land/en/projects.md"],
   ["en/media-kit.html", "https://bero.land/en/media-kit.md"],
 ]);
 
-assert.equal(pages.length, 28, "sitemap and navigation expect 28 active HTML pages");
+assert.equal(pages.length, 26, "sitemap and navigation expect 26 active HTML pages");
 
 for (const page of pages) {
   const html = readFileSync(page, "utf8");
@@ -65,11 +63,9 @@ for (const [page, markdownUrl] of mirrorPages) {
 
 const priorityPages = new Map([
   ["setup.html", ["Setup", "Setup | Equipamentos e ferramentas"]],
-  ["links.html", ["Links", "Links | Perfis, canais e contato"]],
   ["projects.html", ["Projetos", "Projetos | Apps, open source e comunidade"]],
   ["media-kit.html", ["Media Kit", "Media Kit | Publicidade e parcerias"]],
   ["en/setup.html", ["Setup", "Setup | Gear and tools"]],
-  ["en/links.html", ["Links", "Links | Profiles, channels and contact"]],
   ["en/projects.html", ["Projects", "Projects | Apps, open source and community"]],
   ["en/media-kit.html", ["Media Kit", "Media Kit | Brand partnerships"]],
 ]);
@@ -80,21 +76,10 @@ for (const [page, [heading, title]] of priorityPages) {
   assert.equal(html.includes(`<title>${title}</title>`), true, `${page} must use the planned title`);
 }
 
-assert.match(readFileSync("index.html", "utf8"), /href="\/links"[\s\S]*?<span>Links<\/span>/, "PT home must keep a contextual link to the directory");
-assert.match(readFileSync("en/index.html", "utf8"), /href="\/en\/links"[\s\S]*?<span>Links<\/span>/, "EN home must keep a contextual link to the directory");
-
 const homeSchema = JSON.parse(readFileSync("index.html", "utf8").match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
 const website = homeSchema["@graph"].find((item) => item["@type"] === "WebSite");
 assert.equal(website.name, "Bero");
 assert.deepEqual(website.alternateName, ["Bero Land", "bero.land"]);
-
-for (const page of ["links.html", "en/links.html"]) {
-  const html = readFileSync(page, "utf8");
-  const schema = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-  assert.equal(schema["@type"], "CollectionPage", `${page} must describe a collection`);
-  assert.equal(schema.mainEntity["@type"], "ItemList", `${page} must describe its list`);
-  assert.equal(schema.mainEntity.itemListElement.length, 8, `${page} must list eight official destinations`);
-}
 
 const llms = readFileSync("llms.txt", "utf8");
 assert.match(llms, /^# Bero/m);
@@ -104,9 +89,8 @@ assert.match(llms, /mail@bero\.land/);
 assert.match(llms, /61\.026\.871\/0001-79/);
 
 const sitemap = readFileSync("sitemap.xml", "utf8");
-assert.equal((sitemap.match(/<loc>/g) || []).length, 28, "sitemap must list all 28 HTML pages");
-assert.match(sitemap, /<loc>https:\/\/bero\.land\/links<\/loc>/);
-assert.match(sitemap, /<loc>https:\/\/bero\.land\/en\/links<\/loc>/);
+assert.equal((sitemap.match(/<loc>/g) || []).length, 26, "sitemap must list all 26 HTML pages");
+assert.doesNotMatch(sitemap, /<loc>https:\/\/bero\.land\/(?:en\/)?links<\/loc>/);
 assert.doesNotMatch(sitemap, /\.md<\/loc>/, "Markdown mirrors must not be indexed through the sitemap");
 
 const vercel = JSON.parse(readFileSync("vercel.json", "utf8"));
@@ -116,4 +100,4 @@ assert.equal(llmsHeaders.headers.some((header) => header.key === "X-Robots-Tag" 
 assert.equal(markdownHeaders.headers.some((header) => header.key === "Content-Type" && header.value.startsWith("text/markdown")), true);
 assert.equal(markdownHeaders.headers.some((header) => header.key === "X-Robots-Tag" && header.value === "noindex, follow"), true);
 
-console.log("seo contract: brand, 28 pages, structured data, sitemap, and agent-readable mirrors verified");
+console.log("seo contract: brand, 26 pages, structured data, sitemap, and agent-readable mirrors verified");

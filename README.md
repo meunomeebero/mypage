@@ -51,7 +51,6 @@ Public URLs use the clean format:
 
 - `/`
 - `/about`
-- `/links`
 - `/media-kit`
 - `/projects`
 - `/videos`
