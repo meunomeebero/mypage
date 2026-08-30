@@ -1,18 +1,28 @@
+// Gate: analytics only fires in production, keeps the private key server-side,
+// and reports the same numbers in every locale.
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { config, defaultLocale, localeCodes, pagePath, escapeRegExp } from "./config.mjs";
 
+const { publicKey, apiHost, trackedHosts, timezone } = config.analytics;
 const analytics = readFileSync("analytics.js", "utf8");
 const visitorsApi = readFileSync("api/visitors.js", "utf8");
-const portugueseHome = readFileSync("index.html", "utf8");
-const englishHome = readFileSync("en/index.html", "utf8");
+const portugueseHome = readFileSync(pagePath("index", defaultLocale), "utf8");
+const englishHome = readFileSync(pagePath("index", "en"), "utf8");
 
-assert.match(analytics, /phc_ATBb9rU2g9UtZzV4eBYsGehvqUcCpL7w8KFSzRubhdUL/);
-assert.match(analytics, /https:\/\/us\.i\.posthog\.com/);
+assert.equal(analytics.includes(publicKey), true, "analytics.js must use the public key from site.config.json");
+assert.equal(analytics.includes(apiHost), true, "analytics.js must use the API host from site.config.json");
+// The public key is safe in the browser; the personal API key never is.
+assert.doesNotMatch(analytics, /phx_[A-Za-z0-9]/, "analytics.js must never embed a personal API key");
 assert.match(analytics, /defaults:\s*"2026-05-30"/);
 assert.match(analytics, /person_profiles:\s*"identified_only"/);
 assert.match(analytics, /autocapture:\s*true/);
 assert.match(analytics, /disable_session_recording:\s*true/);
 assert.match(analytics, /TRACKED_HOSTS\.has\(window\.location\.hostname\)/);
+for (const host of trackedHosts) {
+  assert.equal(analytics.includes(`"${host}"`), true, `analytics.js must track ${host}`);
+}
+assert.equal(localeCodes.length >= 2, true, "the visitor counter is asserted per locale");
 assert.doesNotMatch(analytics, /phc_j0R4f80F53ctkaYdSz9VEc0Vz1wFrs7V34jQszuSdN7/);
 assert.doesNotMatch(analytics, /analytics\.bero\.land/);
 
@@ -43,11 +53,13 @@ assert.match(analytics, /fetch\("\/api\/visitors"/);
 assert.match(visitorsApi, /process\.env\.POSTHOG_PERSONAL_API_KEY/);
 assert.doesNotMatch(visitorsApi, /phx_[A-Za-z0-9]+/);
 assert.match(visitorsApi, /projects\/\$\{POSTHOG_PROJECT_ID\}\/query/);
-assert.match(visitorsApi, /properties\.\$host IN \('bero\.land', 'www\.bero\.land'\)/);
+const hostList = trackedHosts.map((host) => `'${host}'`).join(", ");
+assert.equal(visitorsApi.includes(`properties.$host IN (${hostList})`), true, "the visitor API must filter by the tracked hosts");
+assert.equal(visitorsApi.includes(config.analytics.projectId), true, "the visitor API must query the configured project");
 assert.match(visitorsApi, /AS today/);
 assert.match(visitorsApi, /toStartOfMonth/);
 assert.match(visitorsApi, /AS month/);
-assert.match(visitorsApi, /America\/Sao_Paulo/);
+assert.equal(visitorsApi.includes(timezone), true, "the visitor API must resolve days and months in the configured timezone");
 assert.match(visitorsApi, /s-maxage=300, stale-while-revalidate=3600/);
 
 for (const [home, labels] of [
@@ -57,7 +69,7 @@ for (const [home, labels] of [
   assert.match(home, /data-visitor-stats/);
   assert.match(home, /data-visitor-today/);
   assert.match(home, /data-visitor-month/);
-  assert.match(home, /analytics\.js\?v=20260828-6/);
+  assert.match(home, new RegExp(`analytics\\.js\\?v=${escapeRegExp(config.assetVersions["analytics.js"])}`));
   for (const label of labels) assert.match(home, new RegExp(`>${label}<`));
 }
 

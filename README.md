@@ -1,102 +1,68 @@
-# My Page
+# bero.land
 
-Static personal site built with plain HTML, no build step, and support for both PT-BR and English.
+Static personal site in plain HTML, CSS and JavaScript. No build step, no
+dependencies, bilingual (Portuguese at the root, English under `en/`), deployed as
+static files on Vercel.
 
-This project is organized to be easy to fork and reuse as a template. The goal is to keep the core simple and isolate integrations, tracking, sound feedback, and easter eggs into separate files.
+Built to be forked. Editing it — by hand or with an agent — is guarded by a set of
+gates that fail loudly when a change reaches only one language, when a date goes
+stale, or when SEO metadata falls out of sync.
 
-## Structure
+## Quick start
 
-- `index.html` and root pages: PT-BR version
-- `en/`: English mirror
-- `styles.css`: shared visual system
-- `i18n.js`: language switch and automatic PT/EN redirect
-- `app-router.js`: progressive internal navigation that preserves the document and audio context
-- `interaction-sounds.js`: delegated sound feedback for global interactions
-- `public/`: favicon, banner, and static assets
-- `llms.txt` and `*.md`: agent-readable site guide and canonical page summaries
-- `vercel.json`: platform-specific configuration
+```bash
+make preview   # http://localhost:5500
+make check     # run every gate — do this before committing
+```
 
-## Base template
+Nothing to install. `make check` needs Node 18+, `make preview` needs Python 3.
 
-If you want to reuse this project as a serious personal site template, these files are the core:
+## How it is organised
 
-- `*.html` pages
-- `en/*.html`
-- `styles.css`
-- `i18n.js`
-- `public/`
-- `robots.txt`
-- `sitemap.xml`
-- `vercel.json`
+`site.config.json` is the source of truth the gates read: domain, brand, contact,
+the list of pages, official profiles and asset versions. Change it, run `make check`,
+and the failures tell you exactly what still needs updating.
 
-## Optional scripts
+- `index.html` and the other root pages — Portuguese
+- `en/` — the English mirror, one file per Portuguese page
+- `styles.css` — the whole visual system
+- `*.md` + `llms.txt` — Markdown summaries for agents, served `noindex, follow`
+- `tests/` — the gates
+- `api/visitors.js` — serverless visitor counter
+- `vercel.json` — clean URLs, legacy redirects, headers
 
-These files are intentionally isolated. You can remove them in a fork if you do not want tracking or easter eggs.
+Optional and removable in a fork: `analytics.js` (PostHog), `secret-link.js` and
+`chaos-mode.js` (easter egg), `interaction-sounds.js` (sound feedback),
+`avatar-spin.js`, and `api/` with the counter.
 
-- `analytics.js`
-  - PostHog tracking
-  - to remove it, delete `<script src="/analytics.js"></script>` from the pages
+## Runtime
 
-- `secret-link.js`
-  - enables the secret link easter egg on the home page
-  - to remove it, delete the secret content link from `index.html` and `en/index.html`, and remove `<script src="/secret-link.js"></script>` from those two pages
+`app-router.js` progressively enhances internal links: direct hits are plain static
+HTML requests, while in-page navigation swaps the body and preserves history,
+metadata, scroll position and the Web Audio context.
 
-- `chaos-mode.js`
-  - loaded on demand by the easter egg
-  - if `secret-link.js` is removed, this file is no longer needed
+`i18n.js` handles the language switch. It auto-redirects Brazilian visitors to the
+Portuguese pages and leaves everyone else — including crawlers — on the page they
+requested; targeting the rest of the world is `hreflang`'s job.
 
-## URLs
+`interaction-sounds.js` uses delegated events to classify links, controls, fields,
+scrolling and navigation globally. The preference is stored locally and toggled by
+the `SOM` / `SOUND` control in the status bar.
 
-Public URLs use the clean format:
+## Search and agents
 
-- `/`
-- `/about`
-- `/media-kit`
-- `/projects`
-- `/videos`
-- `/contact`
-- `/minilab`
-- `/berolab`
-- `/setup`
-- `/gallery`
-- `/site`
-- `/terms`
-- `/privacy`
-- `/en`
-- matching routes inside `/en/...`
-
-Legacy `.html` routes still work through permanent redirects. That logic is intentionally kept inside `vercel.json`.
+Every page declares a self-referencing canonical plus reciprocal `hreflang`.
+`sitemap.xml` lists all 26 pages, and `llms.txt` points agents at concise Markdown
+mirrors of the main content. The `freshness` gate keeps sitemap dates, JSON-LD
+`dateModified` and the mirrors from ever disagreeing.
 
 ## Deploy
 
-The project is ready for static deployment on Vercel.
+Static deploy on Vercel, no build step. `vercel.json` handles clean URLs and the
+permanent redirects from the legacy `.html` routes.
 
-Important notes:
+## Forking
 
-- there is no build step
-- `vercel.json` handles clean URLs and legacy redirects
-- `sitemap.xml` and SEO metadata already use canonical URLs without `.html`
-
-## Local preview
-
-Open the HTML files directly in a browser, or use any static file server:
-
-```bash
-python3 -m http.server 5500
-```
-
-The `local-routing.js` script rewrites clean URLs to `.html` paths automatically when running on localhost.
-
-## Interaction runtime
-
-Internal links are progressively enhanced by `app-router.js`. The server still receives regular static HTML requests on direct access, while in-page navigation swaps the next document body and preserves the global runtime. This keeps language changes, browser history, metadata, scroll restoration, motion, and the Web Audio context synchronized across PT-BR and English pages.
-
-`interaction-sounds.js` uses delegated events instead of per-component listeners. It classifies links, controls, fields, scrolling, navigation, and expandable content globally. The sound preference is stored locally and can be changed with the `SOM` / `SOUND` control in the status bar.
-
-## Search and agent discovery
-
-Every public HTML page declares canonical and language-alternate URLs. `sitemap.xml` lists the 28 Portuguese and English pages, while `llms.txt` points agents to concise Markdown summaries of the main content. The Markdown mirrors are served with `X-Robots-Tag: noindex, follow` so they do not compete with the canonical HTML pages in search results.
-
-## Note
-
-The `example/` folder is only kept as historical reference for an older version. It is not part of the base template or the deployment setup.
+Read [AGENTS.md](AGENTS.md). It documents the layout, the recipes for common
+changes and what each gate guarantees — written to be followed by a coding agent or
+by you.

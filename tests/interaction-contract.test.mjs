@@ -1,68 +1,47 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { config, allPages, escapeRegExp } from "./config.mjs";
 
-const styleVersion = "20260828-4";
-const scriptVersion = "20260804-5";
-const globalScripts = [
-  "analytics.js",
-  "local-routing.js",
-  "i18n.js",
-  "interaction-sounds.js",
-  "link-previews.js",
-  "secret-link.js",
-  "avatar-spin.js",
-  "lite-embed.js",
-  "app-router.js",
-];
-const activePages = [
-  ...readdirSync(".").filter((file) => file.endsWith(".html")),
-  ...readdirSync("en").filter((file) => file.endsWith(".html")).map((file) => `en/${file}`),
-];
-
-assert.equal(activePages.length, 26, "expected all 26 active pages");
+// Cache busting: every asset ships with the version declared in site.config.json.
+// Change a file, bump its version there, and this gate finds the pages you missed.
+const assetVersions = Object.entries(config.assetVersions);
+const activePages = allPages.map((page) => page.path);
 
 for (const page of activePages) {
   const html = readFileSync(page, "utf8");
-  assert.match(html, new RegExp(`/styles\\.css\\?v=${styleVersion}`), `${page} must version styles.css`);
-  for (const script of globalScripts) {
-    const version = script === "analytics.js"
-      ? "20260828-6"
-      : script === "interaction-sounds.js"
-      ? "20260818-1"
-      : script === "local-routing.js"
-        ? "20260828-1"
-        : scriptVersion;
-    assert.match(html, new RegExp(`/${script.replaceAll(".", "\\.")}\\?v=${version}`), `${page} must load ${script}`);
+  for (const [asset, version] of assetVersions) {
+    assert.match(
+      html,
+      new RegExp(`/${escapeRegExp(asset)}\\?v=${escapeRegExp(version)}`),
+      `${page} must load ${asset} at version ${version}`,
+    );
+    assert.doesNotMatch(
+      html,
+      new RegExp(`/${escapeRegExp(asset)}\\?v=(?!${escapeRegExp(version)})`),
+      `${page} loads a stale version of ${asset} — site.config.json says ${version}`,
+    );
   }
-  assert.match(html, /\/gallery-gate\.js\?v=20260804-3/, `${page} must load the gallery gate lifecycle`);
   assert.doesNotMatch(html, /troll-mode|troll-nyancat|data-troll/, `${page} must not load troll mode`);
 
   const isEnglish = page.startsWith("en/");
   const footer = html.match(/<footer class="footer">[\s\S]*?<\/footer>/)?.[0] || "";
-  assert.match(footer, /mailto:mail@bero\.land/, `${page} must display a contact email in the footer`);
-  assert.match(footer, /CNPJ: 61\.026\.871\/0001-79/, `${page} must display the CNPJ in the footer`);
+  assert.equal(footer.includes(`mailto:${config.contact.email}`), true, `${page} must display a contact email in the footer`);
+  assert.equal(footer.includes(config.contact.legalId), true, `${page} must display the legal registration in the footer`);
   assert.match(footer, isEnglish ? /href="\/en\/terms"/ : /href="\/terms"/, `${page} must link to terms in the footer`);
   assert.match(footer, isEnglish ? /href="\/en\/privacy"/ : /href="\/privacy"/, `${page} must link to privacy in the footer`);
 }
 
-for (const page of ["terms.html", "privacy.html", "en/terms.html", "en/privacy.html"]) {
-  const html = readFileSync(page, "utf8");
-  assert.match(html, /CNPJ: 61\.026\.871\/0001-79/, `${page} must identify the business registration`);
-  assert.match(html, /mail@bero\.land/, `${page} must expose the privacy contact channel`);
+for (const { path } of allPages.filter((page) => page.slug === "terms" || page.slug === "privacy")) {
+  const html = readFileSync(path, "utf8");
+  assert.equal(html.includes(config.contact.legalId), true, `${path} must identify the business registration`);
+  assert.equal(html.includes(config.contact.email), true, `${path} must expose the privacy contact channel`);
 }
 
-for (const page of ["index.html", "en/index.html"]) {
+for (const { path: page } of allPages.filter((entry) => entry.slug === "index")) {
   const html = readFileSync(page, "utf8");
   const primaryLinks = html.match(/<nav class="link-list"[^>]*>[\s\S]*?<\/nav>/)?.[0] || "";
-  const expectedLinkOrder = [
-    "https://x.com/meunomeebero",
-    "https://www.instagram.com/meunomeebero",
-    "https://www.youtube.com/@beroodev",
-    "https://www.youtube.com/@meunomeebero",
-    "https://discord.com/servers/mansao-dev-1132161173484224642",
-    "https://github.com/meunomeebero",
-    "https://www.tiktok.com/@meunomeebero",
-  ];
+  // The home page lists the official profiles in exactly the order declared in site.config.json.
+  const expectedLinkOrder = config.socialProfiles;
 
   assert.equal((html.match(/data-link-detail=/g) || []).length, 10, `${page} must have 10 direct link previews`);
   assert.equal((html.match(/<article class="featured-link">/g) || []).length, 10, `${page} must have 10 featured partners and projects`);
@@ -126,7 +105,7 @@ assert.doesNotMatch(styles, /\.record--product|\.record__image/);
 assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.gallery-gate__float[\s\S]*animation:\s*none/s);
 assert.equal(existsSync("public/assets/obra-de-arte-parallax.webp"), true, "gallery parallax image must exist");
 
-for (const page of ["gallery.html", "en/gallery.html"]) {
+for (const { path: page } of allPages.filter((entry) => entry.slug === "gallery")) {
   const html = readFileSync(page, "utf8");
   assert.match(html, /<div class="gallery-portal" data-gallery-gate>/, `${page} must render the gallery portal`);
   assert.match(html, /class="gallery-gate"[^>]*aria-controls="gallery-collection"[^>]*aria-expanded="false"/, `${page} must expose the gallery gate state`);
@@ -149,7 +128,7 @@ for (const asset of [
   assert.equal(existsSync(`public/assets/gallery/${asset}`), true, `${asset} must exist`);
 }
 
-for (const page of ["setup.html", "en/setup.html"]) {
+for (const { path: page } of allPages.filter((entry) => entry.slug === "setup")) {
   const html = readFileSync(page, "utf8");
   assert.equal((html.match(/<article class="record">/g) || []).length, 8, `${page} must render all setup items`);
   assert.doesNotMatch(html, /record--product|record__image|\/public\/assets\/setup\//, `${page} must keep the setup list text-only`);

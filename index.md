@@ -14,4 +14,4 @@ Bero is Roberto Junior, a software engineer, creator and illustrator from Brazil
 
 Contact: [mail@bero.land](mailto:mail@bero.land)  
 CNPJ: 61.026.871/0001-79  
-Last updated: 2026-08-28
+Last updated: 2026-08-30

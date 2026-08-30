@@ -1,4 +1,5 @@
-const POSTHOG_PROJECT_ID = "483565";
+// Override with the POSTHOG_PROJECT_ID environment variable when forking.
+const POSTHOG_PROJECT_ID = process.env.POSTHOG_PROJECT_ID || "483565";
 const POSTHOG_QUERY_URL = `https://us.posthog.com/api/projects/${POSTHOG_PROJECT_ID}/query/`;
 const CACHE_HEADER = "public, s-maxage=300, stale-while-revalidate=3600";
 

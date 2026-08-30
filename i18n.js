@@ -25,7 +25,12 @@
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const locale = (navigator.language || '').toLowerCase();
     const isBrazil = BRAZIL_TIMEZONES.has(timezone) || locale.endsWith('-br');
-    return isBrazil ? 'pt-BR' : 'en';
+
+    // Only Brazilian visitors are redirected automatically. Sending everyone
+    // else from the canonical Portuguese root to /en also redirects crawlers,
+    // which collapses the Portuguese pages into the English ones in search.
+    // Language targeting for everybody else is handled by hreflang.
+    return isBrazil ? 'pt-BR' : null;
   }
 
   function currentLocale() {
@@ -208,7 +213,7 @@
     syncButtons(locale);
     setupIndexSubnavigation();
 
-    if (options && options.allowRedirect && preferredLocale !== locale) {
+    if (options && options.allowRedirect && preferredLocale && preferredLocale !== locale) {
       maybeRedirect(preferredLocale);
     }
   }

@@ -1,0 +1,63 @@
+{
+  "$comment": "Single source of truth for the automated gates in tests/. Fork this project, edit this file, then run `make check`: every failure is a place you still have to update.",
+  "origin": "https://bero.land",
+  "brand": {
+    "name": "Bero",
+    "alternateNames": ["Bero Land", "bero.land"],
+    "person": "Roberto Junior",
+    "twitterHandle": "@meunomeebero"
+  },
+  "contact": {
+    "email": "mail@bero.land",
+    "legalId": "CNPJ: 61.026.871/0001-79"
+  },
+  "locales": {
+    "pt-BR": { "dir": ".", "home": "/", "isDefault": true },
+    "en": { "dir": "en", "home": "/en", "isDefault": false }
+  },
+  "pages": [
+    { "slug": "index", "markdownMirror": true },
+    { "slug": "about", "markdownMirror": true },
+    { "slug": "media-kit", "markdownMirror": true },
+    { "slug": "projects", "markdownMirror": true },
+    { "slug": "setup", "markdownMirror": true },
+    { "slug": "videos", "markdownMirror": false },
+    { "slug": "contact", "markdownMirror": false },
+    { "slug": "minilab", "markdownMirror": false },
+    { "slug": "berolab", "markdownMirror": false },
+    { "slug": "gallery", "markdownMirror": false },
+    { "slug": "site", "markdownMirror": false },
+    { "slug": "terms", "markdownMirror": false },
+    { "slug": "privacy", "markdownMirror": false }
+  ],
+  "socialProfiles": [
+    "https://x.com/meunomeebero",
+    "https://www.instagram.com/meunomeebero",
+    "https://www.youtube.com/@beroodev",
+    "https://www.youtube.com/@meunomeebero",
+    "https://discord.com/servers/mansao-dev-1132161173484224642",
+    "https://github.com/meunomeebero",
+    "https://www.tiktok.com/@meunomeebero"
+  ],
+  "assetVersions": {
+    "styles.css": "20260828-4",
+    "analytics.js": "20260828-6",
+    "local-routing.js": "20260828-1",
+    "i18n.js": "20260830-1",
+    "interaction-sounds.js": "20260818-1",
+    "gallery-gate.js": "20260804-3",
+    "link-previews.js": "20260804-5",
+    "secret-link.js": "20260804-5",
+    "avatar-spin.js": "20260804-5",
+    "lite-embed.js": "20260804-5",
+    "app-router.js": "20260804-5"
+  },
+  "analytics": {
+    "provider": "posthog",
+    "publicKey": "phc_ATBb9rU2g9UtZzV4eBYsGehvqUcCpL7w8KFSzRubhdUL",
+    "apiHost": "https://us.i.posthog.com",
+    "projectId": "483565",
+    "trackedHosts": ["bero.land", "www.bero.land"],
+    "timezone": "America/Sao_Paulo"
+  }
+}
