@@ -11,4 +11,4 @@ Bero iniciou sua carreira como programador em 2016, quando entrou na faculdade d
 Em 2022, voltou a criar conteudo com foco em ajudar desenvolvedores iniciantes. Hoje, tenta conciliar sua vida como desenvolvedor internacional, criador de conteudo, indie hacker e pai.
 
 Contato: [mail@bero.land](mailto:mail@bero.land)  
-Last updated: 2026-08-29
+Last updated: 2026-09-02

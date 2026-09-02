@@ -11,4 +11,4 @@ Bero started his career as a programmer in 2016, when he enrolled in the Compute
 In 2022, he returned to content creation, focusing primarily on helping beginner developers. These days, he tries to balance his life as an international developer, content creator, indie hacker and father.
 
 Contact: [mail@bero.land](mailto:mail@bero.land)  
-Last updated: 2026-08-29
+Last updated: 2026-09-02

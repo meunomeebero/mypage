@@ -19,4 +19,4 @@ Bero cria conteudo sobre programacao, carreira, tecnologia, animacao e cotidiano
 - Pacotes multiplataforma
 
 Contato para parcerias: [mail@bero.land](mailto:mail@bero.land)  
-Last updated: 2026-08-28
+Last updated: 2026-09-02

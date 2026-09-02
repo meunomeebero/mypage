@@ -19,4 +19,4 @@ Bero creates content about programming, careers, technology, animation and every
 - Multi-platform packages
 
 Partnership contact: [mail@bero.land](mailto:mail@bero.land)  
-Last updated: 2026-08-28
+Last updated: 2026-09-02

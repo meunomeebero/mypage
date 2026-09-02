@@ -44,7 +44,7 @@ for (const { path: page } of allPages.filter((entry) => entry.slug === "index"))
   const expectedLinkOrder = config.socialProfiles;
 
   assert.equal((html.match(/data-link-detail=/g) || []).length, 10, `${page} must have 10 direct link previews`);
-  assert.equal((html.match(/<article class="featured-link">/g) || []).length, 10, `${page} must have 10 featured partners and projects`);
+  assert.equal((html.match(/<article class="featured-link">/g) || []).length, 7, `${page} must have 7 featured partners and projects`);
   assert.doesNotMatch(html, /linkedin\.com|>LinkedIn</i, `${page} must not expose LinkedIn`);
   assert.doesNotMatch(html, /runable\.com|>Runable</i, `${page} must not expose Runable`);
   assert.match(html, /66jYFFOmaZL4QONgNVHg\?ref=B5M7dSuHPHP1u3gDsSU0&amp;coupon=BERODEV/, `${page} must use the System Design referral URL`);
