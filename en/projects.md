@@ -2,11 +2,13 @@
 
 Canonical page: [https://bero.land/en/projects](https://bero.land/en/projects)
 
-- [BeroLab](https://berolab.app): a gamified community for developers seeking useful networking, consistent study and real project experience.
-- [CurricuLOL](https://curricu.lol): an app that analyzes resumes and shows how automated filters can reject them.
-- [Pet me or I die](https://poidbid.vercel.app): a tamagotchi-style game with a single pet for everyone, a paid ranking and a marketing platform.
-- [Terminal Hack](https://terminalhack.shardweb.app): an interactive terminal-inspired experience.
-- [FFmpego](https://github.com/meunomeebero/ffmpego): an open-source Go project for working with FFmpeg.
-- [Blaboard](https://github.com/BeroLab/blaboard): an open-source BeroLab community project.
+- [BeroLab](https://berolab.app): Networking, coding marathons, mentoring and real projects. A place to build alongside other developers.
+- [CurricuLOL](https://curricu.lol): Your next career move starts with a better resume. Get a free analysis and find out what to improve.
+- [Pet me or I die](https://poidbid.vercel.app): One Dudu for everyone to look after. Win his love, climb the rankings and get your projects noticed.
+- [Terminal Hack](https://terminalhack.shardweb.app): A race of commands, one opponent and a system to hack. The fastest typist wins.
+- [FFmpego](https://github.com/meunomeebero/ffmpego): Less time editing, more time creating. A Go CLI to remove silence, trim, convert and join videos with ffmpeg.
+- [Blaboard](https://github.com/BeroLab/blaboard): A project board built by the community, for the community. Our open-source alternative to Linear.
 
-Last updated: 2026-09-02
+Contribute to Blaboard by joining [BeroLab](https://berolab.app) for free.
+
+Last updated: 2026-10-11

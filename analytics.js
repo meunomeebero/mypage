@@ -5,7 +5,7 @@
   const POSTHOG_HOST = "https://us.i.posthog.com";
   const TRACKED_HOSTS = new Set(["bero.land", "www.bero.land"]);
   const SESSION_KEY = "bero-land-session-started-v2";
-  const VISITOR_CACHE_KEY = "bero-land-visitor-counts-v2";
+  const VISITOR_CACHE_KEY = "bero-land-visitor-counts-v3";
   const VISITOR_CACHE_TTL = 5 * 60 * 1000;
   const ENGAGEMENT_MILESTONES = [10, 30, 60, 120, 300];
   const SCROLL_MILESTONES = [25, 50, 75, 90, 100];
@@ -80,7 +80,8 @@
   }
 
   function textOf(node) {
-    return (node.textContent || "").replace(/\s+/g, " ").trim().slice(0, 160);
+    const title = node.querySelector(".project-card__title") || node;
+    return (title.textContent || "").replace(/\s+/g, " ").trim().slice(0, 160);
   }
 
   function sectionOf(node) {
@@ -401,7 +402,7 @@
     if (!cached) return null;
     try {
       const parsed = JSON.parse(cached);
-      if (Date.now() - parsed.cachedAt < VISITOR_CACHE_TTL) {
+      if (validVisitorCounts(parsed) && Date.now() - parsed.cachedAt < VISITOR_CACHE_TTL) {
         visitorCountsCache = parsed;
         return parsed;
       }
@@ -409,6 +410,12 @@
       return null;
     }
     return null;
+  }
+
+  function validVisitorCounts(data) {
+    return Number.isSafeInteger(data.total) && data.total >= 0 &&
+      (data.total === 0 ? data.since === null :
+        typeof data.since === "string" && /^\d{4}-\d{2}-\d{2}$/.test(data.since) && Number.isFinite(Date.parse(data.since)));
   }
 
   function fetchVisitorCounts() {
@@ -422,9 +429,10 @@
         return response.json();
       })
       .then(function (data) {
+        if (!validVisitorCounts(data)) throw new Error("Invalid visitor count");
         const normalized = {
-          today: Math.max(0, Number(data.today) || 0),
-          month: Math.max(0, Number(data.month) || 0),
+          total: data.total,
+          since: data.since,
           updatedAt: data.updatedAt || new Date().toISOString(),
           cachedAt: Date.now(),
         };
@@ -439,25 +447,34 @@
   function renderVisitorStats() {
     const root = document.querySelector("[data-visitor-stats]");
     if (!root || root.dataset.state === "loading" || root.dataset.state === "ready") return;
-    const today = root.querySelector("[data-visitor-today]");
-    const month = root.querySelector("[data-visitor-month]");
-    if (!today || !month) return;
+    const total = root.querySelector("[data-visitor-total]");
+    const since = root.querySelector("[data-visitor-since]");
+    if (!total || !since) return;
+    const english = getLocale().startsWith("en");
 
     root.dataset.state = "loading";
     fetchVisitorCounts().then(function (counts) {
       if (!root.isConnected) return;
       root.dataset.state = "ready";
-      root.title = getLocale().startsWith("en")
-        ? "Unique visitors today and this month, updated every few minutes"
-        : "Visitantes únicos de hoje e deste mês, atualizados a cada poucos minutos";
-      animateVisitorCount(today, counts.today);
-      animateVisitorCount(month, counts.month);
+      root.title = english
+        ? "Recorded page views, not unique people. Updated every few minutes."
+        : "Visualizações de página registradas, não pessoas únicas. Atualizadas a cada poucos minutos.";
+      if (counts.since) {
+        const date = new Intl.DateTimeFormat(getLocale(), { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" })
+          .format(new Date(counts.since + "T12:00:00Z"));
+        since.textContent = (english ? "visits since " : "visitas desde ") + date;
+      } else {
+        since.textContent = english ? "visits since tracking began" : "visitas desde o início da contagem";
+      }
+      animateVisitorCount(total, counts.total);
     }).catch(function () {
       if (!root.isConnected) return;
       root.dataset.state = "error";
       root.title = getLocale().startsWith("en")
         ? "Visitor count temporarily unavailable"
         : "Contagem de visitantes temporariamente indisponível";
+      since.textContent = english ? "Visits temporarily unavailable" : "Visitas temporariamente indisponíveis";
+      total.textContent = "—";
     });
   }
 

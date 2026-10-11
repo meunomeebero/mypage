@@ -33,6 +33,7 @@
     collapse: 120,
     media: 180,
     reveal: 150,
+    arrival: 125,
     success: 180,
   };
   const lastCueAt = {};
@@ -170,6 +171,7 @@
     }
 
     if (kind === "scroll") {
+      if (now - (lastCueAt.arrival || 0) < 200) return false;
       voice(audioContext, {
         type: "sine",
         from: 310,
@@ -189,6 +191,15 @@
         duration: entering ? 0.12 : 0.085,
         volume: 0.014,
       });
+      return true;
+    }
+
+    if (kind === "arrival") {
+      // A quiet pentatonic phrase follows the visual stagger without piling up notes.
+      const notes = [392, 440, 523.25, 587.33, 659.25];
+      const step = Number(String(profile || "").split("-").pop()) || 0;
+      const note = notes[step % notes.length];
+      voice(audioContext, { type: "sine", from: note * 0.82, to: note, duration: 0.095, volume: 0.009 });
       return true;
     }
 

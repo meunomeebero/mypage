@@ -5,16 +5,8 @@ const CACHE_HEADER = "public, s-maxage=300, stale-while-revalidate=3600";
 
 const VISITOR_QUERY = `
   SELECT
-    count(DISTINCT if(
-      toTimeZone(timestamp, 'America/Sao_Paulo') >= toStartOfDay(now('America/Sao_Paulo')),
-      distinct_id,
-      NULL
-    )) AS today,
-    count(DISTINCT if(
-      toTimeZone(timestamp, 'America/Sao_Paulo') >= toStartOfMonth(now('America/Sao_Paulo')),
-      distinct_id,
-      NULL
-    )) AS month
+    count() AS total,
+    toString(toDate(toTimeZone(min(timestamp), 'America/Sao_Paulo'))) AS since
   FROM events
   WHERE event = '$pageview'
     AND properties.$host IN ('bero.land', 'www.bero.land')
@@ -51,11 +43,20 @@ export default async function handler(request, response) {
     const row = Array.isArray(payload.results) ? payload.results[0] : null;
     if (!Array.isArray(row)) throw new Error("Unexpected PostHog response");
 
+    const total = Number(row[0]);
+    const since = total === 0 ? null : row[1];
+    if (!Number.isSafeInteger(total) || total < 0 || !/^[0-9]+$/.test(String(row[0]))) {
+      throw new Error("Invalid visit count");
+    }
+    if (total > 0 && (typeof since !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(since) || !Number.isFinite(Date.parse(since)) || new Date(since).toISOString().slice(0, 10) !== since)) {
+      throw new Error("Invalid first visit date");
+    }
+
     response.setHeader("Cache-Control", CACHE_HEADER);
     response.setHeader("Content-Type", "application/json; charset=utf-8");
     return response.status(200).json({
-      today: Math.max(0, Number(row[0]) || 0),
-      month: Math.max(0, Number(row[1]) || 0),
+      total,
+      since,
       updatedAt: new Date().toISOString(),
       timezone: "America/Sao_Paulo",
     });

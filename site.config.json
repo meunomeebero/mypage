@@ -40,17 +40,19 @@
     "https://www.tiktok.com/@meunomeebero"
   ],
   "assetVersions": {
-    "styles.css": "20260828-4",
-    "analytics.js": "20260828-6",
+    "styles.css": "20261011-3",
+    "analytics.js": "20261011-2",
     "local-routing.js": "20260828-1",
     "i18n.js": "20260830-1",
-    "interaction-sounds.js": "20260818-1",
+    "interaction-sounds.js": "20261011-1",
+    "public/vendor/motion.js": "14.1.0",
+    "site-motion.js": "20261011-1",
     "gallery-gate.js": "20260804-3",
     "link-previews.js": "20260804-5",
     "secret-link.js": "20260804-5",
     "avatar-spin.js": "20260804-5",
     "lite-embed.js": "20260804-5",
-    "app-router.js": "20260804-5"
+    "app-router.js": "20261011-1"
   },
   "analytics": {
     "provider": "posthog",

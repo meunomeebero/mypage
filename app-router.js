@@ -190,7 +190,7 @@
 
       document.documentElement.dataset.routerState = "ready";
       document.documentElement.dataset.routeCount = String(Number(document.documentElement.dataset.routeCount || 0) + 1);
-      routeEvent("bero:route-complete", { url: url.href });
+      routeEvent("bero:route-complete", { url: url.href, animate: shouldAnimate });
       window.BeroSound?.play("navigate-in", "navigation");
     } catch (error) {
       if (error.name === "AbortError") return;

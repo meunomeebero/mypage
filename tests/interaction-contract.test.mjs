@@ -44,7 +44,9 @@ for (const { path: page } of allPages.filter((entry) => entry.slug === "index"))
   const expectedLinkOrder = config.socialProfiles;
 
   assert.equal((html.match(/data-link-detail=/g) || []).length, 10, `${page} must have 10 direct link previews`);
-  assert.equal((html.match(/<article class="featured-link">/g) || []).length, 7, `${page} must have 7 featured partners and projects`);
+  assert.equal((html.match(/<article class="featured-link">/g) || []).length, 4, `${page} must preserve the four partners`);
+  assert.equal((html.match(/<article class="project-card[ "]/g) || []).length, 3, `${page} must have three project cards`);
+  assert.ok(html.indexOf('aria-labelledby="partners-title"') < html.indexOf('aria-labelledby="routing-title"'), `${page} must put partners before projects`);
   assert.doesNotMatch(html, /linkedin\.com|>LinkedIn</i, `${page} must not expose LinkedIn`);
   assert.doesNotMatch(html, /runable\.com|>Runable</i, `${page} must not expose Runable`);
   assert.match(html, /66jYFFOmaZL4QONgNVHg\?ref=B5M7dSuHPHP1u3gDsSU0&amp;coupon=BERODEV/, `${page} must use the System Design referral URL`);
@@ -60,6 +62,16 @@ for (const { path: page } of allPages.filter((entry) => entry.slug === "index"))
 }
 
 const styles = readFileSync("styles.css", "utf8");
+assert.match(styles, /\.project-card__cover\s*\{[^}]*height:\s*auto/s, "OG artwork must retain its original aspect ratio");
+assert.match(styles, /\.project-card \.project-card__media:has\(> \.project-card__cover\)\s*\{[^}]*align-self:\s*center[^}]*min-height:\s*0[^}]*aspect-ratio:\s*auto/s, "OG containers must fit the artwork without letterboxing");
+assert.doesNotMatch(styles, /(?:linear|radial|conic)-gradient\(/, "UI surfaces must use solid backgrounds");
+assert.match(styles, /--shadow-subtle: 0 2px 6px rgba\(0, 0, 0, 0\.12\)/);
+for (const [, value] of styles.matchAll(/box-shadow:\s*([^;]+);/g)) {
+  assert.equal(value, "var(--shadow-subtle)", "UI shadows must use the restrained shared token");
+}
+for (const [, value] of styles.matchAll(/filter:\s*(drop-shadow[^;]+);/g)) {
+  assert.equal(value, "drop-shadow(var(--shadow-subtle))", "artwork shadows must stay subtle too");
+}
 assert.match(styles, /\.link-row__detail\s*\{[^}]*position:\s*absolute/s);
 assert.match(styles, /\.link-row__detail\s*\{[^}]*opacity:\s*0/s);
 assert.match(styles, /\.link-row--preview:hover \.link-row__detail/);
@@ -194,4 +206,4 @@ const previews = readFileSync("link-previews.js", "utf8");
 assert.match(previews, /\.featured-link > \.link-row/);
 assert.match(previews, /sourceNodes\.forEach\(function\(node\) \{ node\.remove\(\); \}\)/);
 
-console.log("interaction contract: 26 pages, persistent router, global sound lifecycle, and 20 home previews verified");
+console.log("interaction contract: 26 pages, persistent router, global sounds, partner order and project cards verified");

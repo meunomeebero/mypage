@@ -56,19 +56,23 @@ assert.match(visitorsApi, /projects\/\$\{POSTHOG_PROJECT_ID\}\/query/);
 const hostList = trackedHosts.map((host) => `'${host}'`).join(", ");
 assert.equal(visitorsApi.includes(`properties.$host IN (${hostList})`), true, "the visitor API must filter by the tracked hosts");
 assert.equal(visitorsApi.includes(config.analytics.projectId), true, "the visitor API must query the configured project");
-assert.match(visitorsApi, /AS today/);
-assert.match(visitorsApi, /toStartOfMonth/);
-assert.match(visitorsApi, /AS month/);
-assert.equal(visitorsApi.includes(timezone), true, "the visitor API must resolve days and months in the configured timezone");
+assert.match(visitorsApi, /count\(\) AS total/);
+assert.match(visitorsApi, /min\(timestamp\)/);
+assert.match(visitorsApi, /AS since/);
+assert.doesNotMatch(visitorsApi, /AS today|AS month|toStartOfMonth/);
+assert.equal(visitorsApi.includes(timezone), true, "the first recorded visit must use the configured timezone");
 assert.match(visitorsApi, /s-maxage=300, stale-while-revalidate=3600/);
+assert.match(analytics, /day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC"/);
+assert.match(analytics, /"visits since " : "visitas desde "/);
 
 for (const [home, labels] of [
-  [portugueseHome, ["hoje", "mês"]],
-  [englishHome, ["today", "month"]],
+  [portugueseHome, ["Visitas"]],
+  [englishHome, ["Visits"]],
 ]) {
   assert.match(home, /data-visitor-stats/);
-  assert.match(home, /data-visitor-today/);
-  assert.match(home, /data-visitor-month/);
+  assert.match(home, /data-visitor-total/);
+  assert.match(home, /data-visitor-since/);
+  assert.doesNotMatch(home, /data-visitor-today|data-visitor-month/);
   assert.match(home, new RegExp(`analytics\\.js\\?v=${escapeRegExp(config.assetVersions["analytics.js"])}`));
   for (const label of labels) assert.match(home, new RegExp(`>${label}<`));
 }

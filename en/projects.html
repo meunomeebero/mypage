@@ -34,7 +34,7 @@
   <meta name="twitter:image:alt" content="Bero Land banner">
   <link rel="preconnect" href="https://static.ietf.org" crossorigin>
   <link rel="stylesheet" href="https://static.ietf.org/fonts/noto-sans-mono/import.css">
-  <link rel="stylesheet" href="/styles.css?v=20260828-4">
+  <link rel="stylesheet" href="/styles.css?v=20261011-3">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -42,7 +42,7 @@
       "@id": "https://bero.land/en/projects#projects",
       "url": "https://bero.land/en/projects",
       "name": "Projects",
-      "dateModified": "2026-09-02",
+      "dateModified": "2026-10-11",
       "about": {
         "@type": "Person",
         "@id": "https://bero.land/#person",
@@ -162,80 +162,127 @@
             <span class="section-id">03.</span>
             <h2 id="projects-title">Projects</h2>
           </div>
-          <div class="record-list">
-            <article class="record">
-              <div class="record__head">
-                <h3>BeroLab</h3>
-                <span class="record__tag">active</span>
-              </div>
-              <p>A community for developers focused on networking, marathons, mentoring, live events and building together.</p>
-              <div class="record__meta">
-                <div><strong>Type:</strong> product / community</div>
-                <div><strong>URL:</strong> <a href="https://berolab.app" target="_blank" rel="noopener noreferrer">berolab.app</a></div>
-              </div>
+          <div class="project-grid">
+            <article class="project-card project-card--wide project-card--berolab">
+              <a class="project-card__link" href="https://berolab.app" target="_blank" rel="noopener noreferrer" aria-labelledby="project-berolab-title">
+                <div class="project-card__media">
+                  <img class="project-card__cover" src="/public/projects/berolab-cover.webp" alt="" width="960" height="504" fetchpriority="high" decoding="async">
+                </div>
+                <div class="project-card__body">
+                  <div class="project-card__identity">
+                    <img class="project-card__icon" src="/public/projects/berolab-icon.webp" alt="" width="28" height="28" loading="lazy" decoding="async">
+                    <span class="project-card__category">community</span>
+                  </div>
+                  <h3 class="project-card__title" id="project-berolab-title">BeroLab</h3>
+                  <p class="project-card__description">Networking, coding marathons, mentoring and real projects. A place to build alongside other developers.</p>
+                  <div class="project-card__footer">
+                    <span>Meet the community</span>
+                    <span class="project-card__arrow" aria-hidden="true">↗</span>
+                  </div>
+                </div>
+              </a>
             </article>
-
-            <article class="record">
-              <div class="record__head">
-                <h3>CurricuLOL</h3>
-                <span class="record__tag">active</span>
-              </div>
-              <p>75% of resumes are eliminated before a human ever reads them. Bots decide whether you move forward — your resume is being thrown out right now. Run a free analysis and triple your chances of landing interviews.</p>
-              <div class="record__meta">
-                <div><strong>Type:</strong> product / saas</div>
-                <div><strong>URL:</strong> <a href="https://curricu.lol" target="_blank" rel="noopener noreferrer">curricu.lol</a></div>
-              </div>
+            <article class="project-card project-card--curriculol">
+              <a class="project-card__link" href="https://curricu.lol" target="_blank" rel="noopener noreferrer" aria-labelledby="project-curriculol-title">
+                <div class="project-card__media">
+                  <img class="project-card__cover" src="/public/projects/curriculol-cover.webp" alt="" width="960" height="504" loading="lazy" decoding="async">
+                </div>
+                <div class="project-card__body">
+                  <div class="project-card__identity">
+                    <img class="project-card__icon" src="/public/projects/curriculol-icon.webp" alt="" width="28" height="28" loading="lazy" decoding="async">
+                    <span class="project-card__category">app / careers</span>
+                  </div>
+                  <h3 class="project-card__title" id="project-curriculol-title">CurricuLOL</h3>
+                  <p class="project-card__description">Your next career move starts with a better resume. Get a free analysis and find out what to improve.</p>
+                  <div class="project-card__footer">
+                    <span>Analyze your resume</span>
+                    <span class="project-card__arrow" aria-hidden="true">↗</span>
+                  </div>
+                </div>
+              </a>
             </article>
-
-            <article class="record">
-              <div class="record__head">
-                <h3>Pet me or I die</h3>
-                <span class="record__tag">active</span>
-              </div>
-              <p>A tamagotchi-style game, except there is only one pet for everyone. Compete for Dudu's love, climb the ranking, earn visibility and use it to advertise your apps or anything else. It is a game and a marketing platform at once: you can pay to climb the ranking and promote your links.</p>
-              <div class="record__meta">
-                <div><strong>Type:</strong> game / browser</div>
-                <div><strong>URL:</strong> <a href="https://poidbid.vercel.app" target="_blank" rel="noopener noreferrer">poidbid.vercel.app</a></div>
-              </div>
+            <article class="project-card project-card--dudu">
+              <a class="project-card__link" href="https://poidbid.vercel.app" target="_blank" rel="noopener noreferrer" aria-labelledby="project-dudu-title">
+                <div class="project-card__media">
+                  <img class="project-card__cover" src="/public/projects/dudu-cover.webp" alt="" width="960" height="504" loading="lazy" decoding="async">
+                </div>
+                <div class="project-card__body">
+                  <div class="project-card__identity">
+                    <img class="project-card__icon" src="/public/projects/dudu-icon.webp" alt="" width="28" height="28" loading="lazy" decoding="async">
+                    <span class="project-card__category">browser game</span>
+                  </div>
+                  <h3 class="project-card__title" id="project-dudu-title">Pet me or I die</h3>
+                  <p class="project-card__description">One Dudu for everyone to look after. Win his love, climb the rankings and get your projects noticed.</p>
+                  <div class="project-card__footer">
+                    <span>Meet Dudu</span>
+                    <span class="project-card__arrow" aria-hidden="true">↗</span>
+                  </div>
+                </div>
+              </a>
             </article>
-
-            <article class="record">
-              <div class="record__head">
-                <h3>Terminal Hack</h3>
-                <span class="record__tag">active</span>
-              </div>
-              <p>A multiplayer hacking game: race to break into your opponent's system first. Whoever types the hacker commands fastest wins.</p>
-              <div class="record__meta">
-                <div><strong>Type:</strong> game / browser</div>
-                <div><strong>URL:</strong> <a href="https://terminalhack.shardweb.app" target="_blank" rel="noopener noreferrer">terminalhack.shardweb.app</a></div>
-              </div>
+            <article class="project-card project-card--wide project-card--terminal">
+              <a class="project-card__link" href="https://terminalhack.shardweb.app" target="_blank" rel="noopener noreferrer" aria-labelledby="project-terminal-title">
+                <div class="project-card__media">
+                  <div class="project-card__terminal" aria-hidden="true">
+                    <span class="project-card__terminal-bar"><i></i><i></i><i></i><span>terminal_hack</span></span>
+                    <span class="project-card__terminal-code">&gt; connect --opponent<br>&gt; bypass firewall<br><strong>ACCESS GRANTED<span class="project-card__cursor">_</span></strong></span>
+                    <span class="project-card__terminal-meta">01 vs 01 / 60s</span>
+                  </div>
+                </div>
+                <div class="project-card__body">
+                  <div class="project-card__identity">
+                    <span class="project-card__icon project-card__icon--terminal" aria-hidden="true">&gt;_</span>
+                    <span class="project-card__category">multiplayer game</span>
+                  </div>
+                  <h3 class="project-card__title" id="project-terminal-title">Terminal Hack</h3>
+                  <p class="project-card__description">A race of commands, one opponent and a system to hack. The fastest typist wins.</p>
+                  <div class="project-card__footer">
+                    <span>Enter the arena</span>
+                    <span class="project-card__arrow" aria-hidden="true">↗</span>
+                  </div>
+                </div>
+              </a>
             </article>
-
-            <article class="record">
-              <div class="record__head">
-                <h3>FFmpego</h3>
-                <span class="record__tag">open source</span>
-              </div>
-              <p>A Go CLI tool that makes video and audio processing simple with ffmpeg. Built to scratch my own itch — I use it to edit my videos from the terminal. Removes silence, converts formats, extracts segments and more, without needing to know about codecs or bitrates.</p>
-              <div class="record__meta">
-                <div><strong>Type:</strong> open source / CLI tool</div>
-                <div><strong>Repo:</strong> <a href="https://github.com/meunomeebero/ffmpego" target="_blank" rel="noopener noreferrer">github.com/meunomeebero/ffmpego</a></div>
-              </div>
+            <article class="project-card project-card--ffmpego">
+              <a class="project-card__link" href="https://github.com/meunomeebero/ffmpego" target="_blank" rel="noopener noreferrer" aria-labelledby="project-ffmpego-title">
+                <div class="project-card__media">
+                  <img class="project-card__cover" src="/public/projects/ffmpego-cover.webp" alt="" width="960" height="480" loading="lazy" decoding="async">
+                </div>
+                <div class="project-card__body">
+                  <div class="project-card__identity">
+                    <img class="project-card__icon" src="/public/projects/github-icon.webp" alt="" width="28" height="28" loading="lazy" decoding="async">
+                    <span class="project-card__category">open source / Go</span>
+                  </div>
+                  <h3 class="project-card__title" id="project-ffmpego-title">FFmpego</h3>
+                  <p class="project-card__description">Less time editing, more time creating. A Go CLI to remove silence, trim, convert and join videos with ffmpeg.</p>
+                  <div class="project-card__footer">
+                    <span>Explore the code</span>
+                    <span class="project-card__arrow" aria-hidden="true">↗</span>
+                  </div>
+                </div>
+              </a>
             </article>
-
-            <article class="record">
-              <div class="record__head">
-                <h3>Blaboard</h3>
-                <span class="record__tag">open source</span>
-              </div>
-              <p>An open source board we are building with the community to replace Linear inside BeroLab.</p>
-              <div class="record__meta">
-                <div><strong>Type:</strong> open source / internal product tooling</div>
-                <div><strong>Repo:</strong> <a href="https://github.com/BeroLab/blaboard" target="_blank" rel="noopener noreferrer">github.com/BeroLab/blaboard</a></div>
-                <div><strong>Contribute:</strong> to contribute, just sign up for free on <a href="https://berolab.app" target="_blank" rel="noopener noreferrer">BeroLab</a></div>
-              </div>
+            <article class="project-card project-card--blaboard">
+              <a class="project-card__link" href="https://github.com/BeroLab/blaboard" target="_blank" rel="noopener noreferrer" aria-labelledby="project-blaboard-title">
+                <div class="project-card__media">
+                  <img class="project-card__cover" src="/public/projects/blaboard-cover.webp" alt="" width="960" height="480" loading="lazy" decoding="async">
+                </div>
+                <div class="project-card__body">
+                  <div class="project-card__identity">
+                    <img class="project-card__icon" src="/public/projects/github-icon.webp" alt="" width="28" height="28" loading="lazy" decoding="async">
+                    <span class="project-card__category">open source / community</span>
+                  </div>
+                  <h3 class="project-card__title" id="project-blaboard-title">Blaboard</h3>
+                  <p class="project-card__description">A project board built by the community, for the community. Our open-source alternative to Linear.</p>
+                  <div class="project-card__footer">
+                    <span>Explore the code</span>
+                    <span class="project-card__arrow" aria-hidden="true">↗</span>
+                  </div>
+                </div>
+              </a>
             </article>
           </div>
+          <p class="project-contribute">Want to contribute to Blaboard? <a href="https://berolab.app" target="_blank" rel="noopener noreferrer">Join BeroLab for free</a>.</p>
         </section>
 
         <footer class="footer">
@@ -246,15 +293,17 @@
       </div>
     </main>
   </div>
-  <script src="/analytics.js?v=20260828-6"></script>
+  <script src="/analytics.js?v=20261011-2"></script>
   <script src="/local-routing.js?v=20260828-1"></script>
   <script src="/i18n.js?v=20260830-1"></script>
-  <script src="/interaction-sounds.js?v=20260818-1"></script>
+  <script src="/interaction-sounds.js?v=20261011-1"></script>
   <script src="/gallery-gate.js?v=20260804-3"></script>
   <script src="/link-previews.js?v=20260804-5"></script>
   <script src="/secret-link.js?v=20260804-5"></script>
   <script src="/avatar-spin.js?v=20260804-5"></script>
   <script src="/lite-embed.js?v=20260804-5"></script>
-  <script src="/app-router.js?v=20260804-5"></script>
+  <script src="/app-router.js?v=20261011-1"></script>
+  <script src="/public/vendor/motion.js?v=14.1.0" defer></script>
+  <script src="/site-motion.js?v=20261011-1" defer></script>
 </body>
 </html>
