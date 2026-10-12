@@ -24,4 +24,4 @@ Cursos do Augusto Galego com 20% off e hospedagem gratuita da Shardcloud. Veja o
 
 Contato: [mail@bero.land](mailto:mail@bero.land)
 CNPJ: 61.026.871/0001-79  
-Last updated: 2026-10-11
+Last updated: 2026-10-12

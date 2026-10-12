@@ -7,7 +7,7 @@
     ".featured-link", ".project-card", ".record", ".body-copy > *",
     ".fact", ".text-list > li", ".checklist > li", ".table-wrap", ".section > .note",
     ".section > .video-embed", ".embed-frame", ".cta-stack", ".pricing-block",
-    ".gallery-gate-stage", ".project-index-link", ".project-contribute", ".footer",
+    ".gallery-gate-stage", ".project-contribute", ".footer",
   ].join(",");
   const active = new Map();
   let observer;

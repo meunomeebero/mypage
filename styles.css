@@ -329,11 +329,10 @@ html.is-route-entering .content {
   min-height: 100%;
   padding: 6px;
   overflow: hidden;
-  border: 1px solid rgba(237, 241, 246, 0.12);
+  border: 1px solid var(--line);
   border-radius: var(--card-radius);
   corner-shape: squircle;
-  background: #222;
-  box-shadow: var(--shadow-subtle);
+  background: transparent;
   color: var(--text);
   text-decoration: none;
   transition: transform 380ms cubic-bezier(0.22, 1.5, 0.36, 1), border-color 180ms ease;
@@ -491,16 +490,12 @@ html.is-route-entering .content {
 .project-card__terminal-meta { color: #a6c3b2; font-size: 0.6rem; }
 .project-card__icon--terminal { display: grid; place-items: center; color: #b5f09d; background: #233e26; font-size: 0.75rem; }
 
-.project-index-link,
 .project-contribute {
   display: block;
   margin: 1.5rem 0 0;
   color: var(--muted);
   font-size: 0.78rem;
 }
-
-.project-index-link { width: fit-content; padding: 0.4rem 0; text-underline-offset: 0.35rem; }
-.project-index-link span { display: inline-block; margin-left: 0.3rem; }
 
 .project-card__link:focus-visible {
   outline: 2px solid var(--text);
@@ -619,6 +614,7 @@ html.is-route-entering .content {
 }
 
 .avatar {
+  display: block;
   position: relative;
   width: 6.5rem;
   height: 6.5rem;
@@ -626,6 +622,27 @@ html.is-route-entering .content {
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid var(--line);
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.avatar:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+
+.avatar__face,
+.avatar__vector,
+.avatar__vector svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar [hidden] {
+  display: none;
 }
 
 .avatar img {

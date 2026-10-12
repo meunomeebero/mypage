@@ -34,7 +34,7 @@
   <meta name="twitter:image:alt" content="Banner oficial do Bero">
   <link rel="preconnect" href="https://static.ietf.org" crossorigin>
   <link rel="stylesheet" href="https://static.ietf.org/fonts/noto-sans-mono/import.css">
-  <link rel="stylesheet" href="/styles.css?v=20261011-3">
+  <link rel="stylesheet" href="/styles.css?v=20261012-1">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -54,7 +54,7 @@
           "url": "https://bero.land/",
           "name": "Bero | Site oficial",
           "description": "Site oficial de Bero, nome artístico de Roberto Junior.",
-          "dateModified": "2026-10-11",
+          "dateModified": "2026-10-12",
           "isPartOf": { "@id": "https://bero.land/#website" },
           "mainEntity": { "@id": "https://bero.land/#person" }
         },
@@ -150,9 +150,12 @@
         </div>
 
         <header class="hero">
-          <div class="avatar" aria-hidden="true">
-            <img src="/public/fly.gif" alt="Bero">
-          </div>
+          <button class="avatar" type="button" aria-label="Alternar avatar do Bero" aria-pressed="false" data-avatar-face="gif" data-avatar-state="idle">
+            <span class="avatar__face" aria-hidden="true">
+              <img src="/public/fly.gif" alt="" width="120" height="120">
+              <span class="avatar__vector" hidden></span>
+            </span>
+          </button>
           <h1>Bero</h1>
           <p class="eyebrow">Creator / Programmer / Brand Partnerships</p>
         </header>
@@ -314,7 +317,6 @@
               </a>
             </article>
           </div>
-          <a class="project-index-link" href="/projects">Explore todos os projetos <span aria-hidden="true">↗</span></a>
         </section>
 
         <section class="section" aria-labelledby="secondary-links-title">
@@ -346,10 +348,10 @@
   <script src="/gallery-gate.js?v=20260804-3"></script>
   <script src="/link-previews.js?v=20260804-5"></script>
   <script src="/secret-link.js?v=20260804-5"></script>
-  <script src="/avatar-spin.js?v=20260804-5"></script>
+  <script src="/avatar-spin.js?v=20261012-1"></script>
   <script src="/lite-embed.js?v=20260804-5"></script>
   <script src="/app-router.js?v=20261011-1"></script>
   <script src="/public/vendor/motion.js?v=14.1.0" defer></script>
-  <script src="/site-motion.js?v=20261011-1" defer></script>
+  <script src="/site-motion.js?v=20261012-1" defer></script>
 </body>
 </html>

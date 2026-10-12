@@ -24,4 +24,4 @@ Courses by Augusto Galego with 20% off and free hosting from Shardcloud. See the
 
 Contact: [mail@bero.land](mailto:mail@bero.land)  
 Brazilian company registration: CNPJ 61.026.871/0001-79  
-Last updated: 2026-10-11
+Last updated: 2026-10-12
