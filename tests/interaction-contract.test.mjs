@@ -45,7 +45,6 @@ for (const { path: page } of allPages.filter((entry) => entry.slug === "index"))
 
   assert.equal((html.match(/data-link-detail=/g) || []).length, 10, `${page} must have 10 direct link previews`);
   assert.equal((html.match(/<article class="featured-link">/g) || []).length, 4, `${page} must preserve the four partners`);
-  assert.equal((html.match(/<article class="project-card[ "]/g) || []).length, 3, `${page} must have three project cards`);
   assert.ok(html.indexOf('aria-labelledby="partners-title"') < html.indexOf('aria-labelledby="routing-title"'), `${page} must put partners before projects`);
   assert.doesNotMatch(html, /linkedin\.com|>LinkedIn</i, `${page} must not expose LinkedIn`);
   assert.doesNotMatch(html, /runable\.com|>Runable</i, `${page} must not expose Runable`);

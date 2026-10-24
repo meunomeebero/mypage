@@ -13,6 +13,7 @@ Courses by Augusto Galego with 20% off and free hosting from Shardcloud. See the
 - [BeroLab](https://berolab.app): Networking, coding marathons, mentoring and real projects. A place to build alongside other developers.
 - [CurricuLOL](https://curricu.lol): Your next career move starts with a better resume. Get a free analysis and find out what to improve.
 - [Pet me or I die](https://poidbid.vercel.app): One Dudu for everyone to look after. Win his love, climb the rankings and get your projects noticed.
+- [Hyppo](https://hyppo.bero.land): Startups find X creators to promote their products. Creators set their price and get paid per post.
 
 ## Main destinations
 
@@ -24,4 +25,4 @@ Courses by Augusto Galego with 20% off and free hosting from Shardcloud. See the
 
 Contact: [mail@bero.land](mailto:mail@bero.land)  
 Brazilian company registration: CNPJ 61.026.871/0001-79  
-Last updated: 2026-10-12
+Last updated: 2026-10-24

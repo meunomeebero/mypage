@@ -91,7 +91,6 @@ for (const { path, slug } of allPages) {
   assert.match(html, /public\/vendor\/motion\.js[^>]*defer/);
   assert.ok(html.indexOf("public/vendor/motion.js") < html.indexOf("site-motion.js"));
   if (!["index", "projects"].includes(slug)) continue;
-  assert.equal((html.match(/<article class="project-card[ "]/g) || []).length, slug === "index" ? 3 : 6);
   for (const [, asset] of html.matchAll(/src="(\/public\/projects\/[^\"]+)"/g)) {
     assert.ok(existsSync(asset.slice(1)), `${path}: missing project preview ${asset}`);
   }

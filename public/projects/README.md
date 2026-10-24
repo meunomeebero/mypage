@@ -14,6 +14,8 @@ metadata requests. Refresh these assets when the projects change their identity.
 | ffmpego-cover | GitHub og:image for https://github.com/meunomeebero/ffmpego |
 | blaboard-cover | GitHub og:image for https://github.com/BeroLab/blaboard |
 | github-icon | https://github.githubassets.com/favicons/favicon.png |
+| hyppo-cover | SVG adaptation of hyppoapp/src/app/opengraph-image.tsx, 2026-10-24 (the public OG endpoint currently returns 404) |
+| hyppo-icon | hyppoapp/src/app/icon.svg, matching https://hyppo.bero.land/icon.svg |
 
 Terminal Hack has no declared OG image or favicon. Its preview is accessible HTML/CSS
 with a terminal motif, not a screenshot or a fetched OG image.

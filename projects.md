@@ -8,7 +8,8 @@ Canonical page: [https://bero.land/projects](https://bero.land/projects)
 - [Terminal Hack](https://terminalhack.shardweb.app): Uma corrida de comandos, um adversário e um sistema para invadir. Quem digita mais rápido vence.
 - [FFmpego](https://github.com/meunomeebero/ffmpego): Menos tempo editando, mais tempo criando. Uma CLI em Go para remover silêncio, cortar, converter e juntar vídeos com ffmpeg.
 - [Blaboard](https://github.com/BeroLab/blaboard): Um quadro de projetos feito pela comunidade, para a comunidade. Nossa alternativa open source ao Linear.
+- [Hyppo](https://hyppo.bero.land): Startups encontram creators do X para divulgar seus produtos. Creators definem o preço e recebem por post.
 
 Para contribuir com o Blaboard, entre gratuitamente na [BeroLab](https://berolab.app).
 
-Last updated: 2026-10-11
+Last updated: 2026-10-24
